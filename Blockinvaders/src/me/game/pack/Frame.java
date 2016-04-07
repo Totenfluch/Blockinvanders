@@ -145,6 +145,11 @@ public class Frame extends Application{
 						sb2.append("❤ ");
 					gc.fillText(sb2.toString(), 45, 850);
 				}
+				
+				for(int x = 0; x<Waffen.kugeln.size(); x++){
+					Kugel p = Waffen.kugeln.elementAt(x);
+					gc.fillRect(p.xPos, p.yPos, 5, 5);
+				}
 
 			}
 		}));
@@ -180,7 +185,7 @@ public class Frame extends Application{
 	}
 
 	public static void switchSceneToGame(){
-		Spieler P1 = new Spieler(GAME_WIDTH/2-100, 10, null);
+		Spieler P1 = new Spieler(GAME_WIDTH/2-100, 10, new StandardWaffe());
 		
 		int x = 0;
 		int ix = 0;
@@ -197,7 +202,7 @@ public class Frame extends Application{
 			Monsters[i] = new Monster(1, sub+600+ix*50, x*100, 30, 20, 1);
 		}
 		Players.add(P1);
-		Spieler P2 = new Spieler(GAME_WIDTH/2+100, 10, null);
+		Spieler P2 = new Spieler(GAME_WIDTH/2+100, 10, new StandardWaffe());
 		Players.add(P2);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
@@ -229,6 +234,12 @@ public class Frame extends Application{
 			Players.elementAt(0).moveLeft();
 		}else if(inRight){
 			Players.elementAt(0).moveRight();
+		}
+		if(inShoot){
+			Players.elementAt(0).waffe.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
+		}
+		for(int x =0;x<Players.size(); x++){
+			Players.elementAt(x).waffe.refresh();
 		}
 	}
 
