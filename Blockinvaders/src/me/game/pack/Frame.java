@@ -154,7 +154,7 @@ public class Frame extends Application{
 				for(int i = 0; i<Monsters.length; i++){
 					Monster Monti = Monsters[i];
 					if(Monti.isAlive()){
-						gc.setFill(Color.BROWN);
+						gc.setFill(Monti.getColor());
 						gc.fillRect(Monti.getPosX(), Monti.getPosY(), Monti.getWidth(), Monti.getLength());
 						if(Monti.getLeben() != Monti.getInitHp()){
 							double fragleben = (double)Monti.getLeben()/(double)Monti.getInitHp();
@@ -165,7 +165,12 @@ public class Frame extends Application{
 							}else{
 								gc.setFill(Color.RED);
 							}
-							gc.fillRect(Monti.getPosX()+Monti.getWidth()/10, Monti.getPosY()+Monti.getLength()/3, Monti.getWidth()*fragleben-Monti.getWidth()/10, Monti.getLength()-Monti.getLength()*0.8);
+							gc.fillRect(Monti.getPosX()+Monti.getWidth()/10, Monti.getPosY()+Monti.getLength()/2.5, Monti.getWidth()*fragleben-Monti.getWidth()/10, Monti.getLength()-Monti.getLength()*0.8);
+						}
+						
+						Random r = new Random();
+						if(r.nextInt(1600-clearcount*50) == 1){
+							Monti.getWaffe().shoot(Monti.getPosX(), Monti.getPosY());
 						}
 						alives++;
 					}
@@ -176,6 +181,7 @@ public class Frame extends Application{
 						Monster Monti = Monsters[i];
 						Monti.setInitHp(Monster_HP+20*clearcount);
 						Monti.setLeben(Monster_HP+20*clearcount);
+						Monti.setWorth(Monti.getWorth()+1);
 					}
 				}
 
@@ -187,7 +193,10 @@ public class Frame extends Application{
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0; i<Players.elementAt(0).getLeben(); i++)
 					sb.append("+ ");
-				gc.fillText(sb.toString(), 45, 75);
+				if(!Players.elementAt(0).isDead())
+					gc.fillText(sb.toString(), 45, 75);
+				else
+					gc.fillText("DEAD", 45, 80);
 
 				if(Players.size() > 1){
 					gc.setFont(new Font("Impact", 30));
@@ -197,7 +206,10 @@ public class Frame extends Application{
 					StringBuffer sb2 = new StringBuffer();
 					for(int i = 0; i<Players.elementAt(1).getLeben(); i++)
 						sb2.append("+ ");
-					gc.fillText(sb2.toString(), 45, 850);
+					if(!Players.elementAt(1).isDead())
+						gc.fillText(sb2.toString(), 45, 850);
+					else
+						gc.fillText("DEAD", 45, 855);
 				}
 
 
@@ -207,14 +219,22 @@ public class Frame extends Application{
 						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
 					}
 				}
+
+				for(int i = 0; i<MonsterWaffe.ActiveWeapons.size(); i++){
+					for(int x = 0; x<MonsterWaffe.ActiveWeapons.elementAt(i).kugeln.size(); x++){
+						MonsterKugel draw = MonsterWaffe.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
+						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
+					}
+				}
 				
 				gc.setFill(Color.GOLD);
 				for(int i = 0; i<Drop.AllDrops.size(); i++){
 					Drop p = Drop.AllDrops.elementAt(i);
 					gc.fillRect(p.xPos, p.yPos, Drop.DropSizeX, Drop.DropSizeY);
 				}
-
-
+				
+				gc.setFont(new Font("Impact", 20));
+				gc.fillText("Wave: " + (clearcount+1), GAME_WIDTH/2-30, 40);
 			}
 		}));
 
@@ -281,7 +301,8 @@ public class Frame extends Application{
 			if(x%2 == 0)
 				sub = 50;
 
-			Monsters[i] = new Monster(Monster_HP, sub+600+ix*50, x*100, 30, 20, 1);
+			Monsters[i] = new Monster(null, Monster_HP, sub+600+ix*50, x*100, 30, 20, 1, Color.BROWN);
+			Monsters[i].giveWeapon(new MonsterStandardWaffe(Monsters[i]));
 		}
 		Players.add(P1);
 		if(Coop_enabled){
@@ -316,43 +337,66 @@ public class Frame extends Application{
 		}
 
 		if(P1_inLeft){
-			Players.elementAt(0).moveLeft();
+			if(!Players.elementAt(0).isDead())
+				Players.elementAt(0).moveLeft();
 		}else if(P1_inRight){
-			Players.elementAt(0).moveRight();
+			if(!Players.elementAt(0).isDead())
+				Players.elementAt(0).moveRight();
 		}
 		if(P1_inShoot){
-			Players.elementAt(0).waffe.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
+			if(!Players.elementAt(0).isDead())
+				Players.elementAt(0).waffe.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
 		}
 
 		if(Coop_enabled){
 			if(P2_inLeft){
-				Players.elementAt(1).moveLeft();
+				if(!Players.elementAt(1).isDead())
+					Players.elementAt(1).moveLeft();
 			}else if(P2_inRight){
-				Players.elementAt(1).moveRight();
+				if(!Players.elementAt(1).isDead())
+					Players.elementAt(1).moveRight();
 			}
 			if(P2_inShoot){
-				Players.elementAt(1).waffe.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
+				if(!Players.elementAt(1).isDead())
+					Players.elementAt(1).waffe.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
 			}
 		}
 
-		for(int x =0;x<Players.size(); x++){
-			Players.elementAt(x).waffe.refresh();
-		}
+		for(int x = 0;x<Players.size(); x++){
+			if(!Players.elementAt(x).isDead())
+				Players.elementAt(x).waffe.refresh();
+		}	
 
 		for(int i = 0; i<Waffen.ActiveWeapons.size(); i++){
-			for(int x = 0; x<Waffen.ActiveWeapons.elementAt(i).kugeln.size(); x++){
-				Kugel r = Waffen.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
-				if(r.yPos <= 0 || r.yPos >= GAME_LENGTH || r.xPos <= 0 || r.xPos >= GAME_WIDTH)
-					Waffen.ActiveWeapons.elementAt(i).kugeln.remove(r);
-			}
 			Waffen.ActiveWeapons.elementAt(i).refresh();
 		}
-		
+
 		for(int i = 0; i<Drop.AllDrops.size(); i++){
 			Drop p = Drop.AllDrops.elementAt(i);
 			p.refresh();
 		}
-
+		
+		for(int i = 0; i<MonsterWaffe.ActiveWeapons.size(); i++){
+			MonsterWaffe.ActiveWeapons.elementAt(i).refresh();
+		}
+		
+		int dead = 0;
+		for(int i = 0; i<Players.size(); i++){
+			if(Players.elementAt(i).isDead())
+				dead++;
+			if(dead == Players.size())
+				EndGame();
+		}
+	}
+	
+	public static void EndGame(){
+		tf.stop();
+		gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
+		gc.setFont(new Font("Futura", 140));
+		gc.setFill(Color.BLACK);
+		gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
+		gc.setFill(Color.RED);
+		gc.fillText("You Lost", 500, GAME_LENGTH/2+200);
 	}
 
 }

@@ -55,8 +55,11 @@ public class Drop {
 			AllDrops.remove(this);
 			return;
 		}
+		
 		for(int i = 0; i<Frame.Players.size(); i++){
 			Spieler Peter = Frame.Players.elementAt(i);
+			if(Peter.isDead())
+				break;
 			if(checkHit(Peter.getX(), Peter.getY(), Peter.getWidth(), Peter.getHeight())){
 				assign(Peter);
 				AllDrops.remove(this);

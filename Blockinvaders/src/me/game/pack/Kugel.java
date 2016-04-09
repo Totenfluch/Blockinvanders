@@ -48,6 +48,9 @@ public class Kugel{
 	}
 
 	public void refresh(){
+		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
+			waffe.kugeln.remove(this);
+		
 		for(int i = 0; i<Frame.Monsters.length; i++){
 			Monster Monti = Frame.Monsters[i];
 			if(checkHit(Monti.getPosX(), Monti.getPosY(), Monti.getWidth(), Monti.getLength())){

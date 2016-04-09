@@ -2,6 +2,7 @@ package me.game.pack;
 
 import java.util.Random;
 
+import javafx.scene.paint.Color;
 import me.game.pack.Drop.Drops;
 
 import com.sun.javafx.geom.Rectangle;
@@ -15,8 +16,10 @@ public class Monster {
 	private int worth;
 	private boolean alive;
 	private int InitialHp;
+	private MonsterWaffe waffe;
+	private Color color;
 
-	public Monster(int Leben, double x, double y, double width, double length, int worth){
+	public Monster(MonsterWaffe waffe, int Leben, double x, double y, double width, double length, int worth, Color color){
 		this.Leben = Leben;
 		this.x = x;
 		this.y = y;
@@ -25,6 +28,28 @@ public class Monster {
 		this.worth = worth;
 		alive = true;
 		InitialHp = Leben;
+		this.waffe = waffe;
+		this.color = color;
+	}
+	
+	public void setColor(Color c){
+		this.color = c;
+	}
+	
+	public Color getColor(){
+		return color;
+	}
+	
+	public void setWorth(int amount){
+		worth = amount;
+	}
+	
+	public MonsterWaffe getWaffe(){
+		return waffe;
+	}
+	
+	public void giveWeapon(MonsterWaffe waffe){
+		this.waffe = waffe;
 	}
 
 	public int getInitHp(){
