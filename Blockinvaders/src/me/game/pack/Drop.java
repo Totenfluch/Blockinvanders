@@ -34,14 +34,14 @@ public class Drop {
 			break;
 			
 		case ADDAMMO:
-			p.waffe.addAmmo(20+r.nextInt(80));
+			p.waffe.addAmmo(40+r.nextInt(100));
 			break;
 			
 		case NEXTWEAPON:
-			p.giveWeapon(new Shotgun(p));
+			p.giveWeapon(((PlayerWeapon) p.waffe).nextWaffe());
 			break;
 		case ADDSCORE:
-			p.incScore(100+r.nextInt(400));
+			p.incScore(1+r.nextInt(20));
 			break;
 		default:
 			break;

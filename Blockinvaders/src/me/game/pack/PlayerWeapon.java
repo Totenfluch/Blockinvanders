@@ -34,7 +34,7 @@ public abstract class PlayerWeapon extends Weapon {
 		
 		switch (typ) {
 		case STANDARD:
-			return new Shotgun((Player)this.Besitzer);
+			return new Shotgun((Player)this.Besitzer, this.ammo);
 			
 		default:
 			return this;

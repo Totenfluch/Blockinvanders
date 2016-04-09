@@ -7,9 +7,15 @@ public class StandardWaffe extends PlayerWeapon {
 	
 	public StandardWaffe(Player Besitzer) {
 		super(Besitzer, 10, 12, 4);
-		typ = WaffenTyp.SHOTGUN;
+		typ = WaffenTyp.STANDARD;
 	}
 
+	public StandardWaffe(Player Besitzer,int ammo) {
+		super(Besitzer, 10, 12, 4);
+		typ = WaffenTyp.STANDARD;
+		this.ammo = ammo;
+	}
+	
 	@Override
 	public void shoot(double playerX, double playerY) {
 		if(ammo > 0) {

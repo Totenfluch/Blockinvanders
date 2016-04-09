@@ -187,6 +187,10 @@ public class Frame extends Application{
 
 
 				gc.setFont(new Font("Impact", 30));
+				if(Players.elementAt(0).isAlive()){
+					gc.setFill(Color.LIGHTGRAY);
+					gc.fillText(""+Players.elementAt(0).waffe.getAmmo(), 50, 100);
+				}
 				gc.setFill(Color.BLUEVIOLET);
 				gc.fillText(""+Players.elementAt(0).getScore(), 50, 50);
 				gc.setFill(Color.RED);
@@ -200,6 +204,10 @@ public class Frame extends Application{
 
 				if(Players.size() > 1){
 					gc.setFont(new Font("Impact", 30));
+					if(Players.elementAt(1).isAlive()){
+						gc.setFill(Color.LIGHTGRAY);
+						gc.fillText(""+Players.elementAt(1).waffe.getAmmo(), 50, 875);
+					}
 					gc.setFill(Color.LIME);
 					gc.fillText(""+Players.elementAt(1).getScore(), 50, 825);
 					gc.setFill(Color.RED);
