@@ -58,7 +58,7 @@ public abstract class Waffen {
 	}
 
 
-	public void addAmmunition(int ammo) {
+	public void addAmmo(int ammo) {
 		if (ammo > 0)
 			this.ammo += ammo;
 	}
