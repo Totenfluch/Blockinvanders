@@ -5,30 +5,20 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 import me.game.pack.Drop.Drops;
 
-import com.sun.javafx.geom.Rectangle;
+public class Monster extends Character{
 
-public class Monster {
-	private int Leben;
-	private double x;
-	private double y;
-	private double width;
-	private double length;
 	private int worth;
-	private boolean alive;
+
 	private int InitialHp;
-	private MonsterWaffe waffe;
 	private Color color;
 
-	public Monster(MonsterWaffe waffe, int Leben, double x, double y, double width, double length, int worth, Color color){
-		this.Leben = Leben;
-		this.x = x;
-		this.y = y;
+	public Monster(Weapon waffe, int Leben, double x, double y, double width, double length, int worth, Color color){
+		super(x, y, Leben, waffe);
 		this.width = width;
-		this.length = length;
+		this.heigth = length;
 		this.worth = worth;
 		alive = true;
 		InitialHp = Leben;
-		this.waffe = waffe;
 		this.color = color;
 	}
 	
@@ -43,14 +33,6 @@ public class Monster {
 	public void setWorth(int amount){
 		worth = amount;
 	}
-	
-	public MonsterWaffe getWaffe(){
-		return waffe;
-	}
-	
-	public void giveWeapon(MonsterWaffe waffe){
-		this.waffe = waffe;
-	}
 
 	public int getInitHp(){
 		return InitialHp;
@@ -60,37 +42,10 @@ public class Monster {
 		InitialHp = hp;
 	}
 
-	public double getPosX(){
-		return x;
-	}
-
-	public double getPosY(){
-		return y;
-	}
-
-	public double getWidth(){
-		return width;
-	}
-
-	public double getLength(){
-		return length;
-	}
-
-	public boolean checkHit(double ox, double oy, double owidth, double olength){
-		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
-		Rectangle rt2 = new Rectangle((int)x, (int)y, (int)width, (int)length);
-		if(rt1.intersection(rt2) != null)
-			return true;
-		return false;
-	}
-
-	public int getLeben(){
-		return Leben;
-	}
 
 	public boolean setLeben(int Leben){
-		this.Leben = Leben;
-		if(this.Leben <= 0){
+		this.leben = Leben;
+		if(this.leben <= 0){
 			alive = false;
 			TriggerDeath();
 			return false;
@@ -101,8 +56,8 @@ public class Monster {
 	}
 
 	public boolean subLeben(int amount){
-		Leben -= amount;
-		if(Leben <= 0){
+		leben -= amount;
+		if(leben <= 0){
 			alive = false;
 			TriggerDeath();
 			return false;
@@ -117,31 +72,28 @@ public class Monster {
 		Random r = new Random();
 		if(r.nextInt(5) == 1){
 			Drops[] theDrops = Drops.values();
-			Drop.AllDrops.add(new Drop(x, y, theDrops[r.nextInt(theDrops.length)]));
+			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
 	}
 
 	public void moveLeft(){
-		x--;
+		xPos--;
 	}
 
 	public void moveRight(){
-		x++;
+		xPos++;
 	}
 
 	public void moveUp(){
-		y--;
+		yPos--;
 	}
 
 	public void moveDown(){
-		y++;
+		yPos++;
 	}
 
 	public int getWorth(){
 		return worth;
 	}
 
-	public boolean isAlive(){
-		return alive;
-	}
 }

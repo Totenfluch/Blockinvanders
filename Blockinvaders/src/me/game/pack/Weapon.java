@@ -2,36 +2,27 @@ package me.game.pack;
 
 import java.util.Vector;
 
-public abstract class Waffen {
+public abstract class Weapon {
 	protected final int INIT_DELAY;
 	protected int damage;
 	protected int ammo = 20;
 	protected int bulletSpeed;
 	protected int delay;
-	protected Spieler Besitzer;
+	protected Character Besitzer;
+
 	
-	protected enum WaffenTyp {STANDARD, SHOTGUN };
-	protected WaffenTyp typ;
-	
-	Vector<Kugel> kugeln = new Vector<Kugel>(10, 5);
-	public static Vector<Waffen> ActiveWeapons = new Vector<Waffen>();
+	Vector<Bullet> kugeln = new Vector<Bullet>(10, 5);
 
 
-	public Waffen(Spieler Besitzer, int damage,int delay,int bulletSpeed){
+	public Weapon(Character Besitzer, int damage,int delay,int bulletSpeed){
 		this.damage = damage;
 		this.INIT_DELAY = delay;
 		this.bulletSpeed = bulletSpeed;
 		this.Besitzer = Besitzer;
-		ActiveWeapons.add(this);
 	}
 
 
-	public void shoot(double playerX, double playerY, double bulletW, double bulletH, double angle) {
-		if(delay <= 0){
-			delay = INIT_DELAY;
-			kugeln.add(new Kugel(this, playerX, playerY, bulletH, bulletW, bulletSpeed, damage, angle));
-		}
-	}
+	public abstract void shoot(double playerX, double playerY, double bulletW, double bulletH, double angle);
 
 	public abstract void shoot(double playerX, double playerY);
 
@@ -91,19 +82,5 @@ public abstract class Waffen {
 			delay--;			
 	}
 	
-	public int getWert(){
-		return typ.ordinal();
-	}
-	
-	public Waffen nextWaffe() {
-		
-		switch (typ) {
-		case STANDARD:
-			return new Shotgun(this.Besitzer);
-			
-		default:
-			return this;
-		}
-	}
 
 }

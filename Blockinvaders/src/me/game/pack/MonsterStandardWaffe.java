@@ -1,6 +1,6 @@
 package me.game.pack;
 
-public class MonsterStandardWaffe extends MonsterWaffe{
+public class MonsterStandardWaffe extends MonsterWeapon{
 	double bulletW = 5.0,
 			bulletH = 5.0;
 	public MonsterStandardWaffe(Monster Besitzer) {

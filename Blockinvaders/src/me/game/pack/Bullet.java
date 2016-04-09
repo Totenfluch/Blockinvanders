@@ -1,16 +1,16 @@
 package me.game.pack;
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class MonsterKugel {
+
+public abstract class Bullet {
 	double xPos, yPos;
 	double height, width;
 	int damage;
 	double dx, dy;
-	MonsterWaffe waffe;
+	Weapon waffe;
 	
-	public MonsterKugel(MonsterWaffe waffe, double xPos, double yPos, double height, double width, int speed, int damage, double angle) {
+	public Bullet(Weapon waffe, double xPos, double yPos, double height, double width, int speed, int damage, double angle) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.height = height;
@@ -47,26 +47,7 @@ public class MonsterKugel {
 		return damage;
 	}
 
-	public void refresh(){
-		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
-			waffe.kugeln.remove(this);
-		
-		for(int x =0;x<Frame.Players.size(); x++){
-			Spieler p = Frame.Players.elementAt(x);
-			if(checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight())){
-				if(!p.isDead()){
-					waffe.kugeln.remove(this);
-					p.removeLeben();
-					waffe.Besitzer.setInitHp(waffe.Besitzer.getInitHp()+300);
-					waffe.Besitzer.setLeben(waffe.Besitzer.getInitHp());
-					waffe.Besitzer.setColor(Color.DARKMAGENTA);
-				}
-			}
-		}
-		
-		xPos += dx;
-		yPos += dy;
-	}
+	public abstract void refresh();
 	
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
 		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
@@ -77,5 +58,4 @@ public class MonsterKugel {
 	}
 	
 	
-
 }

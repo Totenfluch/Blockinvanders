@@ -25,7 +25,7 @@ public class Drop {
 		this.drop = drop;
 	}
 	
-	public void assign(Spieler p){
+	public void assign(Player p){
 		Random r = new Random();
 		
 		switch (drop) {
@@ -57,9 +57,9 @@ public class Drop {
 		}
 		
 		for(int i = 0; i<Frame.Players.size(); i++){
-			Spieler Peter = Frame.Players.elementAt(i);
-			if(Peter.isDead())
-				break;
+			Player Peter = Frame.Players.elementAt(i);
+			if(!Peter.isAlive())
+				continue;
 			if(checkHit(Peter.getX(), Peter.getY(), Peter.getWidth(), Peter.getHeight())){
 				assign(Peter);
 				AllDrops.remove(this);

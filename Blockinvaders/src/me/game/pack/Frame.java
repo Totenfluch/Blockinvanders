@@ -40,7 +40,7 @@ public class Frame extends Application{
 	public static Scene ConnectScene;
 	public static Scene GameScene;
 
-	public static Vector<Spieler> Players = new Vector<Spieler>();
+	public static Vector<Player> Players = new Vector<Player>();
 	public static boolean Coop_enabled = false;
 	public static boolean P1_inRight = false;
 	public static boolean P1_inLeft = false;
@@ -145,8 +145,8 @@ public class Frame extends Application{
 					else if(i == 3)
 						gc.setFill(Color.CRIMSON);
 
-					Spieler p = Players.elementAt(i);
-					if(!p.isDead())
+					Player p = Players.elementAt(i);
+					if(p.isAlive())
 						gc.fillRect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				}
 
@@ -155,7 +155,7 @@ public class Frame extends Application{
 					Monster Monti = Monsters[i];
 					if(Monti.isAlive()){
 						gc.setFill(Monti.getColor());
-						gc.fillRect(Monti.getPosX(), Monti.getPosY(), Monti.getWidth(), Monti.getLength());
+						gc.fillRect(Monti.getX(), Monti.getY(), Monti.getWidth(), Monti.getHeight());
 						if(Monti.getLeben() != Monti.getInitHp()){
 							double fragleben = (double)Monti.getLeben()/(double)Monti.getInitHp();
 							if(fragleben > 0.75){
@@ -165,12 +165,12 @@ public class Frame extends Application{
 							}else{
 								gc.setFill(Color.RED);
 							}
-							gc.fillRect(Monti.getPosX()+Monti.getWidth()/10, Monti.getPosY()+Monti.getLength()/2.5, Monti.getWidth()*fragleben-Monti.getWidth()/10, Monti.getLength()-Monti.getLength()*0.8);
+							gc.fillRect(Monti.getX()+Monti.getWidth()/10, Monti.getY()+Monti.getHeight()/2.5, Monti.getWidth()*fragleben-Monti.getWidth()/10, Monti.getHeight()-Monti.getHeight()*0.8);
 						}
 						
 						Random r = new Random();
 						if(r.nextInt(1600-clearcount*50) == 1){
-							Monti.getWaffe().shoot(Monti.getPosX(), Monti.getPosY());
+							Monti.getWaffe().shoot(Monti.getX(), Monti.getY());
 						}
 						alives++;
 					}
@@ -193,7 +193,7 @@ public class Frame extends Application{
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0; i<Players.elementAt(0).getLeben(); i++)
 					sb.append("+ ");
-				if(!Players.elementAt(0).isDead())
+				if(Players.elementAt(0).isAlive())
 					gc.fillText(sb.toString(), 45, 75);
 				else
 					gc.fillText("DEAD", 45, 80);
@@ -206,23 +206,23 @@ public class Frame extends Application{
 					StringBuffer sb2 = new StringBuffer();
 					for(int i = 0; i<Players.elementAt(1).getLeben(); i++)
 						sb2.append("+ ");
-					if(!Players.elementAt(1).isDead())
+					if(Players.elementAt(1).isAlive())
 						gc.fillText(sb2.toString(), 45, 850);
 					else
 						gc.fillText("DEAD", 45, 855);
 				}
 
 
-				for(int i = 0; i<Waffen.ActiveWeapons.size(); i++){
-					for(int x = 0; x<Waffen.ActiveWeapons.elementAt(i).kugeln.size(); x++){
-						Kugel draw = Waffen.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
+				for(int i = 0; i<PlayerWeapon.ActiveWeapons.size(); i++){
+					for(int x = 0; x<PlayerWeapon.ActiveWeapons.elementAt(i).kugeln.size(); x++){
+						Bullet draw = PlayerWeapon.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
 						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
 					}
 				}
 
-				for(int i = 0; i<MonsterWaffe.ActiveWeapons.size(); i++){
-					for(int x = 0; x<MonsterWaffe.ActiveWeapons.elementAt(i).kugeln.size(); x++){
-						MonsterKugel draw = MonsterWaffe.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
+				for(int i = 0; i<MonsterWeapon.ActiveWeapons.size(); i++){
+					for(int x = 0; x<MonsterWeapon.ActiveWeapons.elementAt(i).kugeln.size(); x++){
+						Bullet draw = MonsterWeapon.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
 						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
 					}
 				}
@@ -286,7 +286,7 @@ public class Frame extends Application{
 	}
 
 	public static void switchSceneToGame(){
-		Spieler P1 = new Spieler(GAME_WIDTH/2-100, 10, null);
+		Player P1 = new Player(GAME_WIDTH/2-100, 10, null);
 		P1.giveWeapon(new StandardWaffe(P1));
 
 		int x = 0;
@@ -306,7 +306,7 @@ public class Frame extends Application{
 		}
 		Players.add(P1);
 		if(Coop_enabled){
-			Spieler P2 = new Spieler(GAME_WIDTH/2+100, 10, null);
+			Player P2 = new Player(GAME_WIDTH/2+100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players.add(P2);
 		}
@@ -337,38 +337,38 @@ public class Frame extends Application{
 		}
 
 		if(P1_inLeft){
-			if(!Players.elementAt(0).isDead())
+			if(Players.elementAt(0).isAlive())
 				Players.elementAt(0).moveLeft();
 		}else if(P1_inRight){
-			if(!Players.elementAt(0).isDead())
+			if(Players.elementAt(0).isAlive())
 				Players.elementAt(0).moveRight();
 		}
 		if(P1_inShoot){
-			if(!Players.elementAt(0).isDead())
+			if(Players.elementAt(0).isAlive())
 				Players.elementAt(0).waffe.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
 		}
 
 		if(Coop_enabled){
 			if(P2_inLeft){
-				if(!Players.elementAt(1).isDead())
+				if(Players.elementAt(1).isAlive())
 					Players.elementAt(1).moveLeft();
 			}else if(P2_inRight){
-				if(!Players.elementAt(1).isDead())
+				if(Players.elementAt(1).isAlive())
 					Players.elementAt(1).moveRight();
 			}
 			if(P2_inShoot){
-				if(!Players.elementAt(1).isDead())
+				if(Players.elementAt(1).isAlive())
 					Players.elementAt(1).waffe.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
 			}
 		}
 
 		for(int x = 0;x<Players.size(); x++){
-			if(!Players.elementAt(x).isDead())
+			if(Players.elementAt(x).isAlive())
 				Players.elementAt(x).waffe.refresh();
 		}	
 
-		for(int i = 0; i<Waffen.ActiveWeapons.size(); i++){
-			Waffen.ActiveWeapons.elementAt(i).refresh();
+		for(int i = 0; i<PlayerWeapon.ActiveWeapons.size(); i++){
+			PlayerWeapon.ActiveWeapons.elementAt(i).refresh();
 		}
 
 		for(int i = 0; i<Drop.AllDrops.size(); i++){
@@ -376,13 +376,13 @@ public class Frame extends Application{
 			p.refresh();
 		}
 		
-		for(int i = 0; i<MonsterWaffe.ActiveWeapons.size(); i++){
-			MonsterWaffe.ActiveWeapons.elementAt(i).refresh();
+		for(int i = 0; i<MonsterWeapon.ActiveWeapons.size(); i++){
+			MonsterWeapon.ActiveWeapons.elementAt(i).refresh();
 		}
 		
 		int dead = 0;
 		for(int i = 0; i<Players.size(); i++){
-			if(Players.elementAt(i).isDead())
+			if(!Players.elementAt(i).isAlive())
 				dead++;
 			if(dead == Players.size())
 				EndGame();
