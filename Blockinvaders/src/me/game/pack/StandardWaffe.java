@@ -5,9 +5,9 @@ public class StandardWaffe extends Waffen {
 	double bulletW = 5.0,
 			bulletH = 5.0;
 	
-
 	public StandardWaffe(Spieler Besitzer) {
 		super(Besitzer, 10, 12, 4);
+		typ = WaffenTyp.SHOTGUN;
 	}
 
 	@Override

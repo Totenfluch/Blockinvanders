@@ -10,6 +10,9 @@ public abstract class Waffen {
 	protected int delay;
 	protected Spieler Besitzer;
 	
+	protected enum WaffenTyp {STANDARD, SHOTGUN };
+	protected WaffenTyp typ;
+	
 	Vector<Kugel> kugeln = new Vector<Kugel>(10, 5);
 	public static Vector<Waffen> ActiveWeapons = new Vector<Waffen>();
 
@@ -86,6 +89,21 @@ public abstract class Waffen {
 		
 		if(delay > 0)
 			delay--;			
+	}
+	
+	public int getWert(){
+		return typ.ordinal();
+	}
+	
+	public Waffen nextWaffe() {
+		
+		switch (typ) {
+		case STANDARD:
+			return new Shotgun(this.Besitzer);
+			
+		default:
+			return this;
+		}
 	}
 
 }

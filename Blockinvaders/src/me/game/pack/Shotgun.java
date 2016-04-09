@@ -5,9 +5,9 @@ public class Shotgun  extends Waffen {
 	double bulletW = 3.0,
 			bulletH = 3.0;
 	
-
 	public Shotgun(Spieler Besitzer) {
 		super(Besitzer, 25, 20, 5);
+		typ = WaffenTyp.SHOTGUN;
 	}
 
 	
