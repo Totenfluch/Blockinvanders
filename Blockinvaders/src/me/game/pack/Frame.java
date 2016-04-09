@@ -15,6 +15,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -64,6 +66,8 @@ public class Frame extends Application{
 		MainStage.setTitle("BlockInvaders");
 		// Connect Scene
 		BorderPane connect_Bp = new BorderPane();
+		ImageView back = new ImageView(new Image("background.jpg"));
+		connect_Bp.getChildren().add(back);
 		VBox connect_MiddlePart = new VBox();
 		connect_MiddlePart.setPadding(new Insets(200, 500, 500, 500)); 
 		connect_MiddlePart.setSpacing(20);
@@ -161,7 +165,7 @@ public class Frame extends Application{
 							}else{
 								gc.setFill(Color.RED);
 							}
-							gc.fillRect(Monti.getPosX()+Monti.getWidth()/10, Monti.getPosY()+Monti.getLength()/3, Monti.getWidth()*fragleben, Monti.getLength()-Monti.getLength()*0.8);
+							gc.fillRect(Monti.getPosX()+Monti.getWidth()/10, Monti.getPosY()+Monti.getLength()/3, Monti.getWidth()*fragleben-Monti.getWidth()/10, Monti.getLength()-Monti.getLength()*0.8);
 						}
 						alives++;
 					}
@@ -202,6 +206,12 @@ public class Frame extends Application{
 						Kugel draw = Waffen.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
 						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
 					}
+				}
+				
+				gc.setFill(Color.GOLD);
+				for(int i = 0; i<Drop.AllDrops.size(); i++){
+					Drop p = Drop.AllDrops.elementAt(i);
+					gc.fillRect(p.xPos, p.yPos, Drop.DropSizeX, Drop.DropSizeY);
 				}
 
 
@@ -336,6 +346,11 @@ public class Frame extends Application{
 					Waffen.ActiveWeapons.elementAt(i).kugeln.remove(r);
 			}
 			Waffen.ActiveWeapons.elementAt(i).refresh();
+		}
+		
+		for(int i = 0; i<Drop.AllDrops.size(); i++){
+			Drop p = Drop.AllDrops.elementAt(i);
+			p.refresh();
 		}
 
 	}

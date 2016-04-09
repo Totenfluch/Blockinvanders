@@ -1,5 +1,9 @@
 package me.game.pack;
 
+import java.util.Random;
+
+import me.game.pack.Drop.Drops;
+
 import com.sun.javafx.geom.Rectangle;
 
 public class Monster {
@@ -11,7 +15,7 @@ public class Monster {
 	private int worth;
 	private boolean alive;
 	private int InitialHp;
-	
+
 	public Monster(int Leben, double x, double y, double width, double length, int worth){
 		this.Leben = Leben;
 		this.x = x;
@@ -22,31 +26,31 @@ public class Monster {
 		alive = true;
 		InitialHp = Leben;
 	}
-	
+
 	public int getInitHp(){
 		return InitialHp;
 	}
-	
+
 	public void setInitHp(int hp){
 		InitialHp = hp;
 	}
-	
+
 	public double getPosX(){
 		return x;
 	}
-	
+
 	public double getPosY(){
 		return y;
 	}
-	
+
 	public double getWidth(){
 		return width;
 	}
-	
+
 	public double getLength(){
 		return length;
 	}
-	
+
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
 		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
 		Rectangle rt2 = new Rectangle((int)x, (int)y, (int)width, (int)length);
@@ -54,53 +58,64 @@ public class Monster {
 			return true;
 		return false;
 	}
-	
+
 	public int getLeben(){
 		return Leben;
 	}
-	
+
 	public boolean setLeben(int Leben){
 		this.Leben = Leben;
 		if(this.Leben <= 0){
 			alive = false;
+			TriggerDeath();
 			return false;
 		}else{
 			alive = true;
 			return true;
 		}
 	}
-	
+
 	public boolean subLeben(int amount){
 		Leben -= amount;
 		if(Leben <= 0){
 			alive = false;
+			TriggerDeath();
 			return false;
 		}else{
 			alive = true;
 			return true;
 		}
 	}
-	
+
+
+	public void TriggerDeath(){
+		Random r = new Random();
+		if(r.nextInt(5) == 1){
+			Drops[] theDrops = Drops.values();
+			Drop.AllDrops.add(new Drop(x, y, theDrops[r.nextInt(theDrops.length)]));
+		}
+	}
+
 	public void moveLeft(){
 		x--;
 	}
-	
+
 	public void moveRight(){
 		x++;
 	}
-	
+
 	public void moveUp(){
 		y--;
 	}
-	
+
 	public void moveDown(){
 		y++;
 	}
-	
+
 	public int getWorth(){
 		return worth;
 	}
-	
+
 	public boolean isAlive(){
 		return alive;
 	}
