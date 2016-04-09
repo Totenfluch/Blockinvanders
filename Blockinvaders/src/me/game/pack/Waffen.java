@@ -8,20 +8,25 @@ public abstract class Waffen {
 	protected int ammo = 20;
 	protected int bulletSpeed;
 	protected int delay;
-	public static Vector<Kugel> kugeln = new Vector<Kugel>(10, 5);
+	protected Spieler Besitzer;
+	
+	Vector<Kugel> kugeln = new Vector<Kugel>(10, 5);
+	public static Vector<Waffen> ActiveWeapons = new Vector<Waffen>();
 
 
-	public Waffen(int damage,int delay,int bulletSpeed){
+	public Waffen(Spieler Besitzer, int damage,int delay,int bulletSpeed){
 		this.damage = damage;
 		this.INIT_DELAY = delay;
 		this.bulletSpeed = bulletSpeed;
+		this.Besitzer = Besitzer;
+		ActiveWeapons.add(this);
 	}
 
 
 	public void shoot(double playerX, double playerY, double bulletW, double bulletH, double angle) {
 		if(delay <= 0){
 			delay = INIT_DELAY;
-			kugeln.add(new Kugel(playerX, playerY, bulletH, bulletW, bulletSpeed, damage, angle));
+			kugeln.add(new Kugel(this, playerX, playerY, bulletH, bulletW, bulletSpeed, damage, angle));
 		}
 	}
 
@@ -76,6 +81,9 @@ public abstract class Waffen {
 	}
 
 	public void refresh() {
+		for(int i = 0; i<kugeln.size(); i++)
+			kugeln.elementAt(i).refresh();
+		
 		if(delay > 0)
 			delay--;			
 	}

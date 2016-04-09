@@ -6,8 +6,8 @@ public class StandardWaffe extends Waffen {
 			bulletH = 5.0;
 	
 
-	public StandardWaffe() {
-		super(10, 12, 4);
+	public StandardWaffe(Spieler Besitzer) {
+		super(Besitzer, 10, 12, 4);
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class StandardWaffe extends Waffen {
 			if(delay <= 0){
 				delay = INIT_DELAY;
 				ammo--;
-				kugeln.add(new Kugel(playerX, playerY, 8.0, 8.0, bulletSpeed, damage*2, 0));
+				kugeln.add(new Kugel(this, playerX, playerY, 8.0, 8.0, bulletSpeed, damage*2, 0));
 			}
 		}
 		else

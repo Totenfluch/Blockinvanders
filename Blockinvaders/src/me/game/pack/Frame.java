@@ -132,7 +132,7 @@ public class Frame extends Application{
 				gc.setFill(Color.RED);
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0; i<Players.elementAt(0).getLeben(); i++)
-					sb.append("â�¤ ");
+					sb.append("+ ");
 				gc.fillText(sb.toString(), 45, 75);
 				
 				if(Players.size() > 1){
@@ -142,13 +142,16 @@ public class Frame extends Application{
 					gc.setFill(Color.RED);
 					StringBuffer sb2 = new StringBuffer();
 					for(int i = 0; i<Players.elementAt(1).getLeben(); i++)
-						sb2.append("â�¤ ");
+						sb2.append("+ ");
 					gc.fillText(sb2.toString(), 45, 850);
 				}
 				
-				for(int x = 0; x<Waffen.kugeln.size(); x++){
-					Kugel p = Waffen.kugeln.elementAt(x);
-					gc.fillRect(p.xPos, p.yPos, p.width, p.height);
+				
+				for(int i = 0; i<Waffen.ActiveWeapons.size(); i++){
+					for(int x = 0; x<Waffen.ActiveWeapons.elementAt(i).kugeln.size(); x++){
+						Kugel draw = Waffen.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
+						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
+					}
 				}
 				
 
@@ -186,7 +189,8 @@ public class Frame extends Application{
 	}
 
 	public static void switchSceneToGame(){
-		Spieler P1 = new Spieler(GAME_WIDTH/2-100, 10, new StandardWaffe());
+		Spieler P1 = new Spieler(GAME_WIDTH/2-100, 10, null);
+		P1.giveWeapon(new StandardWaffe(P1));
 		
 		int x = 0;
 		int ix = 0;
@@ -203,7 +207,8 @@ public class Frame extends Application{
 			Monsters[i] = new Monster(1, sub+600+ix*50, x*100, 30, 20, 1);
 		}
 		Players.add(P1);
-		Spieler P2 = new Spieler(GAME_WIDTH/2+100, 10, new StandardWaffe());
+		Spieler P2 = new Spieler(GAME_WIDTH/2+100, 10, null);
+		P2.giveWeapon(new StandardWaffe(P2));
 		Players.add(P2);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
@@ -242,13 +247,14 @@ public class Frame extends Application{
 		for(int x =0;x<Players.size(); x++){
 			Players.elementAt(x).waffe.refresh();
 		}
-		for(int x =0;x<Waffen.kugeln.size(); x++){
-			Kugel r = Waffen.kugeln.elementAt(x);
-			if(r.yPos <= 0 || r.yPos >= GAME_LENGTH || r.xPos <= 0 || r.xPos >= GAME_WIDTH)
-				Waffen.kugeln.remove(r);
-			
-			
-			r.refresh();
+		
+		for(int i = 0; i<Waffen.ActiveWeapons.size(); i++){
+			for(int x = 0; x<Waffen.ActiveWeapons.elementAt(i).kugeln.size(); x++){
+				Kugel r = Waffen.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
+				if(r.yPos <= 0 || r.yPos >= GAME_LENGTH || r.xPos <= 0 || r.xPos >= GAME_WIDTH)
+					Waffen.ActiveWeapons.elementAt(i).kugeln.remove(r);
+			}
+			Waffen.ActiveWeapons.elementAt(i).refresh();
 		}
 	
 	}

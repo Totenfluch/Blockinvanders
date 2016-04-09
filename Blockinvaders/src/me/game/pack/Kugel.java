@@ -5,13 +5,15 @@ public class Kugel{
 	double height, width;
 	int damage;
 	double dx, dy;
+	Waffen waffe;
 	
-	public Kugel(double xPos, double yPos, double height, double width, int speed, int damage, double angle) {
+	public Kugel(Waffen waffe, double xPos, double yPos, double height, double width, int speed, int damage, double angle) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.height = height;
 		this.width = width;
 		this.damage = damage;
+		this.waffe = waffe;
 		
 		if(angle >= -180.0 && angle <= 180){
 			dx = Math.sin(Math.toRadians(angle))*speed;
