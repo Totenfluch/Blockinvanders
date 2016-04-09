@@ -9,6 +9,8 @@ public class Monster {
 	private double width;
 	private double length;
 	private int worth;
+	private boolean alive;
+	private int InitialHp;
 	
 	public Monster(int Leben, double x, double y, double width, double length, int worth){
 		this.Leben = Leben;
@@ -17,6 +19,16 @@ public class Monster {
 		this.width = width;
 		this.length = length;
 		this.worth = worth;
+		alive = true;
+		InitialHp = Leben;
+	}
+	
+	public int getInitHp(){
+		return InitialHp;
+	}
+	
+	public void setInitHp(int hp){
+		InitialHp = hp;
 	}
 	
 	public double getPosX(){
@@ -49,17 +61,22 @@ public class Monster {
 	
 	public boolean setLeben(int Leben){
 		this.Leben = Leben;
-		if(this.Leben <= 0)
+		if(this.Leben <= 0){
+			alive = false;
 			return false;
-		else
+		}else{
+			alive = true;
 			return true;
+		}
 	}
 	
 	public boolean subLeben(int amount){
 		Leben -= amount;
 		if(Leben <= 0){
+			alive = false;
 			return false;
 		}else{
+			alive = true;
 			return true;
 		}
 	}
@@ -82,5 +99,9 @@ public class Monster {
 	
 	public int getWorth(){
 		return worth;
+	}
+	
+	public boolean isAlive(){
+		return alive;
 	}
 }

@@ -39,11 +39,17 @@ public class Frame extends Application{
 	public static Scene GameScene;
 
 	public static Vector<Spieler> Players = new Vector<Spieler>();
-	public static boolean inRight = false;
-	public static boolean inLeft = false;
-	public static boolean inShoot = false;
+	public static boolean Coop_enabled = false;
+	public static boolean P1_inRight = false;
+	public static boolean P1_inLeft = false;
+	public static boolean P1_inShoot = false;
+	public static boolean P2_inRight = false;
+	public static boolean P2_inLeft = false;
+	public static boolean P2_inShoot = false;
 	public static Monster[] Monsters = new Monster[64];
 	public static int Monster_Direction = 0;
+	public static int Monster_HP = 60;
+	public static int clearcount = 0;
 
 	public static int Tick = 0;
 	public static int movetick = 0;
@@ -84,6 +90,18 @@ public class Frame extends Application{
 				switchSceneToGame();
 			}
 		});
+		Confirm.setDisable(true);
+
+		Button Coop = new Button("Local Co-op");
+		connect_MiddlePart.getChildren().add(Coop);
+		Coop.setAlignment(Pos.BOTTOM_CENTER);
+		Coop.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				Coop_enabled = true;
+				switchSceneToGame();
+			}
+		});
 
 		ConnectScene = new Scene(connect_Bp, GAME_WIDTH, GAME_LENGTH);
 		MainStage.setScene(ConnectScene);
@@ -112,17 +130,49 @@ public class Frame extends Application{
 				gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 				Refresh();
 				// Players
-				gc.setFill(Color.BLUE);
+
 				for(int i = 0; i<Players.size(); i++){
+					if(i == 0)
+						gc.setFill(Color.PURPLE);
+					else if(i == 1)
+						gc.setFill(Color.LIME);
+					else if(i == 2)
+						gc.setFill(Color.BLUE);
+					else if(i == 3)
+						gc.setFill(Color.CRIMSON);
+
 					Spieler p = Players.elementAt(i);
 					if(!p.isDead())
 						gc.fillRect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				}
 
-				gc.setFill(Color.ORANGE);
+				int alives = 0;
 				for(int i = 0; i<Monsters.length; i++){
 					Monster Monti = Monsters[i];
-					gc.fillRect(Monti.getPosX(), Monti.getPosY(), Monti.getWidth(), Monti.getLength());
+					if(Monti.isAlive()){
+						gc.setFill(Color.BROWN);
+						gc.fillRect(Monti.getPosX(), Monti.getPosY(), Monti.getWidth(), Monti.getLength());
+						if(Monti.getLeben() != Monti.getInitHp()){
+							double fragleben = (double)Monti.getLeben()/(double)Monti.getInitHp();
+							if(fragleben > 0.75){
+								gc.setFill(Color.LIME);
+							}else if(fragleben > 0.50){
+								gc.setFill(Color.ORANGE);
+							}else{
+								gc.setFill(Color.RED);
+							}
+							gc.fillRect(Monti.getPosX()+Monti.getWidth()/10, Monti.getPosY()+Monti.getLength()/3, Monti.getWidth()*fragleben, Monti.getLength()-Monti.getLength()*0.8);
+						}
+						alives++;
+					}
+				}
+				if(alives == 0){
+					clearcount++;
+					for(int i = 0; i<Monsters.length; i++){
+						Monster Monti = Monsters[i];
+						Monti.setInitHp(Monster_HP+20*clearcount);
+						Monti.setLeben(Monster_HP+20*clearcount);
+					}
 				}
 
 
@@ -134,7 +184,7 @@ public class Frame extends Application{
 				for(int i = 0; i<Players.elementAt(0).getLeben(); i++)
 					sb.append("+ ");
 				gc.fillText(sb.toString(), 45, 75);
-				
+
 				if(Players.size() > 1){
 					gc.setFont(new Font("Impact", 30));
 					gc.setFill(Color.LIME);
@@ -145,15 +195,15 @@ public class Frame extends Application{
 						sb2.append("+ ");
 					gc.fillText(sb2.toString(), 45, 850);
 				}
-				
-				
+
+
 				for(int i = 0; i<Waffen.ActiveWeapons.size(); i++){
 					for(int x = 0; x<Waffen.ActiveWeapons.elementAt(i).kugeln.size(); x++){
 						Kugel draw = Waffen.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
 						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
 					}
 				}
-				
+
 
 			}
 		}));
@@ -163,12 +213,21 @@ public class Frame extends Application{
 			@Override
 			public void handle(KeyEvent event) {
 				if(event.getCode() == KeyCode.A){
-					inLeft = true;
+					P1_inLeft = true;
 				}else if(event.getCode() == KeyCode.D){
-					inRight = true;
-				}if(event.getCode() == KeyCode.SPACE){
-					inShoot = true;
+					P1_inRight = true;
+				}if(event.getCode() == KeyCode.W){
+					P1_inShoot = true;
 				}
+
+				if(event.getCode() == KeyCode.LEFT){
+					P2_inLeft = true;
+				}else if(event.getCode() == KeyCode.RIGHT){
+					P2_inRight = true;
+				}if(event.getCode() == KeyCode.UP){
+					P2_inShoot = true;
+				}
+
 			}
 		});
 
@@ -177,11 +236,19 @@ public class Frame extends Application{
 			@Override
 			public void handle(KeyEvent event) {
 				if(event.getCode() == KeyCode.A){
-					inLeft = false;
+					P1_inLeft = false;
 				}else if(event.getCode() == KeyCode.D){
-					inRight = false;
-				}if(event.getCode() == KeyCode.SPACE){
-					inShoot = false;
+					P1_inRight = false;
+				}if(event.getCode() == KeyCode.W){
+					P1_inShoot = false;
+				}
+
+				if(event.getCode() == KeyCode.LEFT){
+					P2_inLeft = false;
+				}else if(event.getCode() == KeyCode.RIGHT){
+					P2_inRight = false;
+				}if(event.getCode() == KeyCode.UP){
+					P2_inShoot = false;
 				}
 			}
 		});
@@ -191,7 +258,7 @@ public class Frame extends Application{
 	public static void switchSceneToGame(){
 		Spieler P1 = new Spieler(GAME_WIDTH/2-100, 10, null);
 		P1.giveWeapon(new StandardWaffe(P1));
-		
+
 		int x = 0;
 		int ix = 0;
 		for(int i = 0; i<Monsters.length; i++){
@@ -204,12 +271,14 @@ public class Frame extends Application{
 			if(x%2 == 0)
 				sub = 50;
 
-			Monsters[i] = new Monster(1, sub+600+ix*50, x*100, 30, 20, 1);
+			Monsters[i] = new Monster(Monster_HP, sub+600+ix*50, x*100, 30, 20, 1);
 		}
 		Players.add(P1);
-		Spieler P2 = new Spieler(GAME_WIDTH/2+100, 10, null);
-		P2.giveWeapon(new StandardWaffe(P2));
-		Players.add(P2);
+		if(Coop_enabled){
+			Spieler P2 = new Spieler(GAME_WIDTH/2+100, 10, null);
+			P2.giveWeapon(new StandardWaffe(P2));
+			Players.add(P2);
+		}
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
 		MainStage.setScene(GameScene);
@@ -236,18 +305,30 @@ public class Frame extends Application{
 			}
 		}
 
-		if(inLeft){
+		if(P1_inLeft){
 			Players.elementAt(0).moveLeft();
-		}else if(inRight){
+		}else if(P1_inRight){
 			Players.elementAt(0).moveRight();
 		}
-		if(inShoot){
+		if(P1_inShoot){
 			Players.elementAt(0).waffe.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
 		}
+
+		if(Coop_enabled){
+			if(P2_inLeft){
+				Players.elementAt(1).moveLeft();
+			}else if(P2_inRight){
+				Players.elementAt(1).moveRight();
+			}
+			if(P2_inShoot){
+				Players.elementAt(1).waffe.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
+			}
+		}
+
 		for(int x =0;x<Players.size(); x++){
 			Players.elementAt(x).waffe.refresh();
 		}
-		
+
 		for(int i = 0; i<Waffen.ActiveWeapons.size(); i++){
 			for(int x = 0; x<Waffen.ActiveWeapons.elementAt(i).kugeln.size(); x++){
 				Kugel r = Waffen.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
@@ -256,7 +337,7 @@ public class Frame extends Application{
 			}
 			Waffen.ActiveWeapons.elementAt(i).refresh();
 		}
-	
+
 	}
 
 }
