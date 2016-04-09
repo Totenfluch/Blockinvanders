@@ -2,19 +2,26 @@ package me.game.pack;
 
 public class StandardWaffe extends Waffen {
 	
-	double bulletW, bulletH;
+	double bulletW = 5.0,
+			bulletH = 5.0;
 	
 
 	public StandardWaffe() {
-		super(10, 7, 4);
-		// TODO Auto-generated constructor stub
+		super(10, 12, 4);
 	}
 
-	
 	@Override
 	public void shoot(double playerX, double playerY) {
-		super.shoot(playerX, playerY, bulletW, bulletH);
-		
+		if(ammo > 0) {
+			
+			if(delay <= 0){
+				delay = INIT_DELAY;
+				ammo--;
+				kugeln.add(new Kugel(playerX, playerY, 8.0, 8.0, bulletSpeed, damage*2, 0));
+			}
+		}
+		else
+			super.shoot(playerX, playerY, bulletW, bulletH, 0);
 	}
 	
 

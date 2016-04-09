@@ -3,11 +3,11 @@ package me.game.pack;
 import java.util.Vector;
 
 public abstract class Waffen {
-	private final int INIT_DELAY;
-	private int damage;
-	private int ammo;
-	private int bulletSpeed;
-	private int delay;
+	protected final int INIT_DELAY;
+	protected int damage;
+	protected int ammo = 20;
+	protected int bulletSpeed;
+	protected int delay;
 	public static Vector<Kugel> kugeln = new Vector<Kugel>(10, 5);
 
 
@@ -18,10 +18,10 @@ public abstract class Waffen {
 	}
 
 
-	public void shoot(double playerX, double playerY, double bulletW, double bulletH) {
+	public void shoot(double playerX, double playerY, double bulletW, double bulletH, double angle) {
 		if(delay <= 0){
 			delay = INIT_DELAY;
-			kugeln.add(new Kugel(playerX, playerY, bulletH, bulletW, bulletSpeed));
+			kugeln.add(new Kugel(playerX, playerY, bulletH, bulletW, bulletSpeed, damage, angle));
 		}
 	}
 
@@ -77,14 +77,7 @@ public abstract class Waffen {
 
 	public void refresh() {
 		if(delay > 0)
-			delay--;
-
-		for(int p=0; p<kugeln.size(); p++){
-			Kugel r = kugeln.elementAt(p);
-			if(r.yPos <= 0)
-				kugeln.remove(r);
-			r.refresh();
-		}			
+			delay--;			
 	}
 
 }

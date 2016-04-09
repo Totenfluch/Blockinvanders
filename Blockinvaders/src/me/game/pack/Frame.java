@@ -132,7 +132,7 @@ public class Frame extends Application{
 				gc.setFill(Color.RED);
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0; i<Players.elementAt(0).getLeben(); i++)
-					sb.append("❤ ");
+					sb.append("â�¤ ");
 				gc.fillText(sb.toString(), 45, 75);
 				
 				if(Players.size() > 1){
@@ -142,14 +142,15 @@ public class Frame extends Application{
 					gc.setFill(Color.RED);
 					StringBuffer sb2 = new StringBuffer();
 					for(int i = 0; i<Players.elementAt(1).getLeben(); i++)
-						sb2.append("❤ ");
+						sb2.append("â�¤ ");
 					gc.fillText(sb2.toString(), 45, 850);
 				}
 				
 				for(int x = 0; x<Waffen.kugeln.size(); x++){
 					Kugel p = Waffen.kugeln.elementAt(x);
-					gc.fillRect(p.xPos, p.yPos, 5, 5);
+					gc.fillRect(p.xPos, p.yPos, p.width, p.height);
 				}
+				
 
 			}
 		}));
@@ -241,6 +242,15 @@ public class Frame extends Application{
 		for(int x =0;x<Players.size(); x++){
 			Players.elementAt(x).waffe.refresh();
 		}
+		for(int x =0;x<Waffen.kugeln.size(); x++){
+			Kugel r = Waffen.kugeln.elementAt(x);
+			if(r.yPos <= 0 || r.yPos >= GAME_LENGTH || r.xPos <= 0 || r.xPos >= GAME_WIDTH)
+				Waffen.kugeln.remove(r);
+			
+			
+			r.refresh();
+		}
+	
 	}
 
 }

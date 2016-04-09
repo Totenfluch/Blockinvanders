@@ -7,10 +7,7 @@ public class Spieler {
 	protected Waffen waffe;
 	
 	private double xPos;
-	
 	private final double YPos = 800;
-	
-	
 	
 	private final double width = 40;
 	private final double heigth = 60;
@@ -92,12 +89,10 @@ public class Spieler {
 	}
 	
 	
-	public boolean getHit(double x, double y) {
-		if(x > xPos && x < xPos + width 
-				&& y > YPos && y < YPos + heigth) {
-			removeLeben();
+	public boolean checkHit(double x, double y, double w, double h) {
+		if(x + w > xPos && x < xPos + width 
+				&& y + w > YPos && y < YPos + heigth)
 			return true;
-		}
 		return false;
 	}
 	
