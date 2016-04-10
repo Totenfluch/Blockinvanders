@@ -70,8 +70,10 @@ public class Monster extends Character{
 
 	public void TriggerDeath(){
 		Random r = new Random();
-		if(r.nextInt(5) == 1){
-			Drops[] theDrops = Drops.values();
+		Drops[] theDrops = Drops.values();
+		if(r.nextInt(10) == 1){
+			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
+		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
 	}

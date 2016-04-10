@@ -25,6 +25,10 @@ public class Drop {
 		this.drop = drop;
 	}
 	
+	public Drops getDroptype(){
+		return drop;
+	}
+	
 	public void assign(Player p){
 		Random r = new Random();
 		
@@ -34,7 +38,7 @@ public class Drop {
 			break;
 			
 		case ADDAMMO:
-			p.waffe.addAmmo(40+r.nextInt(100));
+			p.waffe.addAmmo(20+r.nextInt(50));
 			break;
 			
 		case NEXTWEAPON:

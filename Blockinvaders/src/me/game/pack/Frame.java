@@ -3,6 +3,7 @@ package me.game.pack;
 import java.util.Random;
 import java.util.Vector;
 
+import me.game.pack.Drop.Drops;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -169,7 +170,7 @@ public class Frame extends Application{
 						}
 						
 						Random r = new Random();
-						if(r.nextInt(1600-clearcount*50) == 1){
+						if(r.nextInt(3200-clearcount*75) == 1){
 							Monti.getWaffe().shoot(Monti.getX(), Monti.getY());
 						}
 						alives++;
@@ -182,15 +183,22 @@ public class Frame extends Application{
 						Monti.setInitHp(Monster_HP+20*clearcount);
 						Monti.setLeben(Monster_HP+20*clearcount);
 						Monti.setWorth(Monti.getWorth()+1);
+						Monti.setColor(Color.BROWN);
 					}
 				}
 
 
-				gc.setFont(new Font("Impact", 30));
+				gc.setFont(new Font("Impact", 20));
 				if(Players.elementAt(0).isAlive()){
 					gc.setFill(Color.LIGHTGRAY);
-					gc.fillText(""+Players.elementAt(0).waffe.getAmmo(), 50, 100);
+					StringBuffer swb = new StringBuffer();
+					//gc.fillText(""+Players.elementAt(0).waffe.getAmmo(), 50, 100);
+					swb.append(Players.elementAt(0).waffe.typ.toString() + ": ");
+					for(int i = 0; i<Players.elementAt(0).waffe.getAmmo(); i++)
+						swb.append("|");
+					gc.fillText(swb.toString(), 50, 100);
 				}
+				gc.setFont(new Font("Impact", 30));
 				gc.setFill(Color.BLUEVIOLET);
 				gc.fillText(""+Players.elementAt(0).getScore(), 50, 50);
 				gc.setFill(Color.RED);
@@ -203,11 +211,17 @@ public class Frame extends Application{
 					gc.fillText("DEAD", 45, 80);
 
 				if(Players.size() > 1){
-					gc.setFont(new Font("Impact", 30));
+					gc.setFont(new Font("Impact", 20));
 					if(Players.elementAt(1).isAlive()){
 						gc.setFill(Color.LIGHTGRAY);
-						gc.fillText(""+Players.elementAt(1).waffe.getAmmo(), 50, 875);
+						//gc.fillText(""+Players.elementAt(1).waffe.getAmmo(), 50, 875);
+						StringBuffer swb2 = new StringBuffer();
+						swb2.append(Players.elementAt(1).waffe.typ.toString() + ": ");
+						for(int i = 0; i<Players.elementAt(1).waffe.getAmmo(); i++)
+							swb2.append("|");
+						gc.fillText(swb2.toString(), 50, 875);
 					}
+					gc.setFont(new Font("Impact", 30));
 					gc.setFill(Color.LIME);
 					gc.fillText(""+Players.elementAt(1).getScore(), 50, 825);
 					gc.setFill(Color.RED);
@@ -235,11 +249,20 @@ public class Frame extends Application{
 					}
 				}
 				
-				gc.setFill(Color.GOLD);
 				for(int i = 0; i<Drop.AllDrops.size(); i++){
 					Drop p = Drop.AllDrops.elementAt(i);
-					gc.fillRect(p.xPos, p.yPos, Drop.DropSizeX, Drop.DropSizeY);
+					Drops pd = p.getDroptype();
+					if(pd.equals(Drops.NEXTWEAPON))
+						gc.setFill(Color.GOLD);
+					else if(pd.equals(Drops.ADDAMMO))
+						gc.setFill(Color.AQUAMARINE);
+					else if(pd.equals(Drops.ADDLEBEN))
+						gc.setFill(Color.FIREBRICK);
+					else if(pd.equals(Drops.ADDSCORE))
+						gc.setFill(Color.BLUE);
+					gc.fillOval(p.xPos, p.yPos, Drop.DropSizeX, Drop.DropSizeY);
 				}
+				gc.setFill(Color.GOLD);
 				
 				gc.setFont(new Font("Impact", 20));
 				gc.fillText("Wave: " + (clearcount+1), GAME_WIDTH/2-30, 40);
@@ -309,7 +332,7 @@ public class Frame extends Application{
 			if(x%2 == 0)
 				sub = 50;
 
-			Monsters[i] = new Monster(null, Monster_HP, sub+600+ix*50, x*100, 30, 20, 1, Color.BROWN);
+			Monsters[i] = new Monster(null, Monster_HP, sub+600+ix*50, x*100+50, 30, 20, 1, Color.BROWN);
 			Monsters[i].giveWeapon(new MonsterStandardWaffe(Monsters[i]));
 		}
 		Players.add(P1);

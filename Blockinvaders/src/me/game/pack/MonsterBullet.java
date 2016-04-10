@@ -23,6 +23,7 @@ public class MonsterBullet extends Bullet {
 					m.setInitHp(m.getInitHp() + 300);
 					m.setLeben(m.getInitHp());
 					m.setColor(Color.DARKMAGENTA);
+					p.giveWeapon(((PlayerWeapon) p.waffe).prevWaffe());
 				}
 			}
 		}

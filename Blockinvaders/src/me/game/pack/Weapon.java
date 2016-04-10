@@ -2,6 +2,8 @@ package me.game.pack;
 
 import java.util.Vector;
 
+import me.game.pack.PlayerWeapon.WaffenTyp;
+
 public abstract class Weapon {
 	protected final int INIT_DELAY;
 	protected int damage;
@@ -9,7 +11,7 @@ public abstract class Weapon {
 	protected int bulletSpeed;
 	protected int delay;
 	protected Character Besitzer;
-
+	protected WaffenTyp typ;
 	
 	Vector<Bullet> kugeln = new Vector<Bullet>(10, 5);
 

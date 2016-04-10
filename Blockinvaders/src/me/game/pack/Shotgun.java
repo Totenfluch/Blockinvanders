@@ -6,12 +6,12 @@ public class Shotgun  extends PlayerWeapon {
 			bulletH = 3.0;
 	
 	public Shotgun(Player Besitzer) {
-		super(Besitzer, 25, 20, 5);
+		super(Besitzer, 25, 16, 5);
 		typ = WaffenTyp.SHOTGUN;
 	}
 	
 	public Shotgun(Player Besitzer, int ammo) {
-		super(Besitzer, 25, 20, 5);
+		super(Besitzer, 25, 16, 5);
 		typ = WaffenTyp.SHOTGUN;
 		this.ammo = ammo;
 	}
@@ -23,13 +23,19 @@ public class Shotgun  extends PlayerWeapon {
 			if(delay <= 0){
 				delay = INIT_DELAY;
 				ammo--;
+				kugeln.add(new PlayerBullet(this, playerX, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+5, 3));
+				kugeln.add(new PlayerBullet(this, playerX, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+5, 0));
+				kugeln.add(new PlayerBullet(this, playerX, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+5, -3));
+			}
+		}
+		else{
+			if(delay <= 0){
+				delay = INIT_DELAY;
 				kugeln.add(new PlayerBullet(this, playerX, playerY, bulletH, bulletW, bulletSpeed, damage, 3));
 				kugeln.add(new PlayerBullet(this, playerX, playerY, bulletH, bulletW, bulletSpeed, damage, 0));
 				kugeln.add(new PlayerBullet(this, playerX, playerY, bulletH, bulletW, bulletSpeed, damage, -3));
 			}
 		}
-		else
-			super.shoot(playerX, playerY, bulletW, bulletH, 0);
 	}
 	
 }
