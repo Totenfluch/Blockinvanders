@@ -12,6 +12,8 @@ import me.game.weapons.StandardWaffe;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -83,9 +85,33 @@ public class Frame extends Application{
 
 		Random r = new Random();
 		int id = r.nextInt(20);
-		TextField Username = new TextField("Username#" + id);
-		connect_MiddlePart.getChildren().add(Username);
+		
+		HBox Usernames = new HBox();
+		connect_MiddlePart.getChildren().add(Usernames);
+		Usernames.setSpacing(5);
+		
+		TextField Username1 = new TextField("Username-1#" + id);
+		
+		Username1.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(newValue.length() > 16)
+					Username1.setText(oldValue);
+			}
+		});
+		Usernames.getChildren().add(Username1);
 
+		TextField Username2 = new TextField("Username-2#" + id);
+		Username2.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(newValue.length() > 16)
+					Username2.setText(oldValue);
+			}
+		});
+		Usernames.getChildren().add(Username2);
+		Usernames.setAlignment(Pos.BOTTOM_CENTER);
+		
 		TextField Host = new TextField("Host:Port");
 		connect_MiddlePart.getChildren().add(Host);
 
@@ -112,7 +138,19 @@ public class Frame extends Application{
 				switchSceneToGame();
 			}
 		});
-
+		
+		Button SinglePlayer = new Button("Single Player");
+		connect_MiddlePart.getChildren().add(SinglePlayer);
+		SinglePlayer.setAlignment(Pos.BOTTOM_CENTER);
+		SinglePlayer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Coop_enabled = false;
+				switchSceneToGame();
+			}
+		});
+		
+	
 		ConnectScene = new Scene(connect_Bp, GAME_WIDTH, GAME_LENGTH);
 		MainStage.setScene(ConnectScene);
 
@@ -205,7 +243,7 @@ public class Frame extends Application{
 				}
 				gc.setFont(new Font("Impact", 30));
 				gc.setFill(Color.BLUEVIOLET);
-				gc.fillText(""+Players.elementAt(0).getScore(), 50, 50);
+				gc.fillText(Username1.getText() + "> " +Players.elementAt(0).getScore(), 50, 50);
 				gc.setFill(Color.RED);
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0; i<Players.elementAt(0).getLife(); i++)
@@ -228,7 +266,7 @@ public class Frame extends Application{
 					}
 					gc.setFont(new Font("Impact", 30));
 					gc.setFill(Color.LIME);
-					gc.fillText(""+Players.elementAt(1).getScore(), 50, 825);
+					gc.fillText(Username2.getText() + "> " + Players.elementAt(1).getScore(), 50, 825);
 					gc.setFill(Color.RED);
 					StringBuffer sb2 = new StringBuffer();
 					for(int i = 0; i<Players.elementAt(1).getLife(); i++)
@@ -336,7 +374,9 @@ public class Frame extends Application{
 			int sub = 0;
 			if(x%2 == 0)
 				sub = 50;
-
+			
+			if(!Coop_enabled)
+				Monster_HP /= 2;
 			Monsters[i] = new Monster(null, Monster_HP, sub+600+ix*50, x*100+50, 30, 20, 1, Color.BROWN);
 			Monsters[i].giveWeapon(new MonsterStandardWaffe(Monsters[i]));
 		}

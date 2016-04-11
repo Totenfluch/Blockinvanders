@@ -23,7 +23,7 @@ public class MonsterBullet extends Bullet {
 			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight())) {
 				if (p.isAlive()) {
 					waffe.getKugeln().remove(this);
-					p.removeLeben();
+					p.setLife(p.getLife()-waffe.getDamage());
 					Monster m = (Monster) waffe.getOwner();
 					m.setInitHp(m.getInitHp() + 300);
 					m.setLife(m.getInitHp());
