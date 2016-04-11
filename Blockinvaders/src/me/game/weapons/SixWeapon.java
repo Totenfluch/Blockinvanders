@@ -29,7 +29,7 @@ public class SixWeapon extends PlayerWeapon{
 				kugeln.add(new PlayerBullet(this, playerX+1, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+15, 5));
 				kugeln.add(new PlayerBullet(this, playerX-1, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+15, -5));
 				kugeln.add(new PlayerBullet(this, playerX-3, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+15, -8));
-				kugeln.add(new PlayerBullet(this, playerX-5, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+15, 12));
+				kugeln.add(new PlayerBullet(this, playerX-5, playerY, bulletH+3, bulletW+3, bulletSpeed, damage+15, -12));
 			}
 		}else{
 			if(delay <= 0){
