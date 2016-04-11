@@ -1,14 +1,12 @@
 package me.game.pack;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Random;
 import java.util.Vector;
 
-import me.game.bullets.Bullet;
-import me.game.pack.Drop.Drops;
-import me.game.weapons.MonsterStandardWaffe;
-import me.game.weapons.MonsterWeapon;
-import me.game.weapons.PlayerWeapon;
-import me.game.weapons.StandardWaffe;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -34,6 +32,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import me.game.bullets.Bullet;
+import me.game.pack.Drop.Drops;
+import me.game.weapons.MonsterStandardWaffe;
+import me.game.weapons.MonsterWeapon;
+import me.game.weapons.PlayerWeapon;
+import me.game.weapons.StandardWaffe;
 
 public class Frame extends Application{
 	public static final int GAME_WIDTH = 1600;
@@ -62,10 +66,13 @@ public class Frame extends Application{
 	public static int Monster_HP = 60;
 	public static int clearcount = 0;
 
+	public static String Player1Name;
+	public static String Player2Name;
+
 	public static int Tick = 0;
 	public static int movetick = 0;
-	
-	
+
+
 	public static long frameTime;
 	public static long refreshTime;
 	public static int frames;
@@ -91,13 +98,13 @@ public class Frame extends Application{
 
 		Random r = new Random();
 		int id = r.nextInt(20);
-		
+
 		HBox Usernames = new HBox();
 		connect_MiddlePart.getChildren().add(Usernames);
 		Usernames.setSpacing(5);
-		
-		TextField Username1 = new TextField("Username-1#" + id);
-		
+
+		final TextField Username1 = new TextField("Username-1#" + id);
+
 		Username1.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -107,7 +114,7 @@ public class Frame extends Application{
 		});
 		Usernames.getChildren().add(Username1);
 
-		TextField Username2 = new TextField("Username-2#" + id);
+		final TextField Username2 = new TextField("Username-2#" + id);
 		Username2.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -117,7 +124,7 @@ public class Frame extends Application{
 		});
 		Usernames.getChildren().add(Username2);
 		Usernames.setAlignment(Pos.BOTTOM_CENTER);
-		
+
 		TextField Host = new TextField("Host:Port");
 		connect_MiddlePart.getChildren().add(Host);
 
@@ -140,23 +147,27 @@ public class Frame extends Application{
 		Coop.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				Player1Name = Username1.getText();
+				Player2Name = Username2.getText();
 				Coop_enabled = true;
 				switchSceneToGame();
 			}
 		});
-		
+
 		Button SinglePlayer = new Button("Single Player");
 		connect_MiddlePart.getChildren().add(SinglePlayer);
 		SinglePlayer.setAlignment(Pos.BOTTOM_CENTER);
 		SinglePlayer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Player1Name = Username1.getText();
+				Player2Name = Username2.getText();
 				Coop_enabled = false;
 				switchSceneToGame();
 			}
 		});
-		
-	
+
+
 		ConnectScene = new Scene(connect_Bp, GAME_WIDTH, GAME_LENGTH);
 		MainStage.setScene(ConnectScene);
 
@@ -181,11 +192,11 @@ public class Frame extends Application{
 			public void handle(ActionEvent arg0) {
 				frames++;
 				long time = System.nanoTime();
-				
+
 				gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 				gc.setFill(Color.BLACK);
 				gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
-				
+
 				// Players
 
 				for(int i = 0; i<Players.size(); i++){
@@ -247,7 +258,7 @@ public class Frame extends Application{
 				}
 				gc.setFont(new Font("Impact", 30));
 				gc.setFill(Color.BLUEVIOLET);
-				gc.fillText(Username1.getText() + "> " +Players.elementAt(0).getScore(), 50, 50);
+				gc.fillText(Player1Name + "> " +Players.elementAt(0).getScore(), 50, 50);
 				gc.setFill(Color.RED);
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0; i<Players.elementAt(0).getLife(); i++)
@@ -270,7 +281,7 @@ public class Frame extends Application{
 					}
 					gc.setFont(new Font("Impact", 30));
 					gc.setFill(Color.LIME);
-					gc.fillText(Username2.getText() + "> " + Players.elementAt(1).getScore(), 50, 825);
+					gc.fillText(Player2Name + "> " + Players.elementAt(1).getScore(), 50, 825);
 					gc.setFill(Color.RED);
 					StringBuffer sb2 = new StringBuffer();
 					for(int i = 0; i<Players.elementAt(1).getLife(); i++)
@@ -295,7 +306,7 @@ public class Frame extends Application{
 						gc.fillRect(draw.getxPos(), draw.getyPos(), draw.getWidth(), draw.getHeight());
 					}
 				}
-				
+
 				for(int i = 0; i<Drop.AllDrops.size(); i++){
 					Drop p = Drop.AllDrops.elementAt(i);
 					Drops pd = p.getDroptype();
@@ -310,10 +321,10 @@ public class Frame extends Application{
 					gc.fillOval(p.xPos, p.yPos, Drop.DropSizeX, Drop.DropSizeY);
 				}
 				gc.setFill(Color.GOLD);
-				
+
 				gc.setFont(new Font("Impact", 20));
 				gc.fillText("Wave: " + (clearcount+1), GAME_WIDTH/2-30, 40);
-				
+
 				frameTime += System.nanoTime() -time;
 			}
 		}));
@@ -321,13 +332,13 @@ public class Frame extends Application{
 		rTf = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
 				long time = System.nanoTime();
-				
+
 				Refresh();
-				
+
 				refreshTime += System.nanoTime() - time;
 			}
 		}));
-		
+
 		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
@@ -390,7 +401,7 @@ public class Frame extends Application{
 			int sub = 0;
 			if(x%2 == 0)
 				sub = 50;
-			
+
 			if(!Coop_enabled)
 				Monster_HP /= 2;
 			Monsters[i] = new Monster(null, Monster_HP, sub+600+ix*50, x*100+50, 30, 20, 1, Color.BROWN);
@@ -406,7 +417,7 @@ public class Frame extends Application{
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
 		rTf.play();
-		
+
 		MainStage.setScene(GameScene);
 	}
 
@@ -431,16 +442,16 @@ public class Frame extends Application{
 				Monsters[i].moveLeft();
 			}
 		}
-		
+
 		for(int i = 0; i < Monsters.length; i++){
-			
+
 			Monster m = Monsters[i];
-			
+
 			if(m.isAlive()){
-				
-			Random r = new Random();
-			if(r.nextInt(3200-clearcount*75) == 1)
-				m.getHisWeapon().shoot(m.getX(), m.getY());
+
+				Random r = new Random();
+				if(r.nextInt(3200-clearcount*75) == 1)
+					m.getHisWeapon().shoot(m.getX(), m.getY());
 			}
 		}
 
@@ -483,11 +494,11 @@ public class Frame extends Application{
 			Drop p = Drop.AllDrops.elementAt(i);
 			p.refresh();
 		}
-		
+
 		for(int i = 0; i<MonsterWeapon.ActiveWeapons.size(); i++){
 			MonsterWeapon.ActiveWeapons.elementAt(i).refresh();
 		}
-		
+
 		int dead = 0;
 		for(int i = 0; i<Players.size(); i++){
 			if(!Players.elementAt(i).isAlive())
@@ -495,9 +506,9 @@ public class Frame extends Application{
 			if(dead == Players.size())
 				EndGame();
 		}
-		
+
 	}
-	
+
 	public static void EndGame(){
 		rTf.stop();
 		tf.stop();
@@ -507,10 +518,25 @@ public class Frame extends Application{
 		gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 		gc.setFill(Color.RED);
 		gc.fillText("You Lost", 500, GAME_LENGTH/2+200);
-		
+
 		System.out.println("Frametime: " + frameTime/frames);
 		System.out.println("Refreshtime: " + refreshTime/Tick);
-		
+		PublishScores();
+	}
+
+	@SuppressWarnings("unused")
+	public static void PublishScores(){
+		if(Coop_enabled){
+			try {
+				String request = "http://totenfluch.de/putScores.php?Username1="+ Player1Name +"&Username2="+ Player2Name +"&Score1="+ Players.elementAt(0).getScore()  +"&Score2="+ Players.elementAt(1).getScore()+"";
+				URL oracle = new URL(request);
+		        URLConnection yc = oracle.openConnection();
+		        BufferedReader in = new BufferedReader(new InputStreamReader(
+		                                    yc.getInputStream()));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
