@@ -40,6 +40,7 @@ public class Frame extends Application{
 	public static final int GAME_LENGTH = 900;
 
 	public static Timeline tf;
+	public static Timeline rTf;
 
 	public static Canvas cv;
 	public static GraphicsContext gc;
@@ -63,6 +64,11 @@ public class Frame extends Application{
 
 	public static int Tick = 0;
 	public static int movetick = 0;
+	
+	
+	public static long frameTime;
+	public static long refreshTime;
+	public static int frames;
 
 	public static void main(String[] args){
 		launch(args);
@@ -173,10 +179,13 @@ public class Frame extends Application{
 		tf = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				frames++;
+				long time = System.nanoTime();
+				
 				gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 				gc.setFill(Color.BLACK);
 				gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
-				Refresh();
+				
 				// Players
 
 				for(int i = 0; i<Players.size(); i++){
@@ -210,11 +219,6 @@ public class Frame extends Application{
 								gc.setFill(Color.RED);
 							}
 							gc.fillRect(Monti.getX()+Monti.getWidth()/10, Monti.getY()+Monti.getHeight()/2.5, Monti.getWidth()*fragleben-Monti.getWidth()/10, Monti.getHeight()-Monti.getHeight()*0.8);
-						}
-						
-						Random r = new Random();
-						if(r.nextInt(3200-clearcount*75) == 1){
-							Monti.getHisWeapon().shoot(Monti.getX(), Monti.getY());
 						}
 						alives++;
 					}
@@ -309,9 +313,21 @@ public class Frame extends Application{
 				
 				gc.setFont(new Font("Impact", 20));
 				gc.fillText("Wave: " + (clearcount+1), GAME_WIDTH/2-30, 40);
+				
+				frameTime += System.nanoTime() -time;
 			}
 		}));
 
+		rTf = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0) {
+				long time = System.nanoTime();
+				
+				Refresh();
+				
+				refreshTime += System.nanoTime() - time;
+			}
+		}));
+		
 		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
@@ -386,12 +402,16 @@ public class Frame extends Application{
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players.add(P2);
 		}
+		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
+		rTf.play();
+		
 		MainStage.setScene(GameScene);
 	}
 
 	public static void Refresh(){
+
 		Tick++;
 		movetick ++ ;
 		if(movetick == 500 && Monster_Direction == 0){
@@ -409,6 +429,18 @@ public class Frame extends Application{
 		}else if(Monster_Direction == 0){
 			for(int i = 0; i<Monsters.length; i++){
 				Monsters[i].moveLeft();
+			}
+		}
+		
+		for(int i = 0; i < Monsters.length; i++){
+			
+			Monster m = Monsters[i];
+			
+			if(m.isAlive()){
+				
+			Random r = new Random();
+			if(r.nextInt(3200-clearcount*75) == 1)
+				m.getHisWeapon().shoot(m.getX(), m.getY());
 			}
 		}
 
@@ -463,9 +495,11 @@ public class Frame extends Application{
 			if(dead == Players.size())
 				EndGame();
 		}
+		
 	}
 	
 	public static void EndGame(){
+		rTf.stop();
 		tf.stop();
 		gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 		gc.setFont(new Font("Futura", 140));
@@ -473,6 +507,10 @@ public class Frame extends Application{
 		gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 		gc.setFill(Color.RED);
 		gc.fillText("You Lost", 500, GAME_LENGTH/2+200);
+		
+		System.out.println("Frametime: " + frameTime/frames);
+		System.out.println("Refreshtime: " + refreshTime/Tick);
+		
 	}
 
 }
