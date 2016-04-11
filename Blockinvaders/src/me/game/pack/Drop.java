@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import javafx.scene.shape.Rectangle;
+import me.game.weapons.PlayerWeapon;
 
 public class Drop {
 	protected double xPos, yPos;

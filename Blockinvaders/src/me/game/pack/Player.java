@@ -1,5 +1,7 @@
 package me.game.pack;
 
+import me.game.weapons.PlayerWeapon;
+
 public class Player extends Character {
 
 	private double movementSpeed = 6.0;

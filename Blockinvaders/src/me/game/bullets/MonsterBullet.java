@@ -1,6 +1,11 @@
-package me.game.pack;
+package me.game.bullets;
 
 import javafx.scene.paint.Color;
+import me.game.pack.Frame;
+import me.game.pack.Monster;
+import me.game.pack.Player;
+import me.game.weapons.MonsterWeapon;
+import me.game.weapons.PlayerWeapon;
 
 public class MonsterBullet extends Bullet {
 
@@ -11,15 +16,15 @@ public class MonsterBullet extends Bullet {
 
 	public void refresh(){
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
-			waffe.kugeln.remove(this);
+			waffe.getKugeln().remove(this);
 		
 		for (int x = 0; x < Frame.Players.size(); x++) {
 			Player p = Frame.Players.elementAt(x);
 			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight())) {
 				if (p.isAlive()) {
-					waffe.kugeln.remove(this);
+					waffe.getKugeln().remove(this);
 					p.removeLeben();
-					Monster m = (Monster) waffe.Besitzer;
+					Monster m = (Monster) waffe.getOwner();
 					m.setInitHp(m.getInitHp() + 300);
 					m.setLife(m.getInitHp());
 					m.setColor(Color.DARKMAGENTA);

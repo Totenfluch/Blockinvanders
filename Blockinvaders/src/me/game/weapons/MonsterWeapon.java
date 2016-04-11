@@ -1,6 +1,9 @@
-package me.game.pack;
+package me.game.weapons;
 
 import java.util.Vector;
+
+import me.game.bullets.MonsterBullet;
+import me.game.pack.Monster;
 
 public abstract class MonsterWeapon extends Weapon {
 

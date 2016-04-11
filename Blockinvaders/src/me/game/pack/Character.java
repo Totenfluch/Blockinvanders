@@ -2,11 +2,13 @@ package me.game.pack;
 
 import com.sun.javafx.geom.Rectangle;
 
+import me.game.weapons.Weapon;
+
 public abstract class Character {
 	protected int life;
 	protected boolean alive = true;
 	
-	protected Weapon hisWeapon;
+	public Weapon hisWeapon;
 	
 	protected double xPos;
 	protected double yPos;

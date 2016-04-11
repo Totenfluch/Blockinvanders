@@ -1,4 +1,9 @@
-package me.game.pack;
+package me.game.bullets;
+
+import me.game.pack.Frame;
+import me.game.pack.Monster;
+import me.game.pack.Player;
+import me.game.weapons.PlayerWeapon;
 
 public class PlayerBullet extends Bullet {
 
@@ -9,15 +14,15 @@ public class PlayerBullet extends Bullet {
 	
 	public void refresh(){
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
-			waffe.kugeln.remove(this);
+			waffe.getKugeln().remove(this);
 		
 		for (int i = 0; i < Frame.Monsters.length; i++) {
 			Monster Monti = Frame.Monsters[i];
 			if (checkHit(Monti.getX(), Monti.getY(), Monti.getWidth(), Monti.getHeight())) {
 				if (Monti.isAlive()) {
-					waffe.kugeln.remove(this);
+					waffe.getKugeln().remove(this);
 					if (!Monti.subLeben(damage)){
-						Player p = (Player)waffe.Besitzer;
+						Player p = (Player)waffe.getOwner();
 						 p.incScore(Monti.getWorth());
 					}
 				}

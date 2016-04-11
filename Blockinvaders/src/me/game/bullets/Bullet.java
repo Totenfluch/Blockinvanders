@@ -1,6 +1,7 @@
-package me.game.pack;
+package me.game.bullets;
 
 import javafx.scene.shape.Rectangle;
+import me.game.weapons.Weapon;
 
 
 public abstract class Bullet {
@@ -17,7 +18,7 @@ public abstract class Bullet {
 		this.width = width;
 		this.damage = damage;
 		this.waffe = waffe;
-		this.xPos += waffe.Besitzer.getWidth()/2/2;
+		this.xPos += waffe.getOwner().getWidth()/2/2;
 		this.xPos += width/2;
 		
 		if(angle >= -180.0 && angle <= 180){

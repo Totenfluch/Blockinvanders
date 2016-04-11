@@ -1,10 +1,13 @@
-package me.game.pack;
+package me.game.weapons;
 
 import java.util.Vector;
 
+import me.game.bullets.PlayerBullet;
+import me.game.pack.Player;
+
 public abstract class PlayerWeapon extends Weapon {
 	
-	protected enum WeaponType {STANDARD, DUALS, SHOTGUN, QUAD, FIVE, SIX, MAX };
+	public enum WeaponType {STANDARD, DUALS, SHOTGUN, QUAD, FIVE, SIX, MAX };
 	
 	
 	public static Vector<PlayerWeapon> ActiveWeapons = new Vector<PlayerWeapon>();
@@ -34,22 +37,22 @@ public abstract class PlayerWeapon extends Weapon {
 		
 		switch (typ) {
 		case STANDARD:
-			return new DualsWeapon((Player)this.Besitzer, this.ammo);
+			return new DualsWeapon((Player)this.Owner, this.ammo);
 			
 		case DUALS:
-			return new Shotgun((Player)this.Besitzer, this.ammo);
+			return new Shotgun((Player)this.Owner, this.ammo);
 			
 		case SHOTGUN:
-			return new QuadWeapon((Player)this.Besitzer, this.ammo);
+			return new QuadWeapon((Player)this.Owner, this.ammo);
 			
 		case QUAD:
-			return new FiveWeapon((Player)this.Besitzer, this.ammo);
+			return new FiveWeapon((Player)this.Owner, this.ammo);
 			
 		case FIVE:
-			return new SixWeapon((Player)this.Besitzer, this.ammo);
+			return new SixWeapon((Player)this.Owner, this.ammo);
 			
 		case SIX:
-			return new MaxWeapon((Player)this.Besitzer, this.ammo);
+			return new MaxWeapon((Player)this.Owner, this.ammo);
 			
 		default:
 			return this;
@@ -62,22 +65,22 @@ public abstract class PlayerWeapon extends Weapon {
 			return this;
 			
 		case DUALS:
-			return new StandardWaffe((Player)this.Besitzer, this.ammo);
+			return new StandardWaffe((Player)this.Owner, this.ammo);
 			
 		case SHOTGUN:
-			return new DualsWeapon((Player)this.Besitzer, this.ammo);
+			return new DualsWeapon((Player)this.Owner, this.ammo);
 			
 		case QUAD:
-			return new Shotgun((Player)this.Besitzer, this.ammo);
+			return new Shotgun((Player)this.Owner, this.ammo);
 			
 		case FIVE:
-			return new QuadWeapon((Player)this.Besitzer, this.ammo);
+			return new QuadWeapon((Player)this.Owner, this.ammo);
 			
 		case SIX:
-			return new FiveWeapon((Player)this.Besitzer, this.ammo);
+			return new FiveWeapon((Player)this.Owner, this.ammo);
 			
 		case MAX:
-			return new SixWeapon((Player)this.Besitzer, this.ammo);
+			return new SixWeapon((Player)this.Owner, this.ammo);
 			
 		default:
 			return this;

@@ -1,5 +1,7 @@
-package me.game.pack;
+package me.game.weapons;
 
+import me.game.bullets.PlayerBullet;
+import me.game.pack.Player;
 
 public class DualsWeapon extends PlayerWeapon{
 

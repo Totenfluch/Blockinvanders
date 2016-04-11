@@ -1,4 +1,6 @@
-package me.game.pack;
+package me.game.weapons;
+
+import me.game.pack.Monster;
 
 public class MonsterStandardWaffe extends MonsterWeapon{
 	double bulletW = 5.0,

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javafx.scene.paint.Color;
 import me.game.pack.Drop.Drops;
+import me.game.weapons.Weapon;
 
 public class Monster extends Character{
 

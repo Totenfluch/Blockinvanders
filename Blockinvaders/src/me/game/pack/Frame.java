@@ -3,7 +3,12 @@ package me.game.pack;
 import java.util.Random;
 import java.util.Vector;
 
+import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
+import me.game.weapons.MonsterStandardWaffe;
+import me.game.weapons.MonsterWeapon;
+import me.game.weapons.PlayerWeapon;
+import me.game.weapons.StandardWaffe;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -193,7 +198,7 @@ public class Frame extends Application{
 					gc.setFill(Color.LIGHTGRAY);
 					StringBuffer swb = new StringBuffer();
 					//gc.fillText(""+Players.elementAt(0).waffe.getAmmo(), 50, 100);
-					swb.append(Players.elementAt(0).hisWeapon.typ.toString() + ": ");
+					swb.append(Players.elementAt(0).hisWeapon.getWeaponType().toString() + ": ");
 					for(int i = 0; i<Players.elementAt(0).hisWeapon.getAmmo(); i++)
 						swb.append("|");
 					gc.fillText(swb.toString(), 50, 100);
@@ -216,7 +221,7 @@ public class Frame extends Application{
 						gc.setFill(Color.LIGHTGRAY);
 						//gc.fillText(""+Players.elementAt(1).waffe.getAmmo(), 50, 875);
 						StringBuffer swb2 = new StringBuffer();
-						swb2.append(Players.elementAt(1).hisWeapon.typ.toString() + ": ");
+						swb2.append(Players.elementAt(1).hisWeapon.getWeaponType().toString() + ": ");
 						for(int i = 0; i<Players.elementAt(1).hisWeapon.getAmmo(); i++)
 							swb2.append("|");
 						gc.fillText(swb2.toString(), 50, 875);
@@ -236,16 +241,16 @@ public class Frame extends Application{
 
 
 				for(int i = 0; i<PlayerWeapon.ActiveWeapons.size(); i++){
-					for(int x = 0; x<PlayerWeapon.ActiveWeapons.elementAt(i).kugeln.size(); x++){
-						Bullet draw = PlayerWeapon.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
-						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
+					for(int x = 0; x<PlayerWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
+						Bullet draw = PlayerWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
+						gc.fillRect(draw.getxPos(), draw.getyPos(), draw.getWidth(), draw.getHeight());
 					}
 				}
 
 				for(int i = 0; i<MonsterWeapon.ActiveWeapons.size(); i++){
-					for(int x = 0; x<MonsterWeapon.ActiveWeapons.elementAt(i).kugeln.size(); x++){
-						Bullet draw = MonsterWeapon.ActiveWeapons.elementAt(i).kugeln.elementAt(x);
-						gc.fillRect(draw.xPos, draw.yPos, draw.width, draw.height);
+					for(int x = 0; x<MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
+						Bullet draw = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
+						gc.fillRect(draw.getxPos(), draw.getyPos(), draw.getWidth(), draw.getHeight());
 					}
 				}
 				
