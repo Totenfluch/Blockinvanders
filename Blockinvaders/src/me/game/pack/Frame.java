@@ -469,11 +469,7 @@ public class Frame extends Application{
 					Players.elementAt(1).hisWeapon.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
 			}
 		}
-
-		for(int x = 0;x<Players.size(); x++){
-			if(Players.elementAt(x).isAlive())
-				Players.elementAt(x).hisWeapon.refresh();
-		}	
+	
 
 		for(int i = 0; i<PlayerWeapon.ActiveWeapons.size(); i++){
 			PlayerWeapon.ActiveWeapons.elementAt(i).refresh();
