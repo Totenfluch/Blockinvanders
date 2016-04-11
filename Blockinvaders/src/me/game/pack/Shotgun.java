@@ -7,12 +7,12 @@ public class Shotgun  extends PlayerWeapon {
 	
 	public Shotgun(Player Besitzer) {
 		super(Besitzer, 25, 16, 5);
-		typ = WaffenTyp.SHOTGUN;
+		typ = WeaponType.SHOTGUN;
 	}
 	
 	public Shotgun(Player Besitzer, int ammo) {
 		super(Besitzer, 25, 16, 5);
-		typ = WaffenTyp.SHOTGUN;
+		typ = WeaponType.SHOTGUN;
 		this.ammo = ammo;
 	}
 

@@ -43,9 +43,9 @@ public class Monster extends Character{
 	}
 
 
-	public boolean setLeben(int Leben){
-		this.leben = Leben;
-		if(this.leben <= 0){
+	public boolean setLife(int Leben){
+		this.life = Leben;
+		if(this.life <= 0){
 			alive = false;
 			TriggerDeath();
 			return false;
@@ -56,8 +56,8 @@ public class Monster extends Character{
 	}
 
 	public boolean subLeben(int amount){
-		leben -= amount;
-		if(leben <= 0){
+		life -= amount;
+		if(life <= 0){
 			alive = false;
 			TriggerDeath();
 			return false;

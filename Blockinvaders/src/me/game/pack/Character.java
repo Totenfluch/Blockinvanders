@@ -3,10 +3,10 @@ package me.game.pack;
 import com.sun.javafx.geom.Rectangle;
 
 public abstract class Character {
-	protected int leben;
+	protected int life;
 	protected boolean alive = true;
 	
-	protected Weapon waffe;
+	protected Weapon hisWeapon;
 	
 	protected double xPos;
 	protected double yPos;
@@ -34,15 +34,15 @@ public abstract class Character {
 	public boolean isAlive(){
 		return alive;
 	}
-	public int getLeben(){
-		return leben;
+	public int getLife(){
+		return life;
 	}
 	
 	public Character(double xPos, double yPos,int leben, Weapon waffe){
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.leben = leben;
-		this.waffe = waffe;
+		this.life = leben;
+		this.hisWeapon = waffe;
 	}
 	
 	public abstract void moveLeft();
@@ -50,7 +50,7 @@ public abstract class Character {
 	public abstract void moveRight();
 	
 	
-	public abstract boolean setLeben(int leben);
+	public abstract boolean setLife(int leben);
 	
 
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
@@ -62,11 +62,11 @@ public abstract class Character {
 	}
 	
 	public void giveWeapon(Weapon waffe){
-		this.waffe = waffe;
+		this.hisWeapon = waffe;
 	}
 	
-	public Weapon getWaffe(){
-		return waffe;
+	public Weapon getHisWeapon(){
+		return hisWeapon;
 	}
 	
 }

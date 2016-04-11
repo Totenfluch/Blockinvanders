@@ -21,9 +21,9 @@ public class MonsterBullet extends Bullet {
 					p.removeLeben();
 					Monster m = (Monster) waffe.Besitzer;
 					m.setInitHp(m.getInitHp() + 300);
-					m.setLeben(m.getInitHp());
+					m.setLife(m.getInitHp());
 					m.setColor(Color.DARKMAGENTA);
-					p.giveWeapon(((PlayerWeapon) p.waffe).prevWaffe());
+					p.giveWeapon(((PlayerWeapon) p.hisWeapon).prevWaffe());
 				}
 			}
 		}

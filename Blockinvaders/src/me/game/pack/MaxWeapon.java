@@ -7,12 +7,12 @@ public class MaxWeapon extends PlayerWeapon{
 
 	public MaxWeapon(Player Besitzer, int damage, int delay, int bulletSpeed) {
 		super(Besitzer, 60, 25, 9);
-		typ = WaffenTyp.MAX;
+		typ = WeaponType.MAX;
 	}
 
 	public MaxWeapon(Player Besitzer, int ammo) {
 		super(Besitzer, 60, 25, 9);
-		typ = WaffenTyp.MAX;
+		typ = WeaponType.MAX;
 		this.ammo = ammo;
 	}
 

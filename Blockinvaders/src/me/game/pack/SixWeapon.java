@@ -7,12 +7,12 @@ public class SixWeapon extends PlayerWeapon{
 
 	public SixWeapon(Player Besitzer, int damage, int delay, int bulletSpeed) {
 		super(Besitzer, 45, 23, 8);
-		typ = WaffenTyp.SIX;
+		typ = WeaponType.SIX;
 	}
 
 	public SixWeapon(Player Besitzer, int ammo) {
 		super(Besitzer, 45, 23, 8);
-		typ = WaffenTyp.SIX;
+		typ = WeaponType.SIX;
 		this.ammo = ammo;
 	}
 

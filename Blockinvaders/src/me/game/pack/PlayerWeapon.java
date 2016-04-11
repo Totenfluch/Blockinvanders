@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public abstract class PlayerWeapon extends Weapon {
 	
-	protected enum WaffenTyp {STANDARD, DUALS, SHOTGUN, QUAD, FIVE, SIX, MAX };
+	protected enum WeaponType {STANDARD, DUALS, SHOTGUN, QUAD, FIVE, SIX, MAX };
 	
 	
 	public static Vector<PlayerWeapon> ActiveWeapons = new Vector<PlayerWeapon>();

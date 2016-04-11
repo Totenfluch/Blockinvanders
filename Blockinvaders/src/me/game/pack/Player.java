@@ -30,9 +30,9 @@ public class Player extends Character {
 	}
 	
 	
-	public boolean setLeben(int leben){
+	public boolean setLife(int leben){
 		if(alive && leben > 0) {
-			this.leben = leben;
+			this.life = leben;
 			return true;
 		}
 		else{
@@ -43,12 +43,12 @@ public class Player extends Character {
 	
 	public void addLeben(){
 		if(alive)
-			this.leben++;	
+			this.life++;	
 	}
 	
 	public void removeLeben(){
-		leben--;
-		if(leben <= 0)
+		life--;
+		if(life <= 0)
 			alive = false;
 	}
 		

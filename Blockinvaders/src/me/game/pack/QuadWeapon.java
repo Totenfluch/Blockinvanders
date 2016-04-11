@@ -8,12 +8,12 @@ public class QuadWeapon extends PlayerWeapon{
 
 	public QuadWeapon(Player Besitzer, int damage, int delay, int bulletSpeed) {
 		super(Besitzer, 30, 18, 6);
-		typ = WaffenTyp.QUAD;
+		typ = WeaponType.QUAD;
 	}
 
 	public QuadWeapon(Player Besitzer, int ammo) {
 		super(Besitzer, 30, 18, 6);
-		typ = WaffenTyp.QUAD;
+		typ = WeaponType.QUAD;
 		this.ammo = ammo;
 	}
 

@@ -157,8 +157,8 @@ public class Frame extends Application{
 					if(Monti.isAlive()){
 						gc.setFill(Monti.getColor());
 						gc.fillRect(Monti.getX(), Monti.getY(), Monti.getWidth(), Monti.getHeight());
-						if(Monti.getLeben() != Monti.getInitHp()){
-							double fragleben = (double)Monti.getLeben()/(double)Monti.getInitHp();
+						if(Monti.getLife() != Monti.getInitHp()){
+							double fragleben = (double)Monti.getLife()/(double)Monti.getInitHp();
 							if(fragleben > 0.75){
 								gc.setFill(Color.LIME);
 							}else if(fragleben > 0.50){
@@ -171,7 +171,7 @@ public class Frame extends Application{
 						
 						Random r = new Random();
 						if(r.nextInt(3200-clearcount*75) == 1){
-							Monti.getWaffe().shoot(Monti.getX(), Monti.getY());
+							Monti.getHisWeapon().shoot(Monti.getX(), Monti.getY());
 						}
 						alives++;
 					}
@@ -181,7 +181,7 @@ public class Frame extends Application{
 					for(int i = 0; i<Monsters.length; i++){
 						Monster Monti = Monsters[i];
 						Monti.setInitHp(Monster_HP+20*clearcount);
-						Monti.setLeben(Monster_HP+20*clearcount);
+						Monti.setLife(Monster_HP+20*clearcount);
 						Monti.setWorth(Monti.getWorth()+1);
 						Monti.setColor(Color.BROWN);
 					}
@@ -193,8 +193,8 @@ public class Frame extends Application{
 					gc.setFill(Color.LIGHTGRAY);
 					StringBuffer swb = new StringBuffer();
 					//gc.fillText(""+Players.elementAt(0).waffe.getAmmo(), 50, 100);
-					swb.append(Players.elementAt(0).waffe.typ.toString() + ": ");
-					for(int i = 0; i<Players.elementAt(0).waffe.getAmmo(); i++)
+					swb.append(Players.elementAt(0).hisWeapon.typ.toString() + ": ");
+					for(int i = 0; i<Players.elementAt(0).hisWeapon.getAmmo(); i++)
 						swb.append("|");
 					gc.fillText(swb.toString(), 50, 100);
 				}
@@ -203,7 +203,7 @@ public class Frame extends Application{
 				gc.fillText(""+Players.elementAt(0).getScore(), 50, 50);
 				gc.setFill(Color.RED);
 				StringBuffer sb = new StringBuffer();
-				for(int i = 0; i<Players.elementAt(0).getLeben(); i++)
+				for(int i = 0; i<Players.elementAt(0).getLife(); i++)
 					sb.append("+ ");
 				if(Players.elementAt(0).isAlive())
 					gc.fillText(sb.toString(), 45, 75);
@@ -216,8 +216,8 @@ public class Frame extends Application{
 						gc.setFill(Color.LIGHTGRAY);
 						//gc.fillText(""+Players.elementAt(1).waffe.getAmmo(), 50, 875);
 						StringBuffer swb2 = new StringBuffer();
-						swb2.append(Players.elementAt(1).waffe.typ.toString() + ": ");
-						for(int i = 0; i<Players.elementAt(1).waffe.getAmmo(); i++)
+						swb2.append(Players.elementAt(1).hisWeapon.typ.toString() + ": ");
+						for(int i = 0; i<Players.elementAt(1).hisWeapon.getAmmo(); i++)
 							swb2.append("|");
 						gc.fillText(swb2.toString(), 50, 875);
 					}
@@ -226,7 +226,7 @@ public class Frame extends Application{
 					gc.fillText(""+Players.elementAt(1).getScore(), 50, 825);
 					gc.setFill(Color.RED);
 					StringBuffer sb2 = new StringBuffer();
-					for(int i = 0; i<Players.elementAt(1).getLeben(); i++)
+					for(int i = 0; i<Players.elementAt(1).getLife(); i++)
 						sb2.append("+ ");
 					if(Players.elementAt(1).isAlive())
 						gc.fillText(sb2.toString(), 45, 850);
@@ -376,7 +376,7 @@ public class Frame extends Application{
 		}
 		if(P1_inShoot){
 			if(Players.elementAt(0).isAlive())
-				Players.elementAt(0).waffe.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
+				Players.elementAt(0).hisWeapon.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
 		}
 
 		if(Coop_enabled){
@@ -389,13 +389,13 @@ public class Frame extends Application{
 			}
 			if(P2_inShoot){
 				if(Players.elementAt(1).isAlive())
-					Players.elementAt(1).waffe.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
+					Players.elementAt(1).hisWeapon.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
 			}
 		}
 
 		for(int x = 0;x<Players.size(); x++){
 			if(Players.elementAt(x).isAlive())
-				Players.elementAt(x).waffe.refresh();
+				Players.elementAt(x).hisWeapon.refresh();
 		}	
 
 		for(int i = 0; i<PlayerWeapon.ActiveWeapons.size(); i++){
