@@ -187,7 +187,7 @@ public class Frame extends Application{
 		MainStage.show();
 
 
-		tf = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+		tf = new Timeline(new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
 				frames++;
@@ -329,7 +329,7 @@ public class Frame extends Application{
 			}
 		}));
 
-		rTf = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+		rTf = new Timeline(new KeyFrame(Duration.millis(8), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
 				long time = System.nanoTime();
 
