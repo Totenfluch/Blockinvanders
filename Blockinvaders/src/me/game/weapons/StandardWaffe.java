@@ -9,12 +9,12 @@ public class StandardWaffe extends PlayerWeapon {
 			bulletH = 5.0;
 	
 	public StandardWaffe(Player Besitzer) {
-		super(Besitzer, 10, 12, 4);
+		super(Besitzer, 10, 12, 5);
 		typ = WeaponType.STANDARD;
 	}
 
 	public StandardWaffe(Player Besitzer,int ammo) {
-		super(Besitzer, 10, 12, 4);
+		super(Besitzer, 10, 12, 5);
 		typ = WeaponType.STANDARD;
 		this.ammo = ammo;
 	}

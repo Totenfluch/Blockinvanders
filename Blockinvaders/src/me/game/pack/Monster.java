@@ -77,6 +77,7 @@ public class Monster extends Character{
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
+		Frame.Monsters.remove(this);
 	}
 
 	public void moveLeft(){

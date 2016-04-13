@@ -18,8 +18,8 @@ public class MonsterBullet extends Bullet {
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
 			waffe.getKugeln().remove(this);
 		
-		for (int x = 0; x < Frame.Players.size(); x++) {
-			Player p = Frame.Players.elementAt(x);
+		for (int x = 0; x < Frame.Players.length; x++) {
+			Player p = Frame.Players[x];
 			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight())) {
 				if (p.isAlive()) {
 					waffe.getKugeln().remove(this);

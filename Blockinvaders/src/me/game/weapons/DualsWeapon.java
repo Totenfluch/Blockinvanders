@@ -9,12 +9,12 @@ public class DualsWeapon extends PlayerWeapon{
 			bulletH = 3.0;
 
 	public DualsWeapon(Player Besitzer, int damage, int delay, int bulletSpeed) {
-		super(Besitzer, 25, 14, 4);
+		super(Besitzer, 25, 14, 5);
 		typ = WeaponType.DUALS;
 	}
 
 	public DualsWeapon(Player Besitzer, int ammo) {
-		super(Besitzer, 25, 14, 4);
+		super(Besitzer, 25, 14, 5);
 		typ = WeaponType.DUALS;
 		this.ammo = ammo;
 	}

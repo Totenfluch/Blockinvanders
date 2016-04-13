@@ -61,8 +61,8 @@ public class Drop {
 			return;
 		}
 		
-		for(int i = 0; i<Frame.Players.size(); i++){
-			Player Peter = Frame.Players.elementAt(i);
+		for(int i = 0; i<Frame.Players.length; i++){
+			Player Peter = Frame.Players[i];
 			if(!Peter.isAlive())
 				continue;
 			if(checkHit(Peter.getX(), Peter.getY(), Peter.getWidth(), Peter.getHeight())){

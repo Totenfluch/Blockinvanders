@@ -53,7 +53,7 @@ public class Frame extends Application{
 	public static Scene ConnectScene;
 	public static Scene GameScene;
 
-	public static Vector<Player> Players = new Vector<Player>();
+	public static Player[] Players;
 	public static boolean Coop_enabled = false;
 	public static boolean P1_inRight = false;
 	public static boolean P1_inLeft = false;
@@ -61,7 +61,7 @@ public class Frame extends Application{
 	public static boolean P2_inRight = false;
 	public static boolean P2_inLeft = false;
 	public static boolean P2_inShoot = false;
-	public static Monster[] Monsters = new Monster[64];
+	public static Vector<Monster> Monsters = new Vector<Monster>(64, 5);
 	public static int Monster_Direction = 0;
 	public static int Monster_HP = 60;
 	public static int clearcount = 0;
@@ -149,6 +149,7 @@ public class Frame extends Application{
 			public void handle(ActionEvent arg0) {
 				Player1Name = Username1.getText();
 				Player2Name = Username2.getText();
+				Players = new Player[2];
 				Coop_enabled = true;
 				switchSceneToGame();
 			}
@@ -162,6 +163,7 @@ public class Frame extends Application{
 			public void handle(ActionEvent event) {
 				Player1Name = Username1.getText();
 				Player2Name = Username2.getText();
+				Players = new Player[1];
 				Coop_enabled = false;
 				switchSceneToGame();
 			}
@@ -199,7 +201,7 @@ public class Frame extends Application{
 
 				// Players
 
-				for(int i = 0; i<Players.size(); i++){
+				for(int i = 0; i<Players.length; i++){
 					if(i == 0)
 						gc.setFill(Color.PURPLE);
 					else if(i == 1)
@@ -209,14 +211,13 @@ public class Frame extends Application{
 					else if(i == 3)
 						gc.setFill(Color.CRIMSON);
 
-					Player p = Players.elementAt(i);
+					Player p = Players[i];
 					if(p.isAlive())
 						gc.fillRect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
 				}
 
-				int alives = 0;
-				for(int i = 0; i<Monsters.length; i++){
-					Monster Monti = Monsters[i];
+				for(int i = 0; i<Monsters.size(); i++){
+					Monster Monti = Monsters.elementAt(i);
 					if(Monti.isAlive()){
 						gc.setFill(Monti.getColor());
 						gc.fillRect(Monti.getX(), Monti.getY(), Monti.getWidth(), Monti.getHeight());
@@ -229,64 +230,63 @@ public class Frame extends Application{
 							}else{
 								gc.setFill(Color.RED);
 							}
-							gc.fillRect(Monti.getX()+Monti.getWidth()/10, Monti.getY()+Monti.getHeight()/2.5, Monti.getWidth()*fragleben-Monti.getWidth()/10, Monti.getHeight()-Monti.getHeight()*0.8);
+							gc.fillRect(Monti.getX()+Monti.getWidth()/10, Monti.getY()+Monti.getHeight()/2.5, Monti.getWidth()*fragleben-Monti.getWidth()/5, Monti.getHeight()-Monti.getHeight()*0.8);
 						}
-						alives++;
 					}
 				}
-				if(alives == 0){
+				if(Monsters.size() == 0){
 					clearcount++;
-					for(int i = 0; i<Monsters.length; i++){
-						Monster Monti = Monsters[i];
+					MonsterWaves.SpawnWave(clearcount);
+					/*for(int i = 0; i<Monsters.size(); i++){
+						Monster Monti = Monsters.elementAt(i);
 						Monti.setInitHp(Monster_HP+20*clearcount);
 						Monti.setLife(Monster_HP+20*clearcount);
 						Monti.setWorth(Monti.getWorth()+1);
 						Monti.setColor(Color.BROWN);
-					}
+					}*/
 				}
 
-
 				gc.setFont(new Font("Impact", 20));
-				if(Players.elementAt(0).isAlive()){
+				if(Players[0].isAlive()){
 					gc.setFill(Color.LIGHTGRAY);
 					StringBuffer swb = new StringBuffer();
-					//gc.fillText(""+Players.elementAt(0).waffe.getAmmo(), 50, 100);
-					swb.append(Players.elementAt(0).hisWeapon.getWeaponType().toString() + ": ");
-					for(int i = 0; i<Players.elementAt(0).hisWeapon.getAmmo(); i++)
+					//gc.fillText(""+Players[0].waffe.getAmmo(), 50, 100);
+					swb.append(Players[0].hisWeapon.getWeaponType().toString() + ": ");
+					for(int i = 0; i<Players[0].hisWeapon.getAmmo(); i++)
 						swb.append("|");
 					gc.fillText(swb.toString(), 50, 100);
 				}
 				gc.setFont(new Font("Impact", 30));
 				gc.setFill(Color.BLUEVIOLET);
-				gc.fillText(Player1Name + "> " +Players.elementAt(0).getScore(), 50, 50);
+				gc.fillText(Player1Name + "> " +Players[0].getScore(), 50, 50);
 				gc.setFill(Color.RED);
 				StringBuffer sb = new StringBuffer();
-				for(int i = 0; i<Players.elementAt(0).getLife(); i++)
+				for(int i = 0; i<Players[0].getLife(); i++)
 					sb.append("+ ");
-				if(Players.elementAt(0).isAlive())
+				if(Players[0].isAlive())
 					gc.fillText(sb.toString(), 45, 75);
 				else
 					gc.fillText("DEAD", 45, 80);
 
-				if(Players.size() > 1){
+				if(Players.length > 1){
 					gc.setFont(new Font("Impact", 20));
-					if(Players.elementAt(1).isAlive()){
+					if(Players[1].isAlive()){
 						gc.setFill(Color.LIGHTGRAY);
-						//gc.fillText(""+Players.elementAt(1).waffe.getAmmo(), 50, 875);
+						//gc.fillText(""+Players[1].waffe.getAmmo(), 50, 875);
 						StringBuffer swb2 = new StringBuffer();
-						swb2.append(Players.elementAt(1).hisWeapon.getWeaponType().toString() + ": ");
-						for(int i = 0; i<Players.elementAt(1).hisWeapon.getAmmo(); i++)
+						swb2.append(Players[1].hisWeapon.getWeaponType().toString() + ": ");
+						for(int i = 0; i<Players[1].hisWeapon.getAmmo(); i++)
 							swb2.append("|");
 						gc.fillText(swb2.toString(), 50, 875);
 					}
 					gc.setFont(new Font("Impact", 30));
 					gc.setFill(Color.LIME);
-					gc.fillText(Player2Name + "> " + Players.elementAt(1).getScore(), 50, 825);
+					gc.fillText(Player2Name + "> " + Players[1].getScore(), 50, 825);
 					gc.setFill(Color.RED);
 					StringBuffer sb2 = new StringBuffer();
-					for(int i = 0; i<Players.elementAt(1).getLife(); i++)
+					for(int i = 0; i<Players[1].getLife(); i++)
 						sb2.append("+ ");
-					if(Players.elementAt(1).isAlive())
+					if(Players[1].isAlive())
 						gc.fillText(sb2.toString(), 45, 850);
 					else
 						gc.fillText("DEAD", 45, 855);
@@ -392,7 +392,7 @@ public class Frame extends Application{
 
 		int x = 0;
 		int ix = 0;
-		for(int i = 0; i<Monsters.length; i++){
+		for(int i = 0; i<64; i++){
 			ix++;
 			if(i%16 == 0){
 				x++;
@@ -404,14 +404,15 @@ public class Frame extends Application{
 
 			if(!Coop_enabled)
 				Monster_HP /= 2;
-			Monsters[i] = new Monster(null, Monster_HP, sub+600+ix*50, x*100+50, 30, 20, 1, Color.BROWN);
-			Monsters[i].giveWeapon(new MonsterStandardWaffe(Monsters[i]));
+			Monster tempi = new Monster(null, Monster_HP, sub+600+ix*50, x*100+50, 30, 20, 1, Color.BROWN);
+			Monsters.add(tempi);
+			tempi.giveWeapon(new MonsterStandardWaffe(tempi));
 		}
-		Players.add(P1);
+		Players[0] = P1;
 		if(Coop_enabled){
 			Player P2 = new Player(GAME_WIDTH/2+100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
-			Players.add(P2);
+			Players[1] = P2;
 		}
 		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
@@ -434,18 +435,18 @@ public class Frame extends Application{
 		}
 
 		if(Monster_Direction == 1){
-			for(int i = 0; i<Monsters.length; i++){
-				Monsters[i].moveRight();
+			for(int i = 0; i<Monsters.size(); i++){
+				Monsters.elementAt(i).moveRight();
 			}
 		}else if(Monster_Direction == 0){
-			for(int i = 0; i<Monsters.length; i++){
-				Monsters[i].moveLeft();
+			for(int i = 0; i<Monsters.size(); i++){
+				Monsters.elementAt(i).moveLeft();
 			}
 		}
 
-		for(int i = 0; i < Monsters.length; i++){
+		for(int i = 0; i < Monsters.size(); i++){
 
-			Monster m = Monsters[i];
+			Monster m = Monsters.elementAt(i);
 
 			if(m.isAlive()){
 
@@ -456,28 +457,28 @@ public class Frame extends Application{
 		}
 
 		if(P1_inLeft){
-			if(Players.elementAt(0).isAlive())
-				Players.elementAt(0).moveLeft();
+			if(Players[0].isAlive())
+				Players[0].moveLeft();
 		}else if(P1_inRight){
-			if(Players.elementAt(0).isAlive())
-				Players.elementAt(0).moveRight();
+			if(Players[0].isAlive())
+				Players[0].moveRight();
 		}
 		if(P1_inShoot){
-			if(Players.elementAt(0).isAlive())
-				Players.elementAt(0).hisWeapon.shoot(Players.elementAt(0).getX(), Players.elementAt(0).getY());
+			if(Players[0].isAlive())
+				Players[0].hisWeapon.shoot(Players[0].getX(), Players[0].getY());
 		}
 
 		if(Coop_enabled){
 			if(P2_inLeft){
-				if(Players.elementAt(1).isAlive())
-					Players.elementAt(1).moveLeft();
+				if(Players[1].isAlive())
+					Players[1].moveLeft();
 			}else if(P2_inRight){
-				if(Players.elementAt(1).isAlive())
-					Players.elementAt(1).moveRight();
+				if(Players[1].isAlive())
+					Players[1].moveRight();
 			}
 			if(P2_inShoot){
-				if(Players.elementAt(1).isAlive())
-					Players.elementAt(1).hisWeapon.shoot(Players.elementAt(1).getX(), Players.elementAt(1).getY());
+				if(Players[1].isAlive())
+					Players[1].hisWeapon.shoot(Players[1].getX(), Players[1].getY());
 			}
 		}
 	
@@ -496,10 +497,10 @@ public class Frame extends Application{
 		}
 
 		int dead = 0;
-		for(int i = 0; i<Players.size(); i++){
-			if(!Players.elementAt(i).isAlive())
+		for(int i = 0; i<Players.length; i++){
+			if(!Players[i].isAlive())
 				dead++;
-			if(dead == Players.size())
+			if(dead ==Players.length)
 				EndGame();
 		}
 
@@ -524,7 +525,7 @@ public class Frame extends Application{
 	public static void PublishScores(){
 		if(Coop_enabled){
 			try {
-				String request = "http://totenfluch.de/putScores.php?Username1="+ Player1Name +"&Username2="+ Player2Name +"&Score1="+ Players.elementAt(0).getScore()  +"&Score2="+ Players.elementAt(1).getScore()+"";
+				String request = "http://totenfluch.de/putScores.php?Username1="+ Player1Name +"&Username2="+ Player2Name +"&Score1="+ Players[0].getScore()  +"&Score2="+ Players[1].getScore()+"";
 				URL oracle = new URL(request);
 		        URLConnection yc = oracle.openConnection();
 		        BufferedReader in = new BufferedReader(new InputStreamReader(
