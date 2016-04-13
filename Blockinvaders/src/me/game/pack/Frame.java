@@ -34,7 +34,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
-import me.game.weapons.MonsterStandardWaffe;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.PlayerWeapon;
 import me.game.weapons.StandardWaffe;
@@ -389,25 +388,9 @@ public class Frame extends Application{
 	public static void switchSceneToGame(){
 		Player P1 = new Player(GAME_WIDTH/2-100, 10, null);
 		P1.giveWeapon(new StandardWaffe(P1));
-
-		int x = 0;
-		int ix = 0;
-		for(int i = 0; i<64; i++){
-			ix++;
-			if(i%16 == 0){
-				x++;
-				ix = 0;
-			}
-			int sub = 0;
-			if(x%2 == 0)
-				sub = 50;
-
-			if(!Coop_enabled)
-				Monster_HP /= 2;
-			Monster tempi = new Monster(null, Monster_HP, sub+600+ix*50, x*100+50, 30, 20, 1, Color.BROWN);
-			Monsters.add(tempi);
-			tempi.giveWeapon(new MonsterStandardWaffe(tempi));
-		}
+		
+		MonsterWaves.SpawnWave(0);
+		
 		Players[0] = P1;
 		if(Coop_enabled){
 			Player P2 = new Player(GAME_WIDTH/2+100, 10, null);
