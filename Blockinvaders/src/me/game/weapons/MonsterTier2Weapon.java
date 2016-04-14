@@ -5,10 +5,10 @@ import java.util.Random;
 import me.game.bullets.MonsterBullet;
 import me.game.pack.Monster;
 
-public class Tier2MonsterWeapon extends MonsterWeapon{
+public class MonsterTier2Weapon extends MonsterWeapon{
 	double bulletW = 5.0,
 			bulletH = 5.0;
-	public Tier2MonsterWeapon(Monster Besitzer) {
+	public MonsterTier2Weapon(Monster Besitzer) {
 		super(Besitzer, 2, 12, 4);
 	}
 

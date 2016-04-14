@@ -1,8 +1,9 @@
 package me.game.pack;
 
 import javafx.scene.paint.Color;
+import me.game.weapons.MonsterBossWeapon;
 import me.game.weapons.MonsterStandardWaffe;
-import me.game.weapons.Tier2MonsterWeapon;
+import me.game.weapons.MonsterTier2Weapon;
 
 public class MonsterWaves {
 	public static void SpawnWave(int which){
@@ -46,7 +47,7 @@ public class MonsterWaves {
 				//	Frame.Monster_HP /= 2;
 				Monster tempi = new Monster(null, 80+which*20, 600+ip*250, p*100+50, 200, 40, 3*which, Color.DARKSLATEGRAY);
 				Frame.Monsters.add(tempi);
-				tempi.giveWeapon(new Tier2MonsterWeapon(tempi));
+				tempi.giveWeapon(new MonsterTier2Weapon(tempi));
 			}
 			break;
 		}
@@ -97,7 +98,7 @@ public class MonsterWaves {
 		case 4:{
 				Monster tempi = new Monster(null, 2500+which*200, 700, 150, 700, 300, 3*which, Color.HOTPINK);
 				Frame.Monsters.add(tempi);
-				tempi.giveWeapon(new Tier2MonsterWeapon(tempi));
+				tempi.giveWeapon(new MonsterBossWeapon(tempi));
 			break;
 		}
 		
