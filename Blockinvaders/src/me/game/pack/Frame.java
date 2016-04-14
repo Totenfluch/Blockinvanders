@@ -36,6 +36,7 @@ import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.PlayerWeapon;
+import me.game.weapons.RocketLauncher;
 import me.game.weapons.StandardWaffe;
 
 public class Frame extends Application{
@@ -188,9 +189,7 @@ public class Frame extends Application{
 		MainStage.show();
 
 
-		tf = new Timeline(new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
+		tf = new Timeline(new KeyFrame(Duration.millis(5), ae ->{
 				frames++;
 				long time = System.nanoTime();
 
@@ -310,17 +309,17 @@ public class Frame extends Application{
 
 				frameTime += System.nanoTime() -time;
 			}
-		}));
+		));
 
-		rTf = new Timeline(new KeyFrame(Duration.millis(8), new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent arg0) {
+		rTf = new Timeline(new KeyFrame(Duration.millis(8), ae -> {
+			
 				long time = System.nanoTime();
 
 				Refresh();
 
 				refreshTime += System.nanoTime() - time;
 			}
-		}));
+		));
 
 		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -369,7 +368,7 @@ public class Frame extends Application{
 
 	public static void switchSceneToGame(){
 		Player P1 = new Player(GAME_WIDTH/2-100, 10, null);
-		P1.giveWeapon(new StandardWaffe(P1));
+		P1.giveWeapon(new RocketLauncher(P1));
 
 		MonsterWaves.SpawnWave(0);
 

@@ -11,6 +11,8 @@ public abstract class TimedBullet extends Bullet{
 
 	@Override
 	public void refresh() {
+		xPos += dx;
+		yPos -= dy;
 		lifetimeticks--;
 		if(lifetimeticks <= 0)
 			Trigger();	
