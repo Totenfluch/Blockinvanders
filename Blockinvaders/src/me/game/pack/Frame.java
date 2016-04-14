@@ -36,7 +36,6 @@ import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.PlayerWeapon;
-import me.game.weapons.RocketLauncher;
 import me.game.weapons.StandardWaffe;
 
 public class Frame extends Application{
@@ -368,7 +367,7 @@ public class Frame extends Application{
 
 	public static void switchSceneToGame(){
 		Player P1 = new Player(GAME_WIDTH/2-100, 10, null);
-		P1.giveWeapon(new RocketLauncher(P1));
+		P1.giveWeapon(new StandardWaffe(P1));
 
 		MonsterWaves.SpawnWave(0);
 
