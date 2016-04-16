@@ -33,6 +33,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.game.bullets.Bullet;
+import me.game.networking.Client;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.PlayerWeapon;
@@ -54,6 +55,7 @@ public class Frame extends Application{
 
 	public static Player[] Players;
 	public static boolean Coop_enabled = false;
+	public static boolean Online_Coop = false;
 	public static boolean P1_inRight = false;
 	public static boolean P1_inLeft = false;
 	public static boolean P1_inShoot = false;
@@ -128,17 +130,22 @@ public class Frame extends Application{
 		connect_MiddlePart.getChildren().add(Host);
 
 
-		Button Confirm = new Button("Connect");
+		Button Confirm = new Button("Online Coop");
 		connect_MiddlePart.getChildren().add(Confirm);
 		connect_MiddlePart.setAlignment(Pos.TOP_CENTER);
 		Confirm.setAlignment(Pos.BOTTOM_CENTER);
 		Confirm.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Online_Coop = true;
+				Player1Name = Username1.getText();
+				Player2Name = Username2.getText();
+				Players = new Player[2];
+				String[] c_data = Host.getText().split(":");
+				Client.ConnectToServer(c_data[0], Integer.valueOf(c_data[1]));
 				switchSceneToGame();
 			}
 		});
-		Confirm.setDisable(true);
 
 		Button Coop = new Button("Local Co-op");
 		connect_MiddlePart.getChildren().add(Coop);
@@ -372,7 +379,7 @@ public class Frame extends Application{
 		MonsterWaves.SpawnWave(0);
 
 		Players[0] = P1;
-		if(Coop_enabled){
+		if(Coop_enabled || Online_Coop){
 			Player P2 = new Player(GAME_WIDTH/2+100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
