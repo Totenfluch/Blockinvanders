@@ -20,12 +20,17 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -126,27 +131,6 @@ public class Frame extends Application{
 		Usernames.getChildren().add(Username2);
 		Usernames.setAlignment(Pos.BOTTOM_CENTER);
 
-		TextField Host = new TextField("Host:Port");
-		connect_MiddlePart.getChildren().add(Host);
-
-
-		Button Confirm = new Button("Online Coop");
-		connect_MiddlePart.getChildren().add(Confirm);
-		connect_MiddlePart.setAlignment(Pos.TOP_CENTER);
-		Confirm.setAlignment(Pos.BOTTOM_CENTER);
-		Confirm.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Online_Coop = true;
-				Player1Name = Username1.getText();
-				Player2Name = Username2.getText();
-				Players = new Player[2];
-				String[] c_data = Host.getText().split(":");
-				Client.ConnectToServer(c_data[0], Integer.valueOf(c_data[1]));
-				switchSceneToGame();
-			}
-		});
-
 		Button Coop = new Button("Local Co-op");
 		connect_MiddlePart.getChildren().add(Coop);
 		Coop.setAlignment(Pos.BOTTOM_CENTER);
@@ -174,7 +158,68 @@ public class Frame extends Application{
 				switchSceneToGame();
 			}
 		});
-
+		
+		VBox LobbyVBox = new VBox();
+		LobbyVBox.setPrefHeight(500);
+		LobbyVBox.setPrefWidth(400);
+		//connect_Bp.setRight(LobbyVBox);
+		
+		ListView<String> lobbylist = new ListView<String>();
+		LobbyVBox.getChildren().add(lobbylist);
+		
+		HBox LobbyControls = new HBox();
+		LobbyVBox.getChildren().add(LobbyControls);
+		
+		TextField LobbyName = new TextField();
+		LobbyName.setTooltip(new Tooltip("Lobby Name"));
+		LobbyName.setPromptText("Lobby Name");
+		LobbyControls.getChildren().add(LobbyName);
+		LobbyName.setPrefWidth(300);
+		
+		Button CreateLobby = new Button("Create");
+		CreateLobby.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// Send lobby create command to Server
+			}
+		});
+		CreateLobby.setPrefWidth(LobbyVBox.getPrefWidth()-160);
+		
+		LobbyControls.getChildren().add(CreateLobby);
+		LobbyControls.setSpacing(5);
+		
+		Button JoinLobby = new Button("Join");
+		JoinLobby.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// Send Lobby join Command to Server
+			}
+		});
+		JoinLobby.setPrefWidth(LobbyVBox.getPrefWidth()-100);
+		
+		LobbyVBox.getChildren().add(JoinLobby);
+		
+		LobbyVBox.setPadding(new Insets(50, 50, 50, 50));
+		LobbyVBox.setSpacing(10);
+		LobbyVBox.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, LobbyVBox.getInsets())));
+		
+		TextField OnlineUsername = new TextField();
+		OnlineUsername.setPromptText("Online Username");
+		LobbyVBox.getChildren().add(OnlineUsername);
+		OnlineUsername.setPrefWidth(350);
+		
+		Button Confirm = new Button("Online Coop");
+		connect_MiddlePart.getChildren().add(Confirm);
+		connect_MiddlePart.setAlignment(Pos.TOP_CENTER);
+		Confirm.setAlignment(Pos.BOTTOM_CENTER);
+		Confirm.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				connect_Bp.setRight(LobbyVBox);
+				Client.ConnectToServer("totenfluch.de", 1521);
+			}
+		});
+		
 
 		ConnectScene = new Scene(connect_Bp, GAME_WIDTH, GAME_LENGTH);
 		MainStage.setScene(ConnectScene);
