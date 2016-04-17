@@ -10,6 +10,7 @@ public class GetServerMessages{
 
 
 	public static void CheckServerMessages(String message){
+		System.out.println(message);
 		if(message.startsWith("lobbys")){
 			message = message.replaceFirst("lobbys ", "");
 			String[] lobbylist = message.split(" ");
@@ -21,6 +22,7 @@ public class GetServerMessages{
 				@Override
 				public void run() {
 					ObservableList<String> names = FXCollections.observableArrayList(lobbylist);
+					Frame.Lobbys.getItems().clear();
 					Frame.Lobbys.getItems().addAll(names);
 				}
 			});

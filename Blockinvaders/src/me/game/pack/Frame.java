@@ -218,7 +218,8 @@ public class Frame extends Application{
 		
 		CurrentLobby = new Text("Your Lobby: none");
 		LobbyVBox.getChildren().add(CurrentLobby);
-		
+		CurrentLobby.setFont(new Font(20));
+		CurrentLobby.setFill(Color.WHITE);
 		
 		Button Confirm = new Button("Online Coop");
 		connect_MiddlePart.getChildren().add(Confirm);
