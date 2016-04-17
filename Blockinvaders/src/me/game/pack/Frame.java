@@ -35,6 +35,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.game.bullets.Bullet;
@@ -79,7 +80,8 @@ public class Frame extends Application{
 	public static int movetick = 0;
 
 	public static ListView<String> Lobbys;
-
+	public static Text CurrentLobby;
+	
 	public static long frameTime;
 	public static long refreshTime;
 	public static int frames;
@@ -181,7 +183,9 @@ public class Frame extends Application{
 		CreateLobby.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// Send lobby create command to Server
+				if(LobbyName.getText().length() > 4 && LobbyName.getText().length() < 16){
+					Client.processMessage("createLobby " + LobbyName.getText().replace(" ", ""));
+				}
 			}
 		});
 		CreateLobby.setPrefWidth(LobbyVBox.getPrefWidth()-160);
@@ -193,7 +197,10 @@ public class Frame extends Application{
 		JoinLobby.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// Send Lobby join Command to Server
+				if(Lobbys.getSelectionModel().getSelectedItem().length() > 0){
+					String[] selectedLobbypart = Lobbys.getSelectionModel().getSelectedItem().split(" ");
+					Client.processMessage("joinLobby " + selectedLobbypart[1]);
+				}
 			}
 		});
 		JoinLobby.setPrefWidth(LobbyVBox.getPrefWidth()-100);
@@ -209,6 +216,10 @@ public class Frame extends Application{
 		LobbyVBox.getChildren().add(OnlineUsername);
 		OnlineUsername.setPrefWidth(350);
 		
+		CurrentLobby = new Text("Your Lobby: none");
+		LobbyVBox.getChildren().add(CurrentLobby);
+		
+		
 		Button Confirm = new Button("Online Coop");
 		connect_MiddlePart.getChildren().add(Confirm);
 		connect_MiddlePart.setAlignment(Pos.TOP_CENTER);
@@ -220,6 +231,8 @@ public class Frame extends Application{
 				Client.ConnectToServer("totenfluch.de", 1521);
 			}
 		});
+		
+
 		
 
 		ConnectScene = new Scene(connect_Bp, GAME_WIDTH, GAME_LENGTH);
