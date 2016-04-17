@@ -78,6 +78,7 @@ public class Frame extends Application{
 	public static int Tick = 0;
 	public static int movetick = 0;
 
+	public static ListView<String> Lobbys;
 
 	public static long frameTime;
 	public static long refreshTime;
@@ -164,8 +165,8 @@ public class Frame extends Application{
 		LobbyVBox.setPrefWidth(400);
 		//connect_Bp.setRight(LobbyVBox);
 		
-		ListView<String> lobbylist = new ListView<String>();
-		LobbyVBox.getChildren().add(lobbylist);
+		Lobbys = new ListView<String>();
+		LobbyVBox.getChildren().add(Lobbys);
 		
 		HBox LobbyControls = new HBox();
 		LobbyVBox.getChildren().add(LobbyControls);
