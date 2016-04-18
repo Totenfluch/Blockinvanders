@@ -34,7 +34,7 @@ public class GetServerMessages{
 					Frame.CurrentLobby.setText("Your Lobby: " + split[1]);
 				}
 			});
-		}else if(message.startsWith("startGame")){
+		}else if(message.startsWith("StartGame")){
 			Frame.switchSceneToGame();
 		}else if(message.startsWith("playerPos")){
 			String[] splinter = message.split(" ");
