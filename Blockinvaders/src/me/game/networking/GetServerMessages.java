@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import me.game.pack.Frame;
+import me.game.pack.Player;
 
 public class GetServerMessages{
 	public static String newestreply = null;
@@ -34,8 +35,16 @@ public class GetServerMessages{
 					Frame.CurrentLobby.setText("Your Lobby: " + split[1]);
 				}
 			});
-		}else if(message.startsWith("StartGame")){
-			Frame.switchSceneToGame();
+		}else if(message.equals("StartGame")){
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Frame.Online_Coop = true;
+					Frame.Player1Name = "PH";
+					Frame.Players = new Player[2];
+					Frame.switchSceneToGame();
+				}
+			});
 		}else if(message.startsWith("playerPos")){
 			String[] splinter = message.split(" ");
 			double xPos = Double.parseDouble(splinter[1]);
