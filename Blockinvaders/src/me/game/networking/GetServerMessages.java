@@ -34,6 +34,14 @@ public class GetServerMessages{
 					Frame.CurrentLobby.setText("Your Lobby: " + split[1]);
 				}
 			});
+		}else if(message.startsWith("startGame")){
+			Frame.switchSceneToGame();
+		}else if(message.startsWith("playerPos")){
+			String[] splinter = message.split(" ");
+			double xPos = Double.parseDouble(splinter[1]);
+			double yPos = Double.parseDouble(splinter[2]);
+			Frame.Players[1].setX(xPos);
+			Frame.Players[1].setY(yPos);
 		}
 	}
 }

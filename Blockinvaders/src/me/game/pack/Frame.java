@@ -382,6 +382,8 @@ public class Frame extends Application{
 				long time = System.nanoTime();
 
 				Refresh();
+				if(Online_Coop)
+					SyncOnline();
 
 				refreshTime += System.nanoTime() - time;
 			}
@@ -525,6 +527,10 @@ public class Frame extends Application{
 				EndGame();
 		}
 
+	}
+	
+	public void SyncOnline(){
+		Client.processMessage("playerpos " + Players[0].getX() + " " + Players[0].getY());
 	}
 
 	public static void EndGame(){

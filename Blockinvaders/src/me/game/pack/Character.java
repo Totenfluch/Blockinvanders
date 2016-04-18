@@ -25,6 +25,14 @@ public abstract class Character {
 		return yPos;
 	}
 	
+	public void setX(double xPos){
+		this.xPos = xPos;
+	}
+	
+	public void setY(double yPos){
+		this.yPos = yPos;
+	}
+	
 	public double getWidth(){
 		return width;
 	}
