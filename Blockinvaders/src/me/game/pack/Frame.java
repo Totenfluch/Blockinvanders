@@ -10,7 +10,6 @@ import java.util.Vector;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -508,10 +507,6 @@ public class Frame extends Application {
 					Players[1].hisWeapon.shoot(Players[1].getX(), Players[1].getY());
 			}
 		}
-		
-		if(Online_Coop){
-			Client.processMessage("playerPos "+Players[0].getX()+" "+Players[0].getY());
-		}
 
 		for (int i = 0; i < PlayerWeapon.ActiveWeapons.size(); i++)
 			PlayerWeapon.ActiveWeapons.elementAt(i).refresh();
@@ -538,7 +533,7 @@ public class Frame extends Application {
 	}
 
 	public void SyncOnline() {
-		Client.processMessage("playerpos " + Players[0].getX() + " " + Players[0].getY());
+		Client.processMessage("playerPos " + Players[0].getX() + " " + Players[0].getY());
 	}
 
 	public static void EndGame() {
