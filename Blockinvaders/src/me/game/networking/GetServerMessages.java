@@ -11,13 +11,16 @@ public class GetServerMessages{
 
 
 	public static void CheckServerMessages(String message){
-		System.out.println(message);
+		//System.out.println(message);
 		if(message.startsWith("lobbys")){
 			message = message.replaceFirst("lobbys ", "");
 			String[] lobbylist = message.split(" ");
+			if(message.equals("lobbys"))
+				return;
 			for(int i = 0; i<lobbylist.length; i++){
 				String[] temsp = lobbylist[i].split(",");
-				lobbylist[i] = "Lobby: " + temsp[0] + " ("+temsp[1]+")";
+				if(temsp.length > 1)
+					lobbylist[i] = "Lobby: " + temsp[0] + " ("+temsp[1]+")";
 			}
 			Platform.runLater(new Runnable() {
 				@Override

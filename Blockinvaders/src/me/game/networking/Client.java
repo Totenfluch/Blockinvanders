@@ -18,7 +18,6 @@ public class Client implements Runnable
 	public DataInputStream din;
 
 	public Client( String host, int port) {
-
 		try {
 			socket = new Socket( host, port );
 			din = new DataInputStream( socket.getInputStream() );
@@ -35,13 +34,13 @@ public class Client implements Runnable
 
 
 	public static void processMessage(String message) {
-			try {
-				connection.dout.writeUTF(message);
-			} catch( Exception ie ){
-				ie.printStackTrace();
-				System.out.println( ie ); 
-			}
-		
+		try {
+			connection.dout.writeUTF(message);
+		} catch( Exception ie ){
+			ie.printStackTrace();
+			System.out.println( ie ); 
+		}
+
 	}
 
 	public void run() {
@@ -56,6 +55,7 @@ public class Client implements Runnable
 						waitingforreply = false;
 					}catch(Exception e){
 						IsConnectedToServer = false;
+						e.printStackTrace();
 					}
 				}
 			}
@@ -78,7 +78,7 @@ public class Client implements Runnable
 			}
 		}
 	}
-	
+
 	public static void DisconnectFromServer(){
 		try {
 			connection.din.close();
