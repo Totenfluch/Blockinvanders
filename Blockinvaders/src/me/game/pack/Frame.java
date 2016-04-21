@@ -60,8 +60,12 @@ public class Frame extends Application {
 	public static Scene GameScene;
 
 	public static Player[] Players;
+	
 	public static boolean Coop_enabled = false;
 	public static boolean Online_Coop = false;
+	public static boolean Bot_enabled = false;
+	public static BotKI bot;
+	
 	public static boolean P1_inRight = false;
 	public static boolean P1_inLeft = false;
 	public static boolean P1_inShoot = false;
@@ -160,6 +164,15 @@ public class Frame extends Application {
 				Coop_enabled = false;
 				switchSceneToGame();
 			}
+		});
+		
+		Button WatchKi = new Button("Watch KI Play");
+		connect_MiddlePart.getChildren().add(WatchKi);
+		WatchKi.setOnAction( ae -> {
+			Bot_enabled = true;
+			Player1Name = "Bot";
+			Players = new Player[1];
+			switchSceneToGame();
 		});
 
 		VBox LobbyVBox = new VBox();
@@ -378,6 +391,8 @@ public class Frame extends Application {
 			Refresh();
 			if (Online_Coop)
 				SyncOnline();
+			if(Bot_enabled)
+				bot.Refresh();
 
 			refreshTime += System.nanoTime() - time;
 		}));
@@ -442,6 +457,8 @@ public class Frame extends Application {
 		MonsterWaves.SpawnWave(0);
 
 		Players[0] = P1;
+		if(Bot_enabled)
+			bot = new BotKI(Players[0]);
 		if (Coop_enabled || Online_Coop) {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
