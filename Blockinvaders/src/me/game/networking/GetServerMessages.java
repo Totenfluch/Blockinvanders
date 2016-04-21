@@ -54,6 +54,11 @@ public class GetServerMessages{
 			double yPos = Double.parseDouble(splinter[2]);
 			Frame.Players[1].setX(xPos);
 			Frame.Players[1].setY(yPos);
+		}else if(message.startsWith("shoot")){
+			String[] splinter = message.split(" ");
+			double xPos = Double.parseDouble(splinter[1]);
+			double yPos = Double.parseDouble(splinter[2]);
+			Frame.Players[1].getHisWeapon().shoot(xPos, yPos);
 		}
 	}
 }

@@ -21,6 +21,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -65,6 +66,7 @@ public class Frame extends Application {
 	public static boolean Online_Coop = false;
 	public static boolean Bot_enabled = false;
 	public static BotKI bot;
+	public static TextArea DebugConsole;
 	
 	public static boolean P1_inRight = false;
 	public static boolean P1_inLeft = false;
@@ -198,6 +200,9 @@ public class Frame extends Application {
 			public void handle(ActionEvent event) {
 				if (LobbyName.getText().length() > 4 && LobbyName.getText().length() < 16) {
 					Client.processMessage("createLobby " + LobbyName.getText().replace(" ", ""));
+					DebugConsole.appendText("Attempting to create Lobby " + LobbyName.getText().replace(" ", "") + "\n");
+				}else{
+					DebugConsole.appendText("Invalid Lobby Name length\n");
 				}
 			}
 		});
@@ -213,6 +218,7 @@ public class Frame extends Application {
 				if (Lobbys.getSelectionModel().getSelectedItem() != null) {
 					String[] selectedLobbypart = Lobbys.getSelectionModel().getSelectedItem().split(" ");
 					Client.processMessage("joinLobby " + selectedLobbypart[1]);
+					DebugConsole.appendText("Attempting to join " + selectedLobbypart[1] + "\n");
 				}
 			}
 		});
@@ -244,8 +250,19 @@ public class Frame extends Application {
 			public void handle(ActionEvent event) {
 				connect_Bp.setRight(LobbyVBox);
 				Client.ConnectToServer("127.0.0.1", 1521);  //for testing purposes. old value: "totenfluch.de"
+				DebugConsole.appendText("Connected to Server\n");
 			}
 		});
+		DebugConsole = new TextArea();
+		//DebugConsole.setDisable(true); -- disable user input
+		DebugConsole.textProperty().addListener(new ChangeListener<Object>() {
+		    @Override
+		    public void changed(ObservableValue<?> observable, Object oldValue,
+		            Object newValue) {
+		    	DebugConsole.setScrollTop(Double.MAX_VALUE);
+		    }
+		});
+		LobbyVBox.getChildren().add(DebugConsole);
 
 		ConnectScene = new Scene(connect_Bp, GAME_WIDTH, GAME_LENGTH);
 		MainStage.setScene(ConnectScene);
@@ -507,8 +524,11 @@ public class Frame extends Application {
 				Players[0].moveRight();
 		}
 		if (P1_inShoot) {
-			if (Players[0].isAlive())
+			if (Players[0].isAlive()){
 				Players[0].hisWeapon.shoot(Players[0].getX(), Players[0].getY());
+				if(Online_Coop)
+					Client.processMessage("shoot " + Players[0].getX() + " " + Players[0].getY());
+			}
 		}
 
 		if (Coop_enabled) {
