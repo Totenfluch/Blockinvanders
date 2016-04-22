@@ -15,7 +15,7 @@ public abstract class Weapon {
 	protected Character Owner;
 	protected WeaponType typ;
 	
-	Vector<Bullet> kugeln = new Vector<Bullet>(450, 30);
+	Vector<Bullet> kugeln = new Vector<Bullet>(10000, 500);
 
 
 	public Weapon(Character Besitzer, int damage,int delay, int bulletSpeed){

@@ -328,6 +328,9 @@ public class Frame extends Application {
 				swb.append(Players[0].hisWeapon.getWeaponType().toString() + ": ");
 				for (int i = 0; i < Players[0].hisWeapon.getAmmo(); i++)
 					swb.append("|");
+				swb.append("   ");
+				for (int x = 0; x < Players[0].getHisSpecialWeapon().getAmmo(); x++)
+					swb.append("<|> ");
 				gc.fillText(swb.toString(), 50, 100);
 			}
 			gc.setFont(new Font("Impact", 30));
@@ -351,6 +354,9 @@ public class Frame extends Application {
 					swb2.append(Players[1].hisWeapon.getWeaponType().toString() + ": ");
 					for (int i = 0; i < Players[1].hisWeapon.getAmmo(); i++)
 						swb2.append("|");
+					swb2.append("   ");
+					for (int x = 0; x < Players[1].getHisSpecialWeapon().getAmmo(); x++)
+						swb2.append("<|> ");
 					gc.fillText(swb2.toString(), 50, 875);
 				}
 				gc.setFont(new Font("Impact", 30));
@@ -425,7 +431,12 @@ public class Frame extends Application {
 				if (event.getCode() == KeyCode.W) {
 					P1_inShoot = true;
 				}
-
+				if (event.getCode() == KeyCode.CONTROL) {
+					if(Players[0].getHisSpecialWeapon() != null)
+						Players[0].getHisSpecialWeapon().shoot(Players[0].getX(), Players[0].getY());
+				}
+				
+				
 				if (event.getCode() == KeyCode.LEFT) {
 					P2_inLeft = true;
 				} else if (event.getCode() == KeyCode.RIGHT) {
@@ -433,6 +444,10 @@ public class Frame extends Application {
 				}
 				if (event.getCode() == KeyCode.UP) {
 					P2_inShoot = true;
+				}
+				if (event.getCode() == KeyCode.ALT_GRAPH && Coop_enabled) {
+					if(Players[1].getHisSpecialWeapon() != null)
+						Players[1].getHisSpecialWeapon().shoot(Players[1].getX(), Players[1].getY());
 				}
 
 			}
@@ -486,6 +501,7 @@ public class Frame extends Application {
 		tf.play();
 		rTf.play();
 
+		//Players[0].giveSpecialWeapon(new RocketLauncher(Players[0])); -- testing
 		MainStage.setScene(GameScene);
 	}
 

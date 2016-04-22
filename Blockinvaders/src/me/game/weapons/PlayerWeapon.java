@@ -7,7 +7,7 @@ import me.game.pack.Player;
 
 public abstract class PlayerWeapon extends Weapon {
 	
-	public enum WeaponType {STANDARD, DUALS, SHOTGUN, QUAD, FIVE, SIX, MAX, ROCKET };
+	public enum WeaponType {STANDARD, DUALS, SHOTGUN, QUAD, FIVE, SIX, MAX };
 	
 	
 	public static Vector<PlayerWeapon> ActiveWeapons = new Vector<PlayerWeapon>();
@@ -53,8 +53,6 @@ public abstract class PlayerWeapon extends Weapon {
 			
 		case SIX:
 			return new MaxWeapon((Player)this.Owner, this.ammo);
-		case MAX:
-			return new RocketLauncher((Player)this.Owner, this.ammo);
 			
 		default:
 			return this;
@@ -83,9 +81,6 @@ public abstract class PlayerWeapon extends Weapon {
 			
 		case MAX:
 			return new SixWeapon((Player)this.Owner, this.ammo);
-		
-		case ROCKET:
-			return new MaxWeapon((Player)this.Owner, this.ammo);
 			
 		default:
 			return this;

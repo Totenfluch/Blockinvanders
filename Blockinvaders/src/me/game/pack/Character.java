@@ -2,6 +2,7 @@ package me.game.pack;
 
 import com.sun.javafx.geom.Rectangle;
 
+import me.game.weapons.SpecialWeapon;
 import me.game.weapons.Weapon;
 
 public abstract class Character {
@@ -9,6 +10,7 @@ public abstract class Character {
 	protected boolean alive = true;
 	
 	public Weapon hisWeapon;
+	public SpecialWeapon hisSpecialWeapon;
 	
 	protected double xPos;
 	protected double yPos;
@@ -77,6 +79,14 @@ public abstract class Character {
 	
 	public Weapon getHisWeapon(){
 		return hisWeapon;
+	}
+	
+	public void giveSpecialWeapon(SpecialWeapon waffe){
+		this.hisSpecialWeapon = waffe;
+	}
+	
+	public SpecialWeapon getHisSpecialWeapon(){
+		return hisSpecialWeapon;
 	}
 	
 }

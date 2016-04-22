@@ -5,6 +5,8 @@ import java.util.Vector;
 
 import javafx.scene.shape.Rectangle;
 import me.game.weapons.PlayerWeapon;
+import me.game.weapons.PlayerWeapon.WeaponType;
+import me.game.weapons.RocketLauncher;
 
 public class Drop {
 	protected double xPos, yPos;
@@ -43,7 +45,13 @@ public class Drop {
 			break;
 			
 		case NEXTWEAPON:
-			p.giveWeapon(((PlayerWeapon) p.hisWeapon).nextWaffe());
+			if(p.getHisWeapon().getWeaponType() == WeaponType.MAX)
+				if(p.getHisSpecialWeapon() != null)
+					p.giveSpecialWeapon(new RocketLauncher(p, p.getHisSpecialWeapon().getAmmo()+3));
+				else
+					p.giveSpecialWeapon(new RocketLauncher(p, 3));
+			else
+				p.giveWeapon(((PlayerWeapon) p.hisWeapon).nextWaffe());
 			break;
 		case ADDSCORE:
 			p.incScore(1+r.nextInt(20));
