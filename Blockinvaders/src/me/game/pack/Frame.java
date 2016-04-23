@@ -79,6 +79,7 @@ public class Frame extends Application {
 	public static int Monster_Direction = 0;
 	public static int Monster_HP = 60;
 	public static int clearcount = 0;
+	public static int shootChance = 3000;
 
 	public static String Player1Name;
 	public static String Player2Name;
@@ -529,7 +530,7 @@ public class Frame extends Application {
 
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
-				if (new Random().nextInt(3200 - clearcount * 75) == 1)
+				if (new Random().nextInt(shootChance) == 0)
 					Monsters.elementAt(i).getHisWeapon().shoot(Monsters.elementAt(i).getX(),
 							Monsters.elementAt(i).getY());
 
@@ -574,6 +575,7 @@ public class Frame extends Application {
 
 		if (Monsters.size() == 0) {
 			clearcount++;
+			shootChance = (int)(10.0 + 2990*Math.pow(Math.E, -0.07 *(clearcount+1)));
 			MonsterWaves.SpawnWave(clearcount);
 		}
 
@@ -601,8 +603,8 @@ public class Frame extends Application {
 		gc.setFill(Color.RED);
 		gc.fillText("Game Over", 500, GAME_LENGTH / 2 + 200);
 
-		System.out.println("Frametime: " + frameTime / frames);
-		System.out.println("Refreshtime: " + refreshTime / Tick);
+		System.out.println("Frametime (ns): " + frameTime / frames);
+		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
 		PublishScores();
 	}
 
