@@ -44,6 +44,7 @@ import me.game.networking.Client;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.PlayerWeapon;
+import me.game.weapons.RocketLauncher;
 import me.game.weapons.StandardWaffe;
 
 public class Frame extends Application {
@@ -495,13 +496,14 @@ public class Frame extends Application {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
+			Players[1].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		}
 		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
 		rTf.play();
 
-		//Players[0].giveSpecialWeapon(new RocketLauncher(Players[0])); -- testing
+		Players[0].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		MainStage.setScene(GameScene);
 	}
 
