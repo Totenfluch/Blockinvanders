@@ -22,6 +22,14 @@ public class Drop {
 		ADDSCORE;
 		}
 	
+	public double getxPos() {
+		return xPos;
+	}
+
+	public double getyPos() {
+		return yPos;
+	}
+
 	public Drop(double xPos, double yPos, Drops drop){
 		this.xPos = xPos;
 		this.yPos = yPos;
