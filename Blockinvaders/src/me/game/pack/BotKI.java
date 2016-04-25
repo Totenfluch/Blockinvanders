@@ -10,7 +10,7 @@ import me.game.weapons.MonsterWeapon;
 public class BotKI {
 	private Player bot;
 	private boolean inRight = true;
-	
+
 	private Bullet escapeThis = null;
 	public BotKI(Player p){
 		this.bot = p;
@@ -25,15 +25,22 @@ public class BotKI {
 					break;
 			}
 		}
-		
-		bot.getHisWeapon().shoot(bot.getX(), bot.getY());
+
 		if(!checkForBullets() && !escapeLock ){
 			if(!findWeaponUpgrade()){
 				moveToClosestEnemy();
+				bot.getHisWeapon().shoot(bot.getX(), bot.getY());
+			}else{
+				if(bot.getHisWeapon().getAmmo() == 0)
+					bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 			}
+		}else{
+			bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 		}
+
 		if(Frame.Monsters.size() > 10 && bot.getHisSpecialWeapon().getAmmo() > 0)
-			bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
+			if(bot.getX() > 600 && bot.getX() < 1000)
+				bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
 	}
 
 	public boolean checkForBullets(){
@@ -45,18 +52,25 @@ public class BotKI {
 		Frame.gc.rect(bot.getX()-20, bot.getY()-200, bot.getWidth()+20, 400);
 		Frame.gc.stroke();
 		Frame.gc.closePath();*/
-		
+
 		boolean dogeing = false;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
-					if(bot.getX() - bul.getxPos() < 20 && bot.getX() - bul.getxPos() > -bot.getWidth()-20){
+					if(bul.checkHit(bot.getX()-25, bot.getY()-200, bot.getWidth()+25, 400)){
+						//if(bot.getX() - bul.getxPos() < 20 && bot.getX() - bul.getxPos() > -bot.getWidth()-20){
 						escapeThis = bul;
 						if(bot.getX() < Frame.GAME_WIDTH/4)
 							inRight = true;
 						if(bot.getX() > Frame.GAME_WIDTH/4*3)
 							inRight = false;
+						
+						/*if(bul.checkHit(bot.getX()-25, bot.getY()-50, bot.getWidth()*2+10, 150))
+							inRight = false;
+						else if(bul.checkHit(bot.getX()-bot.getWidth()*2-10, bot.getY()-50, bot.getX()+bot.getWidth()*2+10, 150))
+							inRight = true;*/
+						
 						if(inRight)
 							bot.moveRight();
 						else
@@ -64,7 +78,7 @@ public class BotKI {
 						dogeing = true;
 						for(Monster p: Frame.Monsters)
 							p.setColor(Color.GREENYELLOW);
-						
+
 
 					}
 				}
@@ -72,8 +86,16 @@ public class BotKI {
 		}
 		return dogeing;
 	}
-	
+
 	public void moveToClosestEnemy(){
+		// Stupid ?
+		/*for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
+			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
+				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
+				if(bul.getyPos() < 200)
+					return;
+			}
+		}*/
 		double closest = 2000;
 		double wheretogo = 0;
 		Iterator<Monster> it = Frame.Monsters.iterator();
@@ -97,22 +119,44 @@ public class BotKI {
 		}else{
 			wheretogo-=timevalue;
 		}
-		
+
 		if(bot.getX() > wheretogo)
 			bot.moveLeft();
 		else
 			bot.moveRight();
 	}
-	
+
 	public boolean findWeaponUpgrade(){
 		Drop p = null;
 		for(int i = 0; i<Drop.AllDrops.size(); i++){
-			if(Drop.AllDrops.elementAt(i).getDroptype() == Drops.NEXTWEAPON)
+			if(Drop.AllDrops.elementAt(i).getDroptype() == Drops.NEXTWEAPON){
 				p = Drop.AllDrops.elementAt(i);
+				break;
+			}
+		}
+		if(p == null){
+			int closest=5000;
+			Drop closestDrop = null;
+			for(int i = 0; i<Drop.AllDrops.size(); i++){
+				Drop n = Drop.AllDrops.elementAt(i);
+				int dist = (int)bot.getX()-(int)n.getxPos();
+				if(i==0){
+					closest = dist;
+					closestDrop = n;
+				}else
+					if(dist < closest){
+						closestDrop = n;
+						closest = dist;
+					}
+			}
+			if(closest < 200 && bot.getY()-closestDrop.getyPos() < 400)
+				p = closestDrop;
 		}
 		if(p == null)
 			return false;
 		else if(p.getyPos() >= bot.getY())
+			return false;
+		else if(bot.getY()-p.getyPos() > 500)
 			return false;
 		double wheretogo = p.xPos;
 		if(bot.getX() > wheretogo)

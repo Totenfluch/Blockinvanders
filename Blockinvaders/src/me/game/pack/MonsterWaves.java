@@ -26,7 +26,7 @@ public class MonsterWaves {
 
 				//if(!Frame.Coop_enabled)
 				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 10+which*5, sub+600+ix*50, x*100+50, 30, 20, 1+which, Color.BROWN);
+				Monster tempi = new Monster(null, 10+which*5, sub+600+ix*50, x*100+50, 30, 20, 1+which, Color.BROWN, 0.25, 20);
 				Frame.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
 			}
@@ -45,7 +45,7 @@ public class MonsterWaves {
 				
 				//if(!Frame.Coop_enabled)
 				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 80+which*20, 600+ip*250, p*100+50, 200, 40, 3*which, Color.DARKSLATEGRAY);
+				Monster tempi = new Monster(null, 80+which*20, 600+ip*250, p*100+50, 200, 40, 3*which, Color.DARKSLATEGRAY, 1, 4);
 				Frame.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterTier2Weapon(tempi));
 			}
@@ -64,7 +64,7 @@ public class MonsterWaves {
 
 				//if(!Frame.Coop_enabled)
 				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 30+which*10, 800+ix*70, x*100+50, 50, 20, 1+2*which, Color.CORAL);
+				Monster tempi = new Monster(null, 30+which*10, 800+ix*70, x*100+50, 50, 20, 1+2*which, Color.CORAL, 0.5, 8);
 				Frame.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
 			}
@@ -88,7 +88,7 @@ public class MonsterWaves {
 
 				//if(!Frame.Coop_enabled)
 				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 5+which*3, 530+ix*30+sub, x*100+50, 20, 40, 1+which, Color.CRIMSON);
+				Monster tempi = new Monster(null, 5+which*3, 530+ix*30+sub, x*100+50, 20, 40, 1+which, Color.CRIMSON, 0.125, 32);
 				Frame.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
 			}
@@ -96,7 +96,7 @@ public class MonsterWaves {
 		}
 		
 		case 4:{
-				Monster tempi = new Monster(null, 2500+which*200, 700, 150, 700, 300, 3*which, Color.HOTPINK);
+				Monster tempi = new Monster(null, 2500+which*200, 700, 150, 700, 300, 3*which, Color.HOTPINK, 2.0, 1);
 				Frame.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterBossWeapon(tempi));
 			break;

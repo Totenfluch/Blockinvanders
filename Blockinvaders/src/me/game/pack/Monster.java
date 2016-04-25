@@ -12,8 +12,10 @@ public class Monster extends Character{
 
 	private int InitialHp;
 	private Color color;
+	private double shootRate;
+	private int dropRate;
 
-	public Monster(Weapon waffe, int Leben, double x, double y, double width, double length, int worth, Color color){
+	public Monster(Weapon waffe, int Leben, double x, double y, double width, double length, int worth, Color color, double shootRate, int dropRate){
 		super(x, y, Leben, waffe);
 		this.width = width;
 		this.heigth = length;
@@ -21,6 +23,16 @@ public class Monster extends Character{
 		alive = true;
 		InitialHp = Leben;
 		this.color = color;
+		this.shootRate = shootRate;
+		this.dropRate = dropRate;
+	}
+	
+	public double getShootRate(){
+		return shootRate;
+	}
+	
+	public int getDropRate(){
+		return dropRate;
 	}
 	
 	public void setColor(Color c){
@@ -72,7 +84,7 @@ public class Monster extends Character{
 	public void TriggerDeath(){
 		Random r = new Random();
 		Drops[] theDrops = Drops.values();
-		if(r.nextInt(10) == 1){
+		if(r.nextInt(dropRate) == 1){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));

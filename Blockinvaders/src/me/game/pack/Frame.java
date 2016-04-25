@@ -409,7 +409,7 @@ public class Frame extends Application {
 			frameTime += System.nanoTime() - time;
 		}));
 
-		rTf = new Timeline(new KeyFrame(Duration.millis(8), ae -> {
+		rTf = new Timeline(new KeyFrame(Duration.millis(2), ae -> {
 
 			long time = System.nanoTime();
 
@@ -530,7 +530,7 @@ public class Frame extends Application {
 
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
-				if (new Random().nextInt(shootChance) == 0)
+				if (new Random().nextInt((int)(shootChance*(1/Monsters.elementAt(i).getShootRate()))) == 0)
 					Monsters.elementAt(i).getHisWeapon().shoot(Monsters.elementAt(i).getX(),
 							Monsters.elementAt(i).getY());
 
