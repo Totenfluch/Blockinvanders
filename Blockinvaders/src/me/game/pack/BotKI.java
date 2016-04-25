@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import javafx.scene.paint.Color;
 import me.game.bullets.Bullet;
+import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 
 public class BotKI {
@@ -61,6 +62,7 @@ public class BotKI {
 		double closest = 2000;
 		double wheretogo = 0;
 		Iterator<Monster> it = Frame.Monsters.iterator();
+		Monster monti2 = null;
 		while(it.hasNext()){
 			Monster monti = it.next();
 			if(Math.abs(monti.getX()-bot.getX()) < closest){
@@ -69,15 +71,33 @@ public class BotKI {
 				for(Monster i: Frame.Monsters)
 					i.setColor(Color.BROWN);
 				monti.setColor(Color.BLUE);
-
-				double timevalue = (bot.getY()-monti.getY())/bot.getHisWeapon().getBulletSpeed();
-				if(Frame.Monster_Direction == 1){
-					wheretogo+=timevalue;
-				}else{
-					wheretogo-=timevalue;
-				}
+				monti2 = monti;
 			}
 		}
+		if(monti2 == null)
+			return;
+		double timevalue = (bot.getY()-monti2.getY())/bot.getHisWeapon().getBulletSpeed();
+		if(Frame.Monster_Direction == 1){
+			wheretogo+=timevalue;
+		}else{
+			wheretogo-=timevalue;
+		}
+		
+		if(bot.getX() > wheretogo)
+			bot.moveLeft();
+		else
+			bot.moveRight();
+	}
+	
+	public void findWeaponUpgrade(){
+		Drop p = null;
+		for(int i = 0; i<Drop.AllDrops.size(); i++){
+			if(Drop.AllDrops.elementAt(i).getDroptype() == Drops.NEXTWEAPON)
+				p = Drop.AllDrops.elementAt(i);
+		}
+		if(p == null)
+			return;
+		double wheretogo = p.xPos;
 		if(bot.getX() > wheretogo)
 			bot.moveLeft();
 		else
