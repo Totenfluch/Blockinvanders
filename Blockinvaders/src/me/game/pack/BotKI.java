@@ -10,6 +10,7 @@ import me.game.weapons.MonsterWeapon;
 public class BotKI {
 	private Player bot;
 	private boolean inRight = true;
+	public static final boolean Bot_debug = false;
 
 	private Bullet escapeThis = null;
 	public BotKI(Player p){
@@ -65,19 +66,20 @@ public class BotKI {
 							inRight = true;
 						if(bot.getX() > Frame.GAME_WIDTH/4*3)
 							inRight = false;
-						
+
 						/*if(bul.checkHit(bot.getX()-25, bot.getY()-50, bot.getWidth()*2+10, 150))
 							inRight = false;
 						else if(bul.checkHit(bot.getX()-bot.getWidth()*2-10, bot.getY()-50, bot.getX()+bot.getWidth()*2+10, 150))
 							inRight = true;*/
-						
+
 						if(inRight)
 							bot.moveRight();
 						else
 							bot.moveLeft();
 						dogeing = true;
-						for(Monster p: Frame.Monsters)
-							p.setColor(Color.GREENYELLOW);
+						if(Bot_debug)
+							for(Monster p: Frame.Monsters)
+								p.setColor(Color.GREENYELLOW);
 
 
 					}
@@ -105,9 +107,11 @@ public class BotKI {
 			if(Math.abs(monti.getX()-bot.getX()) < closest){
 				closest = Math.abs(monti.getX()-bot.getX());
 				wheretogo = monti.getX();
-				for(Monster i: Frame.Monsters)
-					i.setColor(Color.BROWN);
-				monti.setColor(Color.BLUE);
+				if(Bot_debug)
+					for(Monster i: Frame.Monsters)
+						i.setColor(Color.BROWN);
+				if(Bot_debug)
+					monti.setColor(Color.BLUE);
 				monti2 = monti;
 			}
 		}
@@ -163,8 +167,9 @@ public class BotKI {
 			bot.moveLeft();
 		else
 			bot.moveRight();
-		for(Monster ppp: Frame.Monsters)
-			ppp.setColor(Color.YELLOW);
+		if(Bot_debug)
+			for(Monster ppp: Frame.Monsters)
+				ppp.setColor(Color.YELLOW);
 		return true;
 	}
 }

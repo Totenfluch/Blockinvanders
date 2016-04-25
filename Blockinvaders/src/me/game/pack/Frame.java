@@ -66,6 +66,7 @@ public class Frame extends Application {
 	public static boolean Coop_enabled = false;
 	public static boolean Online_Coop = false;
 	public static boolean Bot_enabled = false;
+	public static boolean Play_with_bot_enabled = false;
 	public static BotKI bot;
 	public static TextArea DebugConsole;
 	
@@ -176,6 +177,15 @@ public class Frame extends Application {
 			Bot_enabled = true;
 			Player1Name = "Bot";
 			Players = new Player[1];
+			switchSceneToGame();
+		});
+		
+		Button PlayWithKi = new Button("Play with KI (You have no friends)");
+		connect_MiddlePart.getChildren().add(PlayWithKi);
+		PlayWithKi.setOnAction(ae ->{
+			Play_with_bot_enabled = true;
+			Player2Name = "Bot";
+			Players = new Player[2];
 			switchSceneToGame();
 		});
 
@@ -416,7 +426,7 @@ public class Frame extends Application {
 			Refresh();
 			if (Online_Coop)
 				SyncOnline();
-			if(Bot_enabled)
+			if(Bot_enabled || Play_with_bot_enabled)
 				bot.Refresh();
 
 			refreshTime += System.nanoTime() - time;
@@ -487,24 +497,33 @@ public class Frame extends Application {
 	public static void switchSceneToGame() {
 		Player P1 = new Player(GAME_WIDTH / 2 - 100, 10, null);
 		P1.giveWeapon(new StandardWaffe(P1));
-
-		MonsterWaves.SpawnWave(0);
-
+		P1.giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		Players[0] = P1;
+		
 		if(Bot_enabled)
 			bot = new BotKI(Players[0]);
+		if(Play_with_bot_enabled){
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+			P2.giveWeapon(new StandardWaffe(P2));
+			Players[1] = P2;
+			Players[1].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
+			bot = new BotKI(Players[1]);
+		}
 		if (Coop_enabled || Online_Coop) {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		}
+		
+		MonsterWaves.SpawnWave(0);
+		
 		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
 		rTf.play();
 
-		Players[0].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
+		
 		MainStage.setScene(GameScene);
 	}
 
