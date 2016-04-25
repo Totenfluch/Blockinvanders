@@ -409,7 +409,7 @@ public class Frame extends Application {
 			frameTime += System.nanoTime() - time;
 		}));
 
-		rTf = new Timeline(new KeyFrame(Duration.millis(8), ae -> {
+		rTf = new Timeline(new KeyFrame(Duration.millis(2), ae -> {
 
 			long time = System.nanoTime();
 

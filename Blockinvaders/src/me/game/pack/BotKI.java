@@ -26,19 +26,32 @@ public class BotKI {
 			}
 		}
 		
+		bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 		if(!checkForBullets() && !escapeLock ){
-			moveToClosestEnemy();
-			bot.getHisWeapon().shoot(bot.getX(), bot.getY());
+			if(!findWeaponUpgrade()){
+				moveToClosestEnemy();
+			}
 		}
+		if(Frame.Monsters.size() > 10 && bot.getHisSpecialWeapon().getAmmo() > 0)
+			bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
 	}
 
 	public boolean checkForBullets(){
+		// CDT boxes
+		/*Frame.gc.beginPath();
+		Frame.gc.setLineWidth(2.0);
+		Frame.gc.setStroke(Color.RED);
+		Frame.gc.setFill(Color.RED);
+		Frame.gc.rect(bot.getX()-20, bot.getY()-200, bot.getWidth()+20, 400);
+		Frame.gc.stroke();
+		Frame.gc.closePath();*/
+		
 		boolean dogeing = false;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
-					if(bot.getX() - bul.getxPos() < 5 && bot.getX() - bul.getxPos() > -bot.getWidth()-5){
+					if(bot.getX() - bul.getxPos() < 20 && bot.getX() - bul.getxPos() > -bot.getWidth()-20){
 						escapeThis = bul;
 						if(bot.getX() < Frame.GAME_WIDTH/4)
 							inRight = true;
@@ -51,6 +64,8 @@ public class BotKI {
 						dogeing = true;
 						for(Monster p: Frame.Monsters)
 							p.setColor(Color.GREENYELLOW);
+						
+
 					}
 				}
 			}
@@ -89,18 +104,23 @@ public class BotKI {
 			bot.moveRight();
 	}
 	
-	public void findWeaponUpgrade(){
+	public boolean findWeaponUpgrade(){
 		Drop p = null;
 		for(int i = 0; i<Drop.AllDrops.size(); i++){
 			if(Drop.AllDrops.elementAt(i).getDroptype() == Drops.NEXTWEAPON)
 				p = Drop.AllDrops.elementAt(i);
 		}
 		if(p == null)
-			return;
+			return false;
+		else if(p.getyPos() >= bot.getY())
+			return false;
 		double wheretogo = p.xPos;
 		if(bot.getX() > wheretogo)
 			bot.moveLeft();
 		else
 			bot.moveRight();
+		for(Monster ppp: Frame.Monsters)
+			ppp.setColor(Color.YELLOW);
+		return true;
 	}
 }
