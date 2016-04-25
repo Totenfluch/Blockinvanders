@@ -447,7 +447,7 @@ public class Frame extends Application {
 				if (event.getCode() == KeyCode.UP) {
 					P2_inShoot = true;
 				}
-				if (event.getCode() == KeyCode.ALT_GRAPH && Coop_enabled) {
+				if (event.getCode() == KeyCode.NUMPAD0 && Coop_enabled) {
 					if(Players[1].getHisSpecialWeapon() != null)
 						Players[1].getHisSpecialWeapon().shoot(Players[1].getX(), Players[1].getY());
 				}

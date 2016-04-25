@@ -88,6 +88,14 @@ public class Drop {
 		}
 	}
 	
+	public double getX(){
+		return xPos;
+	}
+	
+	public double getY(){
+		return yPos;
+	}
+	
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
 		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
 		Rectangle rt2 = new Rectangle((int)xPos, (int)yPos, DropSizeX, DropSizeY);
