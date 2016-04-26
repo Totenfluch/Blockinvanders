@@ -606,7 +606,7 @@ public class Frame extends Application {
 			for (int i = 0; i < Monsters.size(); i++)
 				Monsters.elementAt(i).moveLeft();
 		}
-
+		
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
 				if (new Random().nextInt((int)(shootChance*(1/Monsters.elementAt(i).getShootRate()))) == 0)
@@ -680,7 +680,9 @@ public class Frame extends Application {
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 		gc.setFill(Color.RED);
-		gc.fillText("Game Over", 500, GAME_LENGTH / 2 + 200);
+		gc.fillText("Game Over", 450, GAME_LENGTH / 2 + 150);
+		gc.setFont(new Font("Futura", 30));
+		gc.fillText("You survived "+clearcount+" Rounds", 650, GAME_LENGTH / 2 + 200);
 
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
