@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -67,7 +68,8 @@ public class Frame extends Application {
 	public static boolean Online_Coop = false;
 	public static boolean Bot_enabled = false;
 	public static boolean Play_with_bot_enabled = false;
-	public static BotKI bot;
+	public static int botID = 0;
+	public static Bot1 bot;
 	public static TextArea DebugConsole;
 
 	public static boolean P1_inRight = false;
@@ -170,11 +172,23 @@ public class Frame extends Application {
 				switchSceneToGame();
 			}
 		});
+		
+		ChoiceBox<String> botType = new ChoiceBox<String>();
+		botType.getItems().addAll("Bot 1", "Bot 2");
+		botType.setValue("Bot 1");
+		connect_MiddlePart.getChildren().add(botType);
+		
+		botType.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+			if(newValue.equals("Bot 2"))
+				botID = 1;
+			else
+				botID = 0;
+		});
 
 		Button WatchKi = new Button("Watch KI Play");
 		connect_MiddlePart.getChildren().add(WatchKi);
 		WatchKi.setOnAction( ae -> {
-			BotKI.Bot_debug = true;
+			Bot1.Bot_debug = true;
 			Bot_enabled = true;
 			Player1Name = "Bot";
 			Players = new Player[1];
@@ -506,13 +520,13 @@ public class Frame extends Application {
 		Players[0] = P1;
 
 		if(Bot_enabled)
-			bot = new BotKI(Players[0]);
+			bot = new Bot1(Players[0]);
 		if(Play_with_bot_enabled){
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
-			bot = new BotKI(Players[1]);
+			bot = new Bot1(Players[1]);
 		}
 		if (Coop_enabled || Online_Coop) {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);

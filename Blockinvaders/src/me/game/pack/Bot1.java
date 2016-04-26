@@ -7,13 +7,13 @@ import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 
-public class BotKI {
+public class Bot1 {
 	private Player bot;
 	private boolean inRight = true;
 	public static boolean Bot_debug = false;
 
 	private Bullet escapeThis = null;
-	public BotKI(Player p){
+	public Bot1(Player p){
 		this.bot = p;
 	}
 
