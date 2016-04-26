@@ -174,6 +174,7 @@ public class Frame extends Application {
 		Button WatchKi = new Button("Watch KI Play");
 		connect_MiddlePart.getChildren().add(WatchKi);
 		WatchKi.setOnAction( ae -> {
+			BotKI.Bot_debug = true;
 			Bot_enabled = true;
 			Player1Name = "Bot";
 			Players = new Player[1];

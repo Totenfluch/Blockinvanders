@@ -10,7 +10,7 @@ import me.game.weapons.MonsterWeapon;
 public class BotKI {
 	private Player bot;
 	private boolean inRight = true;
-	public static final boolean Bot_debug = false;
+	public static boolean Bot_debug = false;
 
 	private Bullet escapeThis = null;
 	public BotKI(Player p){
@@ -98,14 +98,15 @@ public class BotKI {
 					return;
 			}
 		}*/
-		double closest = 2000;
+		double closest = 5000;
 		double wheretogo = 0;
 		Iterator<Monster> it = Frame.Monsters.iterator();
 		Monster monti2 = null;
 		while(it.hasNext()){
 			Monster monti = it.next();
-			if(Math.abs(monti.getX()-bot.getX()) < closest){
-				closest = Math.abs(monti.getX()-bot.getX());
+			double distanceToMonti = Math.abs(monti.getX()-bot.getX());
+			if( distanceToMonti < closest){
+				closest = distanceToMonti;
 				wheretogo = monti.getX();
 				if(Bot_debug)
 					for(Monster i: Frame.Monsters)
