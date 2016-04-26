@@ -3,7 +3,7 @@ package me.game.pack;
 import me.game.bullets.Bullet;
 import me.game.weapons.MonsterWeapon;
 
-public class Bot2 {
+public class Bot2 implements BotKI {
 
 	private Player player;
 	private double destX = 800;

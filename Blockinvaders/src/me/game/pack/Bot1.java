@@ -7,7 +7,7 @@ import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 
-public class Bot1 {
+public class Bot1 implements BotKI{
 	private Player bot;
 	private boolean inRight = true;
 	public static boolean Bot_debug = false;
@@ -17,7 +17,7 @@ public class Bot1 {
 		this.bot = p;
 	}
 
-	public void Refresh(){
+	public void refresh(){
 		if(!bot.isAlive())
 			return;
 		boolean escapeLock = false;

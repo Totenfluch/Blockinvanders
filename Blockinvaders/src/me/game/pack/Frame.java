@@ -69,7 +69,7 @@ public class Frame extends Application {
 	public static boolean Bot_enabled = false;
 	public static boolean Play_with_bot_enabled = false;
 	public static int botID = 0;
-	public static Bot1 bot;
+	public static BotKI bot;
 	public static TextArea DebugConsole;
 
 	public static boolean P1_inRight = false;
@@ -190,7 +190,10 @@ public class Frame extends Application {
 		WatchKi.setOnAction( ae -> {
 			Bot1.Bot_debug = true;
 			Bot_enabled = true;
-			Player1Name = "Bot";
+			if(botID == 0)
+				Player1Name = "Bot 1";
+			else
+				Player1Name = "Bot 2";
 			Players = new Player[1];
 			switchSceneToGame();
 		});
@@ -199,7 +202,10 @@ public class Frame extends Application {
 		connect_MiddlePart.getChildren().add(PlayWithKi);
 		PlayWithKi.setOnAction(ae ->{
 			Play_with_bot_enabled = true;
-			Player2Name = "Bot";
+			if(botID == 0)
+				Player2Name = "Bot 1";
+			else
+				Player2Name = "Bot 2";
 			Player1Name = Username1.getText();
 			Players = new Player[2];
 			switchSceneToGame();
@@ -445,7 +451,7 @@ public class Frame extends Application {
 			if (Online_Coop)
 				SyncOnline();
 			if(Bot_enabled || Play_with_bot_enabled)
-				bot.Refresh();
+				bot.refresh();
 
 			refreshTime += System.nanoTime() - time;
 		}));
@@ -520,13 +526,20 @@ public class Frame extends Application {
 		Players[0] = P1;
 
 		if(Bot_enabled)
-			bot = new Bot1(Players[0]);
+			if(botID == 0)
+				bot = new Bot1(Players[0]);
+			else if(botID == 1)
+				bot = new Bot2(Players[0]);
 		if(Play_with_bot_enabled){
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
-			bot = new Bot1(Players[1]);
+			
+			if(botID == 0)
+				bot = new Bot1(Players[1]);
+			else if(botID == 1)
+				bot = new Bot2(Players[1]);
 		}
 		if (Coop_enabled || Online_Coop) {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
