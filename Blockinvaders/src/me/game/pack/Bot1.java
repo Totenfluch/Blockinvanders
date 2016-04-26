@@ -8,6 +8,10 @@ import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 
 public class Bot1 implements BotKI{
+	/*
+		Bot to FIGHT FOR HONOR
+		By Totenfluch~
+	*/
 	private Player bot;
 	private boolean inRight = true;
 	public static boolean Bot_debug = false;
@@ -61,7 +65,7 @@ public class Bot1 implements BotKI{
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
-					if(bul.checkHit(bot.getX()-25, bot.getY()-200, bot.getWidth()+25, 400)){
+					if(bul.checkHit(bot.getX()-15, bot.getY()-bot.getHeight(), bot.getWidth()+15, bot.heigth)){
 						//if(bot.getX() - bul.getxPos() < 20 && bot.getX() - bul.getxPos() > -bot.getWidth()-20){
 						escapeThis = bul;
 						if(bot.getX() < Frame.GAME_WIDTH/4)
@@ -92,7 +96,7 @@ public class Bot1 implements BotKI{
 	}
 
 	public void moveToClosestEnemy(){
-		// Stupid ?
+		// Stupid ? -- yes stupid confirmed
 		/*for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);

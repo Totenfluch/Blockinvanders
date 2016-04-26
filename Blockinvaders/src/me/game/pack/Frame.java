@@ -73,6 +73,7 @@ public class Frame extends Application {
 	public static BotKI bot;
 	public static BotKI bot2;
 	public static TextArea DebugConsole;
+	public static int GameSpeed = 8;
 
 	public static boolean P1_inRight = false;
 	public static boolean P1_inLeft = false;
@@ -175,39 +176,50 @@ public class Frame extends Application {
 			}
 		});
 		
+		VBox VBotBox = new VBox();
+		VBotBox.setAlignment(Pos.BASELINE_CENTER);
+		VBotBox.setSpacing(10);
+		HBox BotBox = new HBox();
+		
 		ChoiceBox<String> botType = new ChoiceBox<String>();
-		botType.getItems().addAll("Bot 1", "Bot 2");
-		botType.setValue("Bot 1");
-		connect_MiddlePart.getChildren().add(botType);
+		botType.getItems().addAll("Bot 1 (Totenfluch)", "Bot 2 (toxi675)");
+		botType.setValue("Bot 1 (Totenfluch)");
+		VBotBox.getChildren().add(botType);
 		
 		botType.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-			if(newValue.equals("Bot 2"))
+			if(newValue.equals("Bot 2 (toxi675)"))
 				botID = 1;
 			else
 				botID = 0;
 		});
 
 		Button WatchKi = new Button("Watch KI Play");
-		connect_MiddlePart.getChildren().add(WatchKi);
+		BotBox.getChildren().add(WatchKi);
+		BotBox.setSpacing(10);
+		BotBox.setAlignment(Pos.BASELINE_CENTER);
+		connect_MiddlePart.getChildren().add(VBotBox);
+		
 		WatchKi.setOnAction( ae -> {
 			Bot1.Bot_debug = true;
 			Bot_enabled = true;
 			if(botID == 0)
-				Player1Name = "Bot 1";
+				Player1Name = "Bot 1 - Totenfluch";
 			else
-				Player1Name = "Bot 2";
+				Player1Name = "Bot 2 - toxi675";
 			Players = new Player[1];
 			switchSceneToGame();
 		});
+		VBotBox.getChildren().add(BotBox);
+		VBotBox.setPadding(new Insets(20));
 
 		Button PlayWithKi = new Button("Play with KI (You have no friends)");
-		connect_MiddlePart.getChildren().add(PlayWithKi);
+		BotBox.getChildren().add(PlayWithKi);
 		PlayWithKi.setOnAction(ae ->{
 			Play_with_bot_enabled = true;
 			if(botID == 0)
-				Player2Name = "Bot 1";
+				Player2Name = "Bot 1 - Totenfluch";
 			else
-				Player2Name = "Bot 2";
+				Player2Name = "Bot 2 - toxi675";
 			Player1Name = Username1.getText();
 			Players = new Player[2];
 			switchSceneToGame();
@@ -217,10 +229,28 @@ public class Frame extends Application {
 		connect_MiddlePart.getChildren().add(KiCoop);
 		KiCoop.setOnAction(ae ->{
 			KI_Coop_enabled = true;
-			Player1Name = "Bot 1";
-			Player2Name = "Bot 2";
+			Player1Name = "Bot 1 - Totenfluch";
+			Player2Name = "Bot 2 - toxi675";
 			Players = new Player[2];
 			switchSceneToGame();
+		});
+		
+		ChoiceBox<String> SpeedBox = new ChoiceBox<String>();
+		SpeedBox.getItems().addAll("Slow", "Normal", "Fast", "Very Fast", "Insane");
+		SpeedBox.setValue("Normal");
+		connect_MiddlePart.getChildren().add(SpeedBox);
+		
+		SpeedBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+			if(newValue.equals("Slow"))
+				GameSpeed = 10;
+			else if(newValue.equals("Normal"))
+				GameSpeed = 8;
+			else if(newValue.equals("Fast"))
+				GameSpeed = 6;
+			else if(newValue.equals("Very Fast"))
+				GameSpeed = 4;
+			else if(newValue.equals("Insane"))
+				GameSpeed = 2;
 		});
 
 		VBox LobbyVBox = new VBox();
@@ -455,23 +485,6 @@ public class Frame extends Application {
 			frameTime += System.nanoTime() - time;
 		}));
 
-		rTf = new Timeline(new KeyFrame(Duration.millis(8), ae -> {
-
-			long time = System.nanoTime();
-
-			Refresh();
-			if (Online_Coop)
-				SyncOnline();
-			if(Bot_enabled || Play_with_bot_enabled)
-				bot.refresh();
-			if(KI_Coop_enabled){
-				bot.refresh();
-				bot2.refresh();
-			}
-
-			refreshTime += System.nanoTime() - time;
-		}));
-
 		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -577,7 +590,7 @@ public class Frame extends Application {
 		}
 
 		MonsterWaves.SpawnWave(0);
-
+		CreateTimers();
 		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
@@ -585,6 +598,24 @@ public class Frame extends Application {
 
 
 		MainStage.setScene(GameScene);
+	}
+	
+	public static void CreateTimers(){
+		rTf = new Timeline(new KeyFrame(Duration.millis(GameSpeed), ae -> {
+			long time = System.nanoTime();
+
+			Refresh();
+			if (Online_Coop)
+				SyncOnline();
+			if(Bot_enabled || Play_with_bot_enabled)
+				bot.refresh();
+			if(KI_Coop_enabled){
+				bot.refresh();
+				bot2.refresh();
+			}
+
+			refreshTime += System.nanoTime() - time;
+		}));
 	}
 
 	public static void Refresh() {
@@ -668,7 +699,7 @@ public class Frame extends Application {
 
 	}
 
-	public void SyncOnline() {
+	public static void SyncOnline() {
 		Client.processMessage("playerPos " + Players[0].getX() + " " + Players[0].getY());
 	}
 
