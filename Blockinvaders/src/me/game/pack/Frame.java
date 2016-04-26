@@ -67,9 +67,11 @@ public class Frame extends Application {
 	public static boolean Coop_enabled = false;
 	public static boolean Online_Coop = false;
 	public static boolean Bot_enabled = false;
+	public static boolean KI_Coop_enabled = false;
 	public static boolean Play_with_bot_enabled = false;
 	public static int botID = 0;
 	public static BotKI bot;
+	public static BotKI bot2;
 	public static TextArea DebugConsole;
 
 	public static boolean P1_inRight = false;
@@ -207,6 +209,16 @@ public class Frame extends Application {
 			else
 				Player2Name = "Bot 2";
 			Player1Name = Username1.getText();
+			Players = new Player[2];
+			switchSceneToGame();
+		});
+		
+		Button KiCoop = new Button("KI Coop");
+		connect_MiddlePart.getChildren().add(KiCoop);
+		KiCoop.setOnAction(ae ->{
+			KI_Coop_enabled = true;
+			Player1Name = "Bot 1";
+			Player2Name = "Bot 2";
 			Players = new Player[2];
 			switchSceneToGame();
 		});
@@ -452,6 +464,10 @@ public class Frame extends Application {
 				SyncOnline();
 			if(Bot_enabled || Play_with_bot_enabled)
 				bot.refresh();
+			if(KI_Coop_enabled){
+				bot.refresh();
+				bot2.refresh();
+			}
 
 			refreshTime += System.nanoTime() - time;
 		}));
@@ -541,6 +557,18 @@ public class Frame extends Application {
 			else if(botID == 1)
 				bot = new Bot2(Players[1]);
 		}
+		
+		if(KI_Coop_enabled){
+			bot = new Bot1(Players[0]);
+			
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+			P2.giveWeapon(new StandardWaffe(P2));
+			Players[1] = P2;
+			Players[1].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
+
+			bot2 = new Bot2(Players[1]);
+		}
+		
 		if (Coop_enabled || Online_Coop) {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
