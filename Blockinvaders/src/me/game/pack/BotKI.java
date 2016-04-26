@@ -18,6 +18,8 @@ public class BotKI {
 	}
 
 	public void Refresh(){
+		if(!bot.isAlive())
+			return;
 		boolean escapeLock = false;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){

@@ -62,14 +62,14 @@ public class Frame extends Application {
 	public static Scene GameScene;
 
 	public static Player[] Players;
-	
+
 	public static boolean Coop_enabled = false;
 	public static boolean Online_Coop = false;
 	public static boolean Bot_enabled = false;
 	public static boolean Play_with_bot_enabled = false;
 	public static BotKI bot;
 	public static TextArea DebugConsole;
-	
+
 	public static boolean P1_inRight = false;
 	public static boolean P1_inLeft = false;
 	public static boolean P1_inShoot = false;
@@ -170,7 +170,7 @@ public class Frame extends Application {
 				switchSceneToGame();
 			}
 		});
-		
+
 		Button WatchKi = new Button("Watch KI Play");
 		connect_MiddlePart.getChildren().add(WatchKi);
 		WatchKi.setOnAction( ae -> {
@@ -180,12 +180,13 @@ public class Frame extends Application {
 			Players = new Player[1];
 			switchSceneToGame();
 		});
-		
+
 		Button PlayWithKi = new Button("Play with KI (You have no friends)");
 		connect_MiddlePart.getChildren().add(PlayWithKi);
 		PlayWithKi.setOnAction(ae ->{
 			Play_with_bot_enabled = true;
 			Player2Name = "Bot";
+			Player1Name = Username1.getText();
 			Players = new Player[2];
 			switchSceneToGame();
 		});
@@ -269,11 +270,11 @@ public class Frame extends Application {
 		DebugConsole = new TextArea();
 		//DebugConsole.setDisable(true); -- disable user input
 		DebugConsole.textProperty().addListener(new ChangeListener<Object>() {
-		    @Override
-		    public void changed(ObservableValue<?> observable, Object oldValue,
-		            Object newValue) {
-		    	DebugConsole.setScrollTop(Double.MAX_VALUE);
-		    }
+			@Override
+			public void changed(ObservableValue<?> observable, Object oldValue,
+					Object newValue) {
+				DebugConsole.setScrollTop(Double.MAX_VALUE);
+			}
 		});
 		LobbyVBox.getChildren().add(DebugConsole);
 
@@ -385,6 +386,7 @@ public class Frame extends Application {
 					gc.fillText("DEAD", 45, 855);
 			}
 
+			gc.setFill(Color.AQUA);
 			for (int i = 0; i < PlayerWeapon.ActiveWeapons.size(); i++) {
 				for (int x = 0; x < PlayerWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++) {
 					Bullet draw = PlayerWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
@@ -392,6 +394,7 @@ public class Frame extends Application {
 				}
 			}
 
+			gc.setFill(Color.RED);
 			for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++) {
 				for (int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++) {
 					Bullet draw = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
@@ -448,8 +451,8 @@ public class Frame extends Application {
 					if(Players[0].getHisSpecialWeapon() != null)
 						Players[0].getHisSpecialWeapon().shoot(Players[0].getX(), Players[0].getY());
 				}
-				
-				
+
+
 				if (event.getCode() == KeyCode.LEFT) {
 					P2_inLeft = true;
 				} else if (event.getCode() == KeyCode.RIGHT) {
@@ -478,20 +481,21 @@ public class Frame extends Application {
 					P1_inShoot = false;
 				}
 
-				if (event.getCode() == KeyCode.LEFT) {
-					P2_inLeft = false;
-				} else if (event.getCode() == KeyCode.RIGHT) {
-					P2_inRight = false;
-				}
-				if (event.getCode() == KeyCode.UP) {
-					P2_inShoot = false;
+				if(Coop_enabled){
+					if (event.getCode() == KeyCode.LEFT) {
+						P2_inLeft = false;
+					} else if (event.getCode() == KeyCode.RIGHT) {
+						P2_inRight = false;
+					}
+					if (event.getCode() == KeyCode.UP) {
+						P2_inShoot = false;
+					}
 				}
 			}
 		});
 
 		MainStage.setOnCloseRequest(e -> {
 			System.exit(0);
-
 		});
 	}
 
@@ -500,7 +504,7 @@ public class Frame extends Application {
 		P1.giveWeapon(new StandardWaffe(P1));
 		P1.giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		Players[0] = P1;
-		
+
 		if(Bot_enabled)
 			bot = new BotKI(Players[0]);
 		if(Play_with_bot_enabled){
@@ -516,15 +520,15 @@ public class Frame extends Application {
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		}
-		
+
 		MonsterWaves.SpawnWave(0);
-		
+
 		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
 		rTf.play();
 
-		
+
 		MainStage.setScene(GameScene);
 	}
 
@@ -557,7 +561,7 @@ public class Frame extends Application {
 		if (P1_inLeft) {
 			if (Players[0].isAlive())
 				Players[0].moveLeft();
-				
+
 		} else if (P1_inRight) {
 			if (Players[0].isAlive())
 				Players[0].moveRight();
