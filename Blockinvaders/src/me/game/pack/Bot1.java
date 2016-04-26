@@ -46,7 +46,7 @@ public class Bot1 implements BotKI{
 		}
 
 		if(Frame.Monsters.size() > 10 && bot.getHisSpecialWeapon().getAmmo() > 0)
-			if(bot.getX() > 600 && bot.getX() < 1000)
+			if((bot.getX() > 600 && bot.getX() < 1000) || Frame.clearcount%5==4 && Frame.clearcount > 20)
 				bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
 	}
 
@@ -65,8 +65,9 @@ public class Bot1 implements BotKI{
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
-					if(bul.checkHit(bot.getX()-15, bot.getY()-bot.getHeight(), bot.getWidth()+15, bot.heigth)){
-						//if(bot.getX() - bul.getxPos() < 20 && bot.getX() - bul.getxPos() > -bot.getWidth()-20){
+					//Frame.gc.fillRect(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2);
+					if(bul.checkHit(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2)){
+	
 						escapeThis = bul;
 						if(bot.getX() < Frame.GAME_WIDTH/4)
 							inRight = true;
@@ -86,8 +87,6 @@ public class Bot1 implements BotKI{
 						if(Bot_debug)
 							for(Monster p: Frame.Monsters)
 								p.setColor(Color.GREENYELLOW);
-
-
 					}
 				}
 			}

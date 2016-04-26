@@ -236,7 +236,7 @@ public class Frame extends Application {
 		});
 		
 		ChoiceBox<String> SpeedBox = new ChoiceBox<String>();
-		SpeedBox.getItems().addAll("Slow", "Normal", "Fast", "Very Fast", "Insane");
+		SpeedBox.getItems().addAll("Slow", "Normal", "Fast", "Very Fast", "Insane", "Ok...");
 		SpeedBox.setValue("Normal");
 		connect_MiddlePart.getChildren().add(SpeedBox);
 		
@@ -251,6 +251,8 @@ public class Frame extends Application {
 				GameSpeed = 4;
 			else if(newValue.equals("Insane"))
 				GameSpeed = 2;
+			else if(newValue.equals("Ok..."))
+				GameSpeed = 1;
 		});
 
 		VBox LobbyVBox = new VBox();

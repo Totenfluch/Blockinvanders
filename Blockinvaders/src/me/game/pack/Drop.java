@@ -14,6 +14,8 @@ public class Drop {
 	public static final int DropSizeY = 10;
 	protected Drops drop;
 	public static Vector<Drop> AllDrops = new Vector<Drop>();
+	public static final int weaponUpgradeDropLimitPerWave = 2;
+	public static int weaponUpgradesDroppedThisWave = 0;
 	
 	protected enum Drops{
 		ADDLEBEN,
@@ -53,6 +55,7 @@ public class Drop {
 			break;
 			
 		case NEXTWEAPON:
+			if(weaponUpgradesDroppedThisWave < weaponUpgradeDropLimitPerWave){
 			if(p.getHisWeapon().getWeaponType() == WeaponType.MAX)
 				if(p.getHisSpecialWeapon() != null)
 					p.giveSpecialWeapon(new RocketLauncher(p, p.getHisSpecialWeapon().getAmmo()+3));
@@ -60,6 +63,8 @@ public class Drop {
 					p.giveSpecialWeapon(new RocketLauncher(p, 3));
 			else
 				p.giveWeapon(((PlayerWeapon) p.hisWeapon).nextWaffe());
+			}
+			weaponUpgradesDroppedThisWave++;
 			break;
 		case ADDSCORE:
 			p.incScore(1+r.nextInt(20));

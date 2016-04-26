@@ -7,6 +7,7 @@ import me.game.weapons.MonsterTier2Weapon;
 
 public class MonsterWaves {
 	public static void SpawnWave(int which){
+		Drop.weaponUpgradesDroppedThisWave = 0;
 		int modifier = 1;
 		if(Frame.Coop_enabled || Frame.Online_Coop || Frame.Play_with_bot_enabled)
 			modifier = 2;
