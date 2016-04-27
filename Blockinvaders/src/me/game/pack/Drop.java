@@ -16,14 +16,14 @@ public class Drop {
 	public static Vector<Drop> AllDrops = new Vector<Drop>();
 	public static final int weaponUpgradeDropLimitPerWave = 2;
 	public static int weaponUpgradesDroppedThisWave = 0;
-	
+
 	protected enum Drops{
+		NEXTWEAPON,
 		ADDLEBEN,
 		ADDAMMO,
-		NEXTWEAPON,
 		ADDSCORE;
-		}
-	
+	}
+
 	public double getxPos() {
 		return xPos;
 	}
@@ -35,27 +35,39 @@ public class Drop {
 	public Drop(double xPos, double yPos, Drops drop){
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.drop = drop;
+		if(this.getDroptype() == Drops.NEXTWEAPON){
+			Drops[] theDrops = Drops.values();
+			Random r = new Random();
+			if(weaponUpgradesDroppedThisWave < weaponUpgradeDropLimitPerWave ){
+				this.drop = drop;
+			}else{
+				this.drop = theDrops[r.nextInt(theDrops.length-1)+1];
+			}
+		}else{
+			this.drop = drop;
+		}
+
+		if(this.getDroptype() == Drops.NEXTWEAPON)
+			weaponUpgradesDroppedThisWave++;
 	}
-	
+
 	public Drops getDroptype(){
 		return drop;
 	}
-	
+
 	public void assign(Player p){
 		Random r = new Random();
-		
+
 		switch (drop) {
 		case ADDLEBEN:
 			p.addLeben();
 			break;
-			
+
 		case ADDAMMO:
 			p.hisWeapon.addAmmo(20+r.nextInt(50));
 			break;
-			
+
 		case NEXTWEAPON:
-			if(weaponUpgradesDroppedThisWave < weaponUpgradeDropLimitPerWave){
 			if(p.getHisWeapon().getWeaponType() == WeaponType.MAX)
 				if(p.getHisSpecialWeapon() != null)
 					p.giveSpecialWeapon(new RocketLauncher(p, p.getHisSpecialWeapon().getAmmo()+3));
@@ -63,8 +75,7 @@ public class Drop {
 					p.giveSpecialWeapon(new RocketLauncher(p, 3));
 			else
 				p.giveWeapon(((PlayerWeapon) p.hisWeapon).nextWaffe());
-			}
-			weaponUpgradesDroppedThisWave++;
+
 			break;
 		case ADDSCORE:
 			p.incScore(1+r.nextInt(20));
@@ -72,16 +83,16 @@ public class Drop {
 		default:
 			break;
 		}
-		
+
 	}
-	
+
 	public void refresh(){
 		yPos++;
 		if(yPos > Frame.GAME_WIDTH){
 			AllDrops.remove(this);
 			return;
 		}
-		
+
 		for(int i = 0; i<Frame.Players.length; i++){
 			Player Peter = Frame.Players[i];
 			if(!Peter.isAlive())
@@ -92,7 +103,7 @@ public class Drop {
 			}
 		}
 	}
-	
+
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
 		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
 		Rectangle rt2 = new Rectangle((int)xPos, (int)yPos, DropSizeX, DropSizeY);
