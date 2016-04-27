@@ -46,27 +46,18 @@ public class Bot1 implements BotKI{
 			bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 		}
 
-		if(Frame.Monsters.size() > 10 && bot.getHisSpecialWeapon().getAmmo() > 0)
-			if((bot.getX() > 600 && bot.getX() < 1000) || Frame.clearcount%5==4 && Frame.clearcount > 20)
+		if((Frame.Monsters.size() > 10  || (Frame.clearcount%5==4 && Frame.clearcount > 20)) && bot.getHisSpecialWeapon().getAmmo() > 0)
+			if((bot.getX() > 600 && bot.getX() < 1000))
 				bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
+			
 	}
 
 	public boolean checkForBullets(){
-		// CDT boxes
-		/*Frame.gc.beginPath();
-		Frame.gc.setLineWidth(2.0);
-		Frame.gc.setStroke(Color.RED);
-		Frame.gc.setFill(Color.RED);
-		Frame.gc.rect(bot.getX()-20, bot.getY()-200, bot.getWidth()+20, 400);
-		Frame.gc.stroke();
-		Frame.gc.closePath();*/
-
 		boolean dogeing = false;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
-					//Frame.gc.fillRect(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2);
 					if(bul.checkHit(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2)){
 						
 						escapeThis = bul;
