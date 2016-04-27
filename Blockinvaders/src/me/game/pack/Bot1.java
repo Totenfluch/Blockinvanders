@@ -11,10 +11,11 @@ public class Bot1 implements BotKI{
 	/*
 		Bot to FIGHT FOR HONOR
 		By Totenfluch~
-	*/
+	 */
 	private Player bot;
 	private boolean inRight = true;
 	public static boolean Bot_debug = false;
+	public Monster Target = null;
 
 	private Bullet escapeThis = null;
 	public Bot1(Player p){
@@ -67,7 +68,7 @@ public class Bot1 implements BotKI{
 				if(bot.getY() - bul.getyPos() < 200){
 					//Frame.gc.fillRect(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2);
 					if(bul.checkHit(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2)){
-	
+						
 						escapeThis = bul;
 						if(bot.getX() < Frame.GAME_WIDTH/4)
 							inRight = true;
@@ -94,25 +95,15 @@ public class Bot1 implements BotKI{
 		return dogeing;
 	}
 
-	public void moveToClosestEnemy(){
-		// Stupid ? -- yes stupid confirmed
-		/*for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
-			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
-				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-				if(bul.getyPos() < 200)
-					return;
-			}
-		}*/
-		double closest = 5000;
-		double wheretogo = 0;
-		Iterator<Monster> it = Frame.Monsters.iterator();
+	public Monster findTarget(){
 		Monster monti2 = null;
+		double closest = 5000;
+		Iterator<Monster> it = Frame.Monsters.iterator();
 		while(it.hasNext()){
 			Monster monti = it.next();
 			double distanceToMonti = Math.abs(monti.getX()-bot.getX());
 			if( distanceToMonti < closest){
 				closest = distanceToMonti;
-				wheretogo = monti.getX();
 				if(Bot_debug)
 					for(Monster i: Frame.Monsters)
 						i.setColor(Color.BROWN);
@@ -121,8 +112,24 @@ public class Bot1 implements BotKI{
 				monti2 = monti;
 			}
 		}
+		return monti2;
+	}
+	
+	public void moveToClosestEnemy(){
+		Monster monti2 = null;
+		double wheretogo = 0;
+		if(Target == null){
+			monti2 = findTarget();
+			Target = monti2;
+		}else if(!Target.isAlive()){
+			monti2 = findTarget();
+			Target = monti2;
+		}else{
+			monti2 = Target;
+		}
 		if(monti2 == null)
 			return;
+		wheretogo = monti2.getX();
 		double timevalue = (bot.getY()-monti2.getY())/bot.getHisWeapon().getBulletSpeed();
 		if(Frame.Monster_Direction == 1){
 			wheretogo+=timevalue;

@@ -90,6 +90,11 @@ public class Monster extends Character{
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
 		Frame.Monsters.remove(this);
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void moveLeft(){
