@@ -327,7 +327,7 @@ public class Frame extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				connect_Bp.setRight(LobbyVBox);
-				Client.ConnectToServer("127.0.0.1", 1521);  //for testing purposes. old value: "totenfluch.de"
+				Client.ConnectToServer("139.59.134.247", 1521);  //for testing purposes. old value: "totenfluch.de"
 				DebugConsole.appendText("Connected to Server\n");
 			}
 		});
