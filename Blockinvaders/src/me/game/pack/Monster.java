@@ -15,8 +15,8 @@ public class Monster extends Character{
 	private double shootRate;
 	private int dropRate;
 
-	public Monster(Weapon waffe, int Leben, double x, double y, double width, double length, int worth, Color color, double shootRate, int dropRate){
-		super(x, y, Leben, waffe);
+	public Monster(Frame game, Weapon waffe, int Leben, double x, double y, double width, double length, int worth, Color color, double shootRate, int dropRate){
+		super(game, x, y, Leben, waffe);
 		this.width = width;
 		this.heigth = length;
 		this.worth = worth;
@@ -85,11 +85,11 @@ public class Monster extends Character{
 		Random r = new Random();
 		Drops[] theDrops = Drops.values();
 		if(r.nextInt(dropRate) == 1){
-			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
+			Drop.AllDrops.add(new Drop(game, xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}else if(color.equals(Color.DARKMAGENTA)){
-			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
+			Drop.AllDrops.add(new Drop(game, xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
-		Frame.Monsters.remove(this);
+		game.Monsters.remove(this);
 		try {
 			this.finalize();
 		} catch (Throwable e) {

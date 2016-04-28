@@ -6,6 +6,7 @@ import me.game.weapons.SpecialWeapon;
 import me.game.weapons.Weapon;
 
 public abstract class Character {
+	public final Frame game;
 	protected int life;
 	protected boolean alive = true;
 	
@@ -50,7 +51,8 @@ public abstract class Character {
 		return life;
 	}
 	
-	public Character(double xPos, double yPos,int leben, Weapon waffe){
+	public Character(Frame game, double xPos, double yPos,int leben, Weapon waffe){
+		this.game = game;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.life = leben;

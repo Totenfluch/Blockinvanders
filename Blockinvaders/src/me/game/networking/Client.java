@@ -1,23 +1,31 @@
 package me.game.networking;
 
-import java.io.*;
-import java.net.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+import me.game.pack.Frame;
 
 public class Client implements Runnable
 {
-	public static boolean IsConnectedToServer = false;
-	public static String LatestServerReply = "";
+	public boolean IsConnectedToServer = false;
+	public String LatestServerReply = "";
 	public boolean waitingforreply = false;
 	public boolean running = true;
 	public Thread thread = null;
-	public static Client connection = null;
 
+	private Frame game;
+	GetServerMessages gsm;
+	
 	public String format;
 	public Socket socket;
 	public DataOutputStream dout;
 	public DataInputStream din;
 
-	public Client( String host, int port) {
+	public Client(Frame game, String host, int port) {
+		this.game = game;
+		gsm = new GetServerMessages(this.game);
 		try {
 			socket = new Socket( host, port );
 			din = new DataInputStream( socket.getInputStream() );
@@ -33,9 +41,9 @@ public class Client implements Runnable
 	}
 
 
-	public static void processMessage(String message) {
+	public void processMessage(String message) {
 		try {
-			connection.dout.writeUTF(message);
+			dout.writeUTF(message);
 		} catch( Exception ie ){
 			ie.printStackTrace();
 			System.out.println( ie ); 
@@ -51,7 +59,7 @@ public class Client implements Runnable
 					try{
 						message = din.readUTF();
 						LatestServerReply = message;
-						GetServerMessages.CheckServerMessages(message);
+						gsm.CheckServerMessages(message);
 						waitingforreply = false;
 					}catch(Exception e){
 						IsConnectedToServer = false;
@@ -79,26 +87,16 @@ public class Client implements Runnable
 		}
 	}
 
-	public static void DisconnectFromServer(){
+	public void DisconnectFromServer(){
 		try {
-			connection.din.close();
-			connection.dout.close();
-			connection.socket.close();
+			this.din.close();
+			this.dout.close();
+			this.socket.close();
 		}catch (Exception e) {}
-		try{connection.socket = null;}catch(Exception e){}
-		try{connection.din = null;}catch(Exception e){}
-		try{connection.dout = null;}catch(Exception e){}
-		try{connection.thread = null;}catch(Exception e){}
-		try{connection.running = false;}catch(Exception e){}
-		try{connection = null;}catch(Exception e){}
-	}
-
-	public static boolean ConnectToServer(String ip, int port){
-		try{
-			connection = new Client(ip, port);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return true;
+		try{this.socket = null;}catch(Exception e){}
+		try{this.din = null;}catch(Exception e){}
+		try{this.dout = null;}catch(Exception e){}
+		try{this.thread = null;}catch(Exception e){}
+		try{this.running = false;}catch(Exception e){}
 	}
 }

@@ -6,14 +6,14 @@ import me.game.weapons.MonsterStandardWaffe;
 import me.game.weapons.MonsterTier2Weapon;
 
 public class MonsterWaves {
-	public static void SpawnWave(int which){
+	public static void SpawnWave(Frame game, int which){
 		Drop.weaponUpgradesDroppedThisWave = 0;
 		int modifier = 1;
-		if(Frame.Coop_enabled || Frame.Online_Coop || Frame.Play_with_bot_enabled)
+		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled)
 			modifier = 2;
 		// Reset current movement 
-		Frame.movetick = 0;
-		Frame.Monster_Direction = 0;
+		game.movetick = 0;
+		game.Monster_Direction = 0;
 		switch(which%5){
 		case 0: {
 			int x = 0;
@@ -28,10 +28,10 @@ public class MonsterWaves {
 				if(x%2 == 0)
 					sub = 50;
 
-				//if(!Frame.Coop_enabled)
-				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 10+which*5*modifier, sub+600+ix*50, x*100+50, 30, 20, 1+which, Color.BROWN, 0.25, 20);
-				Frame.Monsters.add(tempi);
+				//if(!game.Coop_enabled)
+				//	game.Monster_HP /= 2;
+				Monster tempi = new Monster(game, null, 10+which*5*modifier, sub+600+ix*50, x*100+50, 30, 20, 1+which, Color.BROWN, 0.25, 20);
+				game.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
 			}
 			break;
@@ -47,10 +47,10 @@ public class MonsterWaves {
 					ip = 0;
 				}
 				
-				//if(!Frame.Coop_enabled)
-				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 80+which*20*modifier, 600+ip*250, p*100+50, 200, 40, 3*which, Color.DARKSLATEGRAY, 1, 4);
-				Frame.Monsters.add(tempi);
+				//if(!game.Coop_enabled)
+				//	game.Monster_HP /= 2;
+				Monster tempi = new Monster(game, null, 80+which*20*modifier, 600+ip*250, p*100+50, 200, 40, 3*which, Color.DARKSLATEGRAY, 1, 4);
+				game.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterTier2Weapon(tempi));
 			}
 			break;
@@ -66,10 +66,10 @@ public class MonsterWaves {
 					ix = 0;
 				}
 
-				//if(!Frame.Coop_enabled)
-				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 30+which*10*modifier, 800+ix*70, x*100+50, 50, 20, 1+2*which, Color.CORAL, 0.5, 8);
-				Frame.Monsters.add(tempi);
+				//if(!game.Coop_enabled)
+				//	game.Monster_HP /= 2;
+				Monster tempi = new Monster(game, null, 30+which*10*modifier, 800+ix*70, x*100+50, 50, 20, 1+2*which, Color.CORAL, 0.5, 8);
+				game.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
 			}
 			break;
@@ -90,18 +90,18 @@ public class MonsterWaves {
 					sub = 50;
 				
 
-				//if(!Frame.Coop_enabled)
-				//	Frame.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 5+which*3*modifier, 530+ix*30+sub, x*100+50, 20, 40, 1+which, Color.CRIMSON, 0.125, 32);
-				Frame.Monsters.add(tempi);
+				//if(!game.Coop_enabled)
+				//	game.Monster_HP /= 2;
+				Monster tempi = new Monster(game, null, 5+which*3*modifier, 530+ix*30+sub, x*100+50, 20, 40, 1+which, Color.CRIMSON, 0.125, 32);
+				game.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
 			}
 			break;
 		}
 		
 		case 4:{
-				Monster tempi = new Monster(null, 2500+which*200*modifier, 700, 150, 700, 300, 3*which, Color.HOTPINK, 2.0, 1);
-				Frame.Monsters.add(tempi);
+				Monster tempi = new Monster(game, null, 2500+which*200*modifier, 700, 150, 700, 300, 3*which, Color.HOTPINK, 2.0, 1);
+				game.Monsters.add(tempi);
 				tempi.giveWeapon(new MonsterBossWeapon(tempi));
 			break;
 		}

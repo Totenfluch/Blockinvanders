@@ -16,8 +16,8 @@ public class PlayerBullet extends Bullet {
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
 			waffe.getKugeln().remove(this);
 		
-		for (int i = 0; i < Frame.Monsters.size(); i++) {
-			Monster Monti = Frame.Monsters.elementAt(i);
+		for (int i = 0; i < waffe.getOwner().game.Monsters.size(); i++) {
+			Monster Monti = waffe.getOwner().game.Monsters.elementAt(i);
 			if (checkHit(Monti.getX(), Monti.getY(), Monti.getWidth(), Monti.getHeight())) {
 				if (Monti.isAlive()) {
 					waffe.getKugeln().remove(this);

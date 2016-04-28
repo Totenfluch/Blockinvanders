@@ -9,7 +9,6 @@ import java.util.Vector;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -48,65 +47,66 @@ import me.game.weapons.PlayerWeapon;
 import me.game.weapons.RocketLauncher;
 import me.game.weapons.StandardWaffe;
 
-public class Frame extends Application {
+public class Frame {
 	public static final int GAME_WIDTH = 1600;
 	public static final int GAME_LENGTH = 900;
 
-	public static Timeline tf;
-	public static Timeline rTf;
+	public Timeline tf;
+	public Timeline rTf;
 
-	public static Canvas cv;
-	public static GraphicsContext gc;
+	public Canvas cv;
+	public GraphicsContext gc;
 
-	public static Stage MainStage;
-	public static Scene ConnectScene;
-	public static Scene GameScene;
+	public Stage MainStage;
+	public Scene ConnectScene;
+	public Scene GameScene;
 
-	public static Player[] Players;
+	public Player[] Players;
 
-	public static boolean Coop_enabled = false;
-	public static boolean Online_Coop = false;
-	public static boolean Bot_enabled = false;
-	public static boolean KI_Coop_enabled = false;
-	public static boolean Play_with_bot_enabled = false;
-	public static int KiPartyPlayers = 0;
-	public static int botID = 0;
-	public static BotKI bot;
-	public static BotKI bot2;
-	public static BotKI[] bots;
-	public static TextArea DebugConsole;
-	public static int GameSpeed = 8;
+	public Client client;
+	public Frame game = this;
 
-	public static boolean P1_inRight = false;
-	public static boolean P1_inLeft = false;
-	public static boolean P1_inShoot = false;
-	public static boolean P2_inRight = false;
-	public static boolean P2_inLeft = false;
-	public static boolean P2_inShoot = false;
-	public static Vector<Monster> Monsters = new Vector<Monster>(64, 5);
-	public static int Monster_Direction = 0;
-	public static int Monster_HP = 60;
-	public static int clearcount = 0;
-	public static int shootChance = 3000;
+	public boolean Coop_enabled = false;
+	public boolean Online_Coop = false;
+	public boolean Bot_enabled = false;
+	public boolean KI_Coop_enabled = false;
+	public boolean Play_with_bot_enabled = false;
+	public int KiPartyPlayers = 0;
+	public int botID = 0;
+	public BotKI bot;
+	public BotKI bot2;
+	public BotKI[] bots;
+	public TextArea DebugConsole;
+	public int GameSpeed = 8;
 
-	public static String Player1Name;
-	public static String Player2Name;
+	public boolean P1_inRight = false;
+	public boolean P1_inLeft = false;
+	public boolean P1_inShoot = false;
+	public boolean P2_inRight = false;
+	public boolean P2_inLeft = false;
+	public boolean P2_inShoot = false;
+	public Vector<Monster> Monsters = new Vector<Monster>(64, 5);
+	public int Monster_Direction = 0;
+	public int Monster_HP = 60;
+	public int clearcount = 0;
+	public int shootChance = 3000;
 
-	public static int Tick = 0;
-	public static int movetick = 0;
+	public String Player1Name;
+	public String Player2Name;
 
-	public static ListView<String> Lobbys;
-	public static Text CurrentLobby;
+	public int Tick = 0;
+	public int movetick = 0;
 
-	public static long frameTime;
-	public static long refreshTime;
-	public static int frames;
+	public ListView<String> Lobbys;
+	public Text CurrentLobby;
 
-	public static void main(String[] args) {
-		launch(args);
+	public long frameTime;
+	public long refreshTime;
+	public int frames;
+
+	public Frame() {
 	}
 
-	@Override
 	public void start(Stage primaryStage) throws Exception {
 		MainStage = primaryStage;
 		MainStage.setTitle("BlockInvaders");
@@ -189,7 +189,7 @@ public class Frame extends Application {
 		VBotBox.getChildren().add(botType);
 
 		botType.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-			if(newValue.equals("Bot 2 (toxi675)"))
+			if (newValue.equals("Bot 2 (toxi675)"))
 				botID = 1;
 			else
 				botID = 0;
@@ -201,10 +201,10 @@ public class Frame extends Application {
 		BotBox.setAlignment(Pos.BASELINE_CENTER);
 		connect_MiddlePart.getChildren().add(VBotBox);
 
-		WatchKi.setOnAction( ae -> {
+		WatchKi.setOnAction(ae -> {
 			Bot1.Bot_debug = true;
 			Bot_enabled = true;
-			if(botID == 0)
+			if (botID == 0)
 				Player1Name = "Bot 1 - Totenfluch";
 			else
 				Player1Name = "Bot 2 - toxi675";
@@ -216,9 +216,9 @@ public class Frame extends Application {
 
 		Button PlayWithKi = new Button("Play with KI (You have no friends)");
 		BotBox.getChildren().add(PlayWithKi);
-		PlayWithKi.setOnAction(ae ->{
+		PlayWithKi.setOnAction(ae -> {
 			Play_with_bot_enabled = true;
-			if(botID == 0)
+			if (botID == 0)
 				Player2Name = "Bot 1 - Totenfluch";
 			else
 				Player2Name = "Bot 2 - toxi675";
@@ -229,7 +229,7 @@ public class Frame extends Application {
 
 		Button KiCoop = new Button("KI Coop");
 		connect_MiddlePart.getChildren().add(KiCoop);
-		KiCoop.setOnAction(ae ->{
+		KiCoop.setOnAction(ae -> {
 			KI_Coop_enabled = true;
 			Player1Name = "Bot 1 - Totenfluch";
 			Player2Name = "Bot 2 - toxi675";
@@ -239,7 +239,7 @@ public class Frame extends Application {
 
 		Button KiCoopParty = new Button("KI Party");
 		connect_MiddlePart.getChildren().add(KiCoopParty);
-		KiCoopParty.setOnAction(ae ->{
+		KiCoopParty.setOnAction(ae -> {
 			Player1Name = "Bot 1 - Totenfluch";
 			Player2Name = "Bot 2 - toxi675";
 			KiPartyPlayers = 4;
@@ -254,17 +254,17 @@ public class Frame extends Application {
 		connect_MiddlePart.getChildren().add(SpeedBox);
 
 		SpeedBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-			if(newValue.equals("Slow"))
+			if (newValue.equals("Slow"))
 				GameSpeed = 10;
-			else if(newValue.equals("Normal"))
+			else if (newValue.equals("Normal"))
 				GameSpeed = 8;
-			else if(newValue.equals("Fast"))
+			else if (newValue.equals("Fast"))
 				GameSpeed = 6;
-			else if(newValue.equals("Very Fast"))
+			else if (newValue.equals("Very Fast"))
 				GameSpeed = 4;
-			else if(newValue.equals("Insane"))
+			else if (newValue.equals("Insane"))
 				GameSpeed = 2;
-			else if(newValue.equals("Ok..."))
+			else if (newValue.equals("Ok..."))
 				GameSpeed = 1;
 		});
 
@@ -290,9 +290,10 @@ public class Frame extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				if (LobbyName.getText().length() > 4 && LobbyName.getText().length() < 16) {
-					Client.processMessage("createLobby " + LobbyName.getText().replace(" ", ""));
-					DebugConsole.appendText("Attempting to create Lobby " + LobbyName.getText().replace(" ", "") + "\n");
-				}else{
+					client.processMessage("createLobby " + LobbyName.getText().replace(" ", ""));
+					DebugConsole
+							.appendText("Attempting to create Lobby " + LobbyName.getText().replace(" ", "") + "\n");
+				} else {
 					DebugConsole.appendText("Invalid Lobby Name length\n");
 				}
 			}
@@ -308,7 +309,7 @@ public class Frame extends Application {
 			public void handle(ActionEvent event) {
 				if (Lobbys.getSelectionModel().getSelectedItem() != null) {
 					String[] selectedLobbypart = Lobbys.getSelectionModel().getSelectedItem().split(" ");
-					Client.processMessage("joinLobby " + selectedLobbypart[1]);
+					client.processMessage("joinLobby " + selectedLobbypart[1]);
 					DebugConsole.appendText("Attempting to join " + selectedLobbypart[1] + "\n");
 				}
 			}
@@ -340,16 +341,18 @@ public class Frame extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				connect_Bp.setRight(LobbyVBox);
-				Client.ConnectToServer("139.59.134.247", 1521);  //for testing purposes. old value: "totenfluch.de"
+				client = new Client(game, "127.0.0.1", 1521); // for testing
+																// purposes. old
+																// value:
+																// "139.59.134.247"
 				DebugConsole.appendText("Connected to Server\n");
 			}
 		});
 		DebugConsole = new TextArea();
-		//DebugConsole.setDisable(true); -- disable user input
+		// DebugConsole.setDisable(true); -- disable user input
 		DebugConsole.textProperty().addListener(new ChangeListener<Object>() {
 			@Override
-			public void changed(ObservableValue<?> observable, Object oldValue,
-					Object newValue) {
+			public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
 				DebugConsole.setScrollTop(Double.MAX_VALUE);
 			}
 		});
@@ -512,10 +515,9 @@ public class Frame extends Application {
 					P1_inShoot = true;
 				}
 				if (event.getCode() == KeyCode.CONTROL) {
-					if(Players[0].getHisSpecialWeapon() != null)
+					if (Players[0].getHisSpecialWeapon() != null)
 						Players[0].getHisSpecialWeapon().shoot(Players[0].getX(), Players[0].getY());
 				}
-
 
 				if (event.getCode() == KeyCode.LEFT) {
 					P2_inLeft = true;
@@ -526,7 +528,7 @@ public class Frame extends Application {
 					P2_inShoot = true;
 				}
 				if (event.getCode() == KeyCode.NUMPAD0 && Coop_enabled) {
-					if(Players[1].getHisSpecialWeapon() != null)
+					if (Players[1].getHisSpecialWeapon() != null)
 						Players[1].getHisSpecialWeapon().shoot(Players[1].getX(), Players[1].getY());
 				}
 
@@ -545,7 +547,7 @@ public class Frame extends Application {
 					P1_inShoot = false;
 				}
 
-				if(Coop_enabled){
+				if (Coop_enabled) {
 					if (event.getCode() == KeyCode.LEFT) {
 						P2_inLeft = false;
 					} else if (event.getCode() == KeyCode.RIGHT) {
@@ -563,81 +565,80 @@ public class Frame extends Application {
 		});
 	}
 
-	public static void switchSceneToGame() {
-		Player P1 = new Player(GAME_WIDTH / 2 - 100, 10, null);
+	public void switchSceneToGame() {
+		Player P1 = new Player(this, GAME_WIDTH / 2 - 100, 10, null);
 		P1.giveWeapon(new StandardWaffe(P1));
 		P1.giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		Players[0] = P1;
 
-		if(Bot_enabled)
-			if(botID == 0)
-				bot = new Bot1(Players[0]);
-			else if(botID == 1)
-				bot = new Bot2(Players[0]);
-		if(Play_with_bot_enabled){
-			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+		if (Bot_enabled)
+			if (botID == 0)
+				bot = new Bot1(this, Players[0]);
+			else if (botID == 1)
+				bot = new Bot2(this, Players[0]);
+		if (Play_with_bot_enabled) {
+			Player P2 = new Player(this, GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 
-			if(botID == 0)
-				bot = new Bot1(Players[1]);
-			else if(botID == 1)
-				bot = new Bot2(Players[1]);
+			if (botID == 0)
+				bot = new Bot1(this, Players[1]);
+			else if (botID == 1)
+				bot = new Bot2(this, Players[1]);
 		}
 
-		if(KI_Coop_enabled){
-			bot = new Bot1(Players[0]);
+		if (KI_Coop_enabled) {
+			bot = new Bot1(this, Players[0]);
 
-			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+			Player P2 = new Player(this, GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 
-			bot2 = new Bot2(Players[1]);
+			bot2 = new Bot2(this, Players[1]);
 		}
 
 		if (Coop_enabled || Online_Coop) {
-			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+			Player P2 = new Player(this, GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 		}
 
-		if(KiPartyPlayers > 0){
-				bots[0] = new Bot1(Players[0]);
-			for(int i = 1; i < KiPartyPlayers; i++){
-				Players[i] = new Player(GAME_WIDTH / 2 + 100+100*i, 10, null);
+		if (KiPartyPlayers > 0) {
+			bots[0] = new Bot1(this, Players[0]);
+			for (int i = 1; i < KiPartyPlayers; i++) {
+				Players[i] = new Player(this, GAME_WIDTH / 2 + 100 + 100 * i, 10, null);
 				Players[i].giveWeapon(new StandardWaffe(Players[i]));
 				Players[i].giveSpecialWeapon(new RocketLauncher(Players[i], 0));
-				if(i%2==0)
-					bots[i] = new Bot1(Players[i]);
+				if (i % 2 == 0)
+					bots[i] = new Bot1(this, Players[i]);
 				else
-					bots[i] = new Bot2(Players[i]);
+					bots[i] = new Bot2(this, Players[i]);
 			}
 		}
 
-		MonsterWaves.SpawnWave(0);
+		MonsterWaves.SpawnWave(this, 0);
 		CreateTimers();
 		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
 		tf.play();
 		rTf.play();
 
-
 		MainStage.setScene(GameScene);
 	}
 
-	public static void CreateTimers(){
+	public void CreateTimers() {
 		rTf = new Timeline(new KeyFrame(Duration.millis(GameSpeed), ae -> {
 			long time = System.nanoTime();
 
 			Refresh();
 			if (Online_Coop)
 				SyncOnline();
-			if(Bot_enabled || Play_with_bot_enabled)
+			if (Bot_enabled || Play_with_bot_enabled)
 				bot.refresh();
-			if(KI_Coop_enabled){
+			if (KI_Coop_enabled) {
 				bot.refresh();
 				bot2.refresh();
 			}
@@ -646,7 +647,7 @@ public class Frame extends Application {
 		}));
 	}
 
-	public static void Refresh() {
+	public void Refresh() {
 
 		Tick++;
 		movetick++;
@@ -668,7 +669,7 @@ public class Frame extends Application {
 
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
-				if (new Random().nextInt((int)(shootChance*(1/Monsters.elementAt(i).getShootRate()))) == 0)
+				if (new Random().nextInt((int) (shootChance * (1 / Monsters.elementAt(i).getShootRate()))) == 0)
 					Monsters.elementAt(i).getHisWeapon().shoot(Monsters.elementAt(i).getX(),
 							Monsters.elementAt(i).getY());
 
@@ -681,10 +682,10 @@ public class Frame extends Application {
 				Players[0].moveRight();
 		}
 		if (P1_inShoot) {
-			if (Players[0].isAlive()){
+			if (Players[0].isAlive()) {
 				Players[0].hisWeapon.shoot(Players[0].getX(), Players[0].getY());
-				if(Online_Coop)
-					Client.processMessage("shoot " + Players[0].getX() + " " + Players[0].getY());
+				if (Online_Coop)
+					client.processMessage("shoot " + Players[0].getX() + " " + Players[0].getY());
 			}
 		}
 
@@ -713,8 +714,8 @@ public class Frame extends Application {
 
 		if (Monsters.size() == 0) {
 			clearcount++;
-			shootChance = (int)(10.0 + 2990*Math.pow(Math.E, -0.07 *(clearcount+1)));
-			MonsterWaves.SpawnWave(clearcount);
+			shootChance = (int) (10.0 + 2990 * Math.pow(Math.E, -0.07 * (clearcount + 1)));
+			MonsterWaves.SpawnWave(this, clearcount);
 		}
 
 		int dead = 0;
@@ -725,16 +726,16 @@ public class Frame extends Application {
 				EndGame();
 		}
 
-		if(KiPartyPlayers > 0)
-			for(int i = 0; i<bots.length; i++)
+		if (KiPartyPlayers > 0)
+			for (int i = 0; i < bots.length; i++)
 				bots[i].refresh();
 	}
 
-	public static void SyncOnline() {
-		Client.processMessage("playerPos " + Players[0].getX() + " " + Players[0].getY());
+	public void SyncOnline() {
+		client.processMessage("playerPos " + Players[0].getX() + " " + Players[0].getY());
 	}
 
-	public static void EndGame() {
+	public void EndGame() {
 		rTf.stop();
 		tf.stop();
 		gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
@@ -744,7 +745,7 @@ public class Frame extends Application {
 		gc.setFill(Color.RED);
 		gc.fillText("Game Over", 450, GAME_LENGTH / 2 + 150);
 		gc.setFont(new Font("Futura", 30));
-		gc.fillText("You survived "+clearcount+" Rounds", 650, GAME_LENGTH / 2 + 200);
+		gc.fillText("You survived " + clearcount + " Rounds", 650, GAME_LENGTH / 2 + 200);
 
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
@@ -752,7 +753,7 @@ public class Frame extends Application {
 	}
 
 	@SuppressWarnings("unused")
-	public static void PublishScores() {
+	public void PublishScores() {
 		if (Coop_enabled) {
 			try {
 				String request = "http://totenfluch.de/putScores.php?Username1=" + Player1Name + "&Username2="

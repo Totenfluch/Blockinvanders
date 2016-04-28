@@ -5,6 +5,7 @@ import me.game.weapons.Weapon;
 
 
 public abstract class Bullet {
+
 	double xPos, yPos;
 	double height, width;
 	int damage;

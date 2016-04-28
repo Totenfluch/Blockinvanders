@@ -5,6 +5,7 @@ import me.game.weapons.MonsterWeapon;
 
 public class Bot2 implements BotKI {
 
+	public final Frame game;
 	private Player player;
 	private double destX = 800;
 	private boolean lockLeft, lockRight;
@@ -13,7 +14,8 @@ public class Bot2 implements BotKI {
 	private Bullet dodge;
 	private Monster locked = null;
 
-	public Bot2(Player player) {
+	public Bot2(Frame game, Player player) {
+		this.game = game;
 		this.player = player;
 	}
 
@@ -39,10 +41,10 @@ public class Bot2 implements BotKI {
 	private void findMonster() {
 		double minDistance = 1000;
 		
-		for (int i = 0; i < Frame.Monsters.size(); i++) {
-			Monster m = Frame.Monsters.elementAt(i);
+		for (int i = 0; i < game.Monsters.size(); i++) {
+			Monster m = game.Monsters.elementAt(i);
 			if (m.isAlive()) {
-				double offset = (Frame.Monster_Direction == 0 ? 1 : -1)*((m.getY() - player.getY()) / player.getHisWeapon().getBulletSpeed());
+				double offset = (game.Monster_Direction == 0 ? 1 : -1)*((m.getY() - player.getY()) / player.getHisWeapon().getBulletSpeed());
 				double distance = Math.abs(player.getX() + player.getWidth() / 2 - m.getX() - m.getWidth() / 2 +offset);
 				if (distance < minDistance) {
 					minDistance = distance;
@@ -53,7 +55,7 @@ public class Bot2 implements BotKI {
 	}
 
 	private double destination() {
-		if (Frame.Monster_Direction == 1)
+		if (game.Monster_Direction == 1)
 			destX = locked.getX() + locked.getWidth() / 2 - player.getWidth()/2
 					- ((locked.getY() - player.getY()) / player.getHisWeapon().getBulletSpeed());
 		else
@@ -159,12 +161,12 @@ public class Bot2 implements BotKI {
 	private void specialShoot() {
 		if (player.hisSpecialWeapon.getAmmo() > 0) {
 			int alive = 0;
-			for (Monster m : Frame.Monsters)
+			for (Monster m : game.Monsters)
 				if (m.isAlive())
 					alive++;
 
 			int initMonsters = 0;
-			switch (Frame.clearcount % 5) {
+			switch (game.clearcount % 5) {
 			case 0:
 				initMonsters = 64;
 				break;
@@ -182,9 +184,9 @@ public class Bot2 implements BotKI {
 				break;
 			}
 
-			if ((Frame.clearcount >= 20 && (double) alive / initMonsters >= 0.8)
-					|| (Frame.clearcount >= 30 && (double) alive / initMonsters >= 0.6)
-					|| (Frame.clearcount >= 40 && (double) alive / initMonsters >= 0.4)) {
+			if ((game.clearcount >= 20 && (double) alive / initMonsters >= 0.8)
+					|| (game.clearcount >= 30 && (double) alive / initMonsters >= 0.6)
+					|| (game.clearcount >= 40 && (double) alive / initMonsters >= 0.4)) {
 				if (player.getX() + player.getWidth() / 2 >= Frame.GAME_WIDTH / 3
 						&& player.getX() + player.getWidth() / 2 <= (Frame.GAME_WIDTH / 3) * 2) {
 					player.hisSpecialWeapon.shoot(player.getX(), player.getY());

@@ -9,6 +9,7 @@ import me.game.weapons.PlayerWeapon.WeaponType;
 import me.game.weapons.RocketLauncher;
 
 public class Drop {
+	final Frame game;
 	protected double xPos, yPos;
 	public static final int DropSizeX = 10;
 	public static final int DropSizeY = 10;
@@ -32,7 +33,8 @@ public class Drop {
 		return yPos;
 	}
 
-	public Drop(double xPos, double yPos, Drops drop){
+	public Drop(Frame game, double xPos, double yPos, Drops drop){
+		this.game = game;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		if(this.getDroptype() == Drops.NEXTWEAPON){
@@ -93,8 +95,8 @@ public class Drop {
 			return;
 		}
 
-		for(int i = 0; i<Frame.Players.length; i++){
-			Player Peter = Frame.Players[i];
+		for(int i = 0; i<game.Players.length; i++){
+			Player Peter = game.Players[i];
 			if(!Peter.isAlive())
 				continue;
 			if(checkHit(Peter.getX(), Peter.getY(), Peter.getWidth(), Peter.getHeight())){

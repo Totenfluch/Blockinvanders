@@ -12,13 +12,15 @@ public class Bot1 implements BotKI{
 		Bot to FIGHT FOR HONOR
 		By Totenfluch~
 	 */
+	public final Frame game;
 	private Player bot;
 	private boolean inRight = true;
 	public static boolean Bot_debug = false;
 	public Monster Target = null;
 
 	private Bullet escapeThis = null;
-	public Bot1(Player p){
+	public Bot1(Frame game, Player p){
+		this.game = game;
 		this.bot = p;
 	}
 
@@ -46,7 +48,7 @@ public class Bot1 implements BotKI{
 			bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 		}
 
-		if((Frame.Monsters.size() > 10  || (Frame.clearcount%5==4 && Frame.clearcount > 20)) && bot.getHisSpecialWeapon().getAmmo() > 0)
+		if((game.Monsters.size() > 10  || (game.clearcount%5==4 && game.clearcount > 20)) && bot.getHisSpecialWeapon().getAmmo() > 0)
 			if((bot.getX() > 600 && bot.getX() < 1000))
 				bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
 			
@@ -77,7 +79,7 @@ public class Bot1 implements BotKI{
 							bot.moveLeft();
 						dogeing = true;
 						if(Bot_debug)
-							for(Monster p: Frame.Monsters)
+							for(Monster p: game.Monsters)
 								p.setColor(Color.GREENYELLOW);
 					}
 				}
@@ -89,14 +91,14 @@ public class Bot1 implements BotKI{
 	public Monster findTarget(){
 		Monster monti2 = null;
 		double closest = 5000;
-		Iterator<Monster> it = Frame.Monsters.iterator();
+		Iterator<Monster> it = game.Monsters.iterator();
 		while(it.hasNext()){
 			Monster monti = it.next();
 			double distanceToMonti = Math.abs(monti.getX()-bot.getX());
 			if( distanceToMonti < closest){
 				closest = distanceToMonti;
 				if(Bot_debug)
-					for(Monster i: Frame.Monsters)
+					for(Monster i: game.Monsters)
 						i.setColor(Color.BROWN);
 				if(Bot_debug)
 					monti.setColor(Color.BLUE);
@@ -122,7 +124,7 @@ public class Bot1 implements BotKI{
 			return;
 		wheretogo = monti2.getX();
 		double timevalue = (bot.getY()-monti2.getY())/bot.getHisWeapon().getBulletSpeed();
-		if(Frame.Monster_Direction == 1){
+		if(game.Monster_Direction == 1){
 			wheretogo+=timevalue;
 		}else{
 			wheretogo-=timevalue;
@@ -172,7 +174,7 @@ public class Bot1 implements BotKI{
 		else
 			bot.moveRight();
 		if(Bot_debug)
-			for(Monster ppp: Frame.Monsters)
+			for(Monster ppp: game.Monsters)
 				ppp.setColor(Color.YELLOW);
 		return true;
 	}

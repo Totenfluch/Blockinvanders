@@ -7,10 +7,15 @@ import me.game.pack.Frame;
 import me.game.pack.Player;
 
 public class GetServerMessages{
-	public static String newestreply = null;
+	public String newestreply = null;
+	protected Frame game;
+	
+	public GetServerMessages(Frame game) {
+		this.game = game;
+	}
 
 
-	public static void CheckServerMessages(String message){
+	public void CheckServerMessages(String message){
 		//System.out.println(message);
 		if(message.startsWith("lobbys")){
 			message = message.replaceFirst("lobbys ", "");
@@ -26,8 +31,8 @@ public class GetServerMessages{
 				@Override
 				public void run() {
 					ObservableList<String> names = FXCollections.observableArrayList(lobbylist);
-					Frame.Lobbys.getItems().clear();
-					Frame.Lobbys.getItems().addAll(names);
+					game.Lobbys.getItems().clear();
+					game.Lobbys.getItems().addAll(names);
 				}
 			});
 		}else if(message.startsWith("setLobby")){
@@ -35,30 +40,30 @@ public class GetServerMessages{
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					Frame.CurrentLobby.setText("Your Lobby: " + split[1]);
+					game.CurrentLobby.setText("Your Lobby: " + split[1]);
 				}
 			});
 		}else if(message.equals("StartGame")){
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					Frame.Online_Coop = true;
-					Frame.Player1Name = "PH";
-					Frame.Players = new Player[2];
-					Frame.switchSceneToGame();
+					game.Online_Coop = true;
+					game.Player1Name = "PH";
+					game.Players = new Player[2];
+					game.switchSceneToGame();
 				}
 			});
 		}else if(message.startsWith("playerPos")){
 			String[] splinter = message.split(" ");
 			double xPos = Double.parseDouble(splinter[1]);
 			double yPos = Double.parseDouble(splinter[2]);
-			Frame.Players[1].setX(xPos);
-			Frame.Players[1].setY(yPos);
+			game.Players[1].setX(xPos);
+			game.Players[1].setY(yPos);
 		}else if(message.startsWith("shoot")){
 			String[] splinter = message.split(" ");
 			double xPos = Double.parseDouble(splinter[1]);
 			double yPos = Double.parseDouble(splinter[2]);
-			Frame.Players[1].getHisWeapon().shoot(xPos, yPos);
+			game.Players[1].getHisWeapon().shoot(xPos, yPos);
 		}
 	}
 }
