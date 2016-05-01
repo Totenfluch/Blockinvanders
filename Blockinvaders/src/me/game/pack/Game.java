@@ -7,8 +7,7 @@ public class Game extends Application {
 	static Frame spiel;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		spiel = new Frame();
+		spiel = Frame.getInstance();
 		launch(args);
 	}
 

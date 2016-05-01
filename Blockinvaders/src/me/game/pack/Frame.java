@@ -64,7 +64,7 @@ public class Frame {
 	public Player[] Players;
 
 	public Client client;
-	public Frame game = this;
+	public static Frame game;
 
 	public boolean Coop_enabled = false;
 	public boolean Online_Coop = false;
@@ -104,8 +104,14 @@ public class Frame {
 	public long refreshTime;
 	public int frames;
 
-	public Frame() {
-	}
+	private Frame() {}
+	
+	public static Frame getInstance() {
+        if (game == null) {
+        	game = new Frame();
+        }
+        return game;
+    }
 
 	public void start(Stage primaryStage) throws Exception {
 		MainStage = primaryStage;
