@@ -572,60 +572,60 @@ public class Frame {
 	}
 
 	public void switchSceneToGame() {
-		Player P1 = new Player(this, GAME_WIDTH / 2 - 100, 10, null);
+		Player P1 = new Player(GAME_WIDTH / 2 - 100, 10, null);
 		P1.giveWeapon(new StandardWaffe(P1));
 		P1.giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		Players[0] = P1;
 
 		if (Bot_enabled)
 			if (botID == 0)
-				bot = new Bot1(this, Players[0]);
+				bot = new Bot1(Players[0]);
 			else if (botID == 1)
-				bot = new Bot2(this, Players[0]);
+				bot = new Bot2(Players[0]);
 		if (Play_with_bot_enabled) {
-			Player P2 = new Player(this, GAME_WIDTH / 2 + 100, 10, null);
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 
 			if (botID == 0)
-				bot = new Bot1(this, Players[1]);
+				bot = new Bot1(Players[1]);
 			else if (botID == 1)
-				bot = new Bot2(this, Players[1]);
+				bot = new Bot2(Players[1]);
 		}
 
 		if (KI_Coop_enabled) {
-			bot = new Bot1(this, Players[0]);
+			bot = new Bot1(Players[0]);
 
-			Player P2 = new Player(this, GAME_WIDTH / 2 + 100, 10, null);
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 
-			bot2 = new Bot2(this, Players[1]);
+			bot2 = new Bot2(Players[1]);
 		}
 
 		if (Coop_enabled || Online_Coop) {
-			Player P2 = new Player(this, GAME_WIDTH / 2 + 100, 10, null);
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
 			P2.giveWeapon(new StandardWaffe(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 		}
 
 		if (KiPartyPlayers > 0) {
-			bots[0] = new Bot1(this, Players[0]);
+			bots[0] = new Bot1(Players[0]);
 			for (int i = 1; i < KiPartyPlayers; i++) {
-				Players[i] = new Player(this, GAME_WIDTH / 2 + 100 + 100 * i, 10, null);
+				Players[i] = new Player(GAME_WIDTH / 2 + 100 + 100 * i, 10, null);
 				Players[i].giveWeapon(new StandardWaffe(Players[i]));
 				Players[i].giveSpecialWeapon(new RocketLauncher(Players[i], 0));
 				if (i % 2 == 0)
-					bots[i] = new Bot1(this, Players[i]);
+					bots[i] = new Bot1(Players[i]);
 				else
-					bots[i] = new Bot2(this, Players[i]);
+					bots[i] = new Bot2(Players[i]);
 			}
 		}
 
-		MonsterWaves.SpawnWave(this, 0);
+		MonsterWaves.SpawnWave(0);
 		CreateTimers();
 		rTf.setCycleCount(Timeline.INDEFINITE);
 		tf.setCycleCount(Timeline.INDEFINITE);
@@ -721,7 +721,7 @@ public class Frame {
 		if (Monsters.size() == 0) {
 			clearcount++;
 			shootChance = (int) (10.0 + 2990 * Math.pow(Math.E, -0.07 * (clearcount + 1)));
-			MonsterWaves.SpawnWave(this, clearcount);
+			MonsterWaves.SpawnWave(clearcount);
 		}
 
 		int dead = 0;

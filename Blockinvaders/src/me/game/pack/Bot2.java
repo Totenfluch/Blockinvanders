@@ -14,8 +14,8 @@ public class Bot2 implements BotKI {
 	private Bullet dodge;
 	private Monster locked = null;
 
-	public Bot2(Frame game, Player player) {
-		this.game = game;
+	public Bot2(Player player) {
+		this.game = Frame.getInstance();
 		this.player = player;
 	}
 

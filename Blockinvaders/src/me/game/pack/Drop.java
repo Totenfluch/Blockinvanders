@@ -33,8 +33,8 @@ public class Drop {
 		return yPos;
 	}
 
-	public Drop(Frame game, double xPos, double yPos, Drops drop){
-		this.game = game;
+	public Drop(double xPos, double yPos, Drops drop){
+		this.game = Frame.getInstance();
 		this.xPos = xPos;
 		this.yPos = yPos;
 		if(this.getDroptype() == Drops.NEXTWEAPON){

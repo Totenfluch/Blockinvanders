@@ -51,8 +51,8 @@ public abstract class Character {
 		return life;
 	}
 	
-	public Character(Frame game, double xPos, double yPos,int leben, Weapon waffe){
-		this.game = game;
+	public Character(double xPos, double yPos,int leben, Weapon waffe){
+		this.game = Frame.getInstance();
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.life = leben;

@@ -19,8 +19,8 @@ public class Bot1 implements BotKI{
 	public Monster Target = null;
 
 	private Bullet escapeThis = null;
-	public Bot1(Frame game, Player p){
-		this.game = game;
+	public Bot1(Player p){
+		this.game = Frame.getInstance();
 		this.bot = p;
 	}
 

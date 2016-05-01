@@ -7,8 +7,8 @@ public class Player extends Character {
 	private double movementSpeed = 6.0;
 	private int score;
 	
-	public Player(Frame game, double xPos, int leben, PlayerWeapon waffe){
-		super(game, xPos, 800, leben, waffe);
+	public Player(double xPos, int leben, PlayerWeapon waffe){
+		super(xPos, 800, leben, waffe);
 		heigth = 60;
 		width = 40;
 	}
