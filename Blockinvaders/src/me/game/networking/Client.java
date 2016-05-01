@@ -23,8 +23,8 @@ public class Client implements Runnable
 	public DataOutputStream dout;
 	public DataInputStream din;
 
-	public Client(Frame game, String host, int port) {
-		this.game = game;
+	public Client(String host, int port) {
+		this.game = Frame.getInstance();
 		gsm = new GetServerMessages(this.game);
 		try {
 			socket = new Socket( host, port );

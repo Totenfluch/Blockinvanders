@@ -339,21 +339,41 @@ public class Frame {
 		CurrentLobby.setFont(new Font(20));
 		CurrentLobby.setFill(Color.WHITE);
 
+		HBox Online_coop_hbox = new HBox();
+		
 		Button Confirm = new Button("Online Coop");
-		connect_MiddlePart.getChildren().add(Confirm);
 		connect_MiddlePart.setAlignment(Pos.TOP_CENTER);
+		connect_MiddlePart.getChildren().add(Online_coop_hbox);
 		Confirm.setAlignment(Pos.BOTTOM_CENTER);
+
+		
+		TextField AlternativeIP = new TextField();
+		AlternativeIP.setPromptText("Alternative IP (Optional)");
+		Online_coop_hbox.getChildren().add(AlternativeIP);
+		Online_coop_hbox.getChildren().add(Confirm);
+		Online_coop_hbox.setAlignment(Pos.TOP_CENTER);
+		Online_coop_hbox.setSpacing(10);
+		
 		Confirm.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				connect_Bp.setRight(LobbyVBox);
-				client = new Client(game, "127.0.0.1", 1521); // for testing
+				if(AlternativeIP.getText().equals("")){
+					client = new Client("127.0.0.1", 1521); // for testing
 																// purposes. old
 																// value:
 																// "139.59.134.247"
-				DebugConsole.appendText("Connected to Server\n");
+					connect_Bp.setRight(LobbyVBox);
+					DebugConsole.appendText("Connected to Server\n");
+				}else if(AlternativeIP.getText().contains(".") && AlternativeIP.getText().length() > 6 && AlternativeIP.getText().length() < 16 && !AlternativeIP.getText().matches("^[a-zA-Z]")){
+					client = new Client(AlternativeIP.getText(), 1521);
+					connect_Bp.setRight(LobbyVBox);
+					DebugConsole.appendText("Connected to Server\n");
+				}else
+					System.out.println("Wrong IP m8");
 			}
 		});
+		
+		
 		DebugConsole = new TextArea();
 		// DebugConsole.setDisable(true); -- disable user input
 		DebugConsole.textProperty().addListener(new ChangeListener<Object>() {
