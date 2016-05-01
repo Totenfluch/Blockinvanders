@@ -10,9 +10,16 @@ public class Player extends Character {
 	private int score;
 	public static int activePlayers = 0;
 	private int playerNumber;
+	private static Frame instance;
 	
 	public Player(double xPos, int leben, PlayerWeapon waffe){
 		super(xPos, 800, leben, waffe);
+		if(instance == null)
+			instance = Frame.getInstance();
+		else if(instance != Frame.getInstance()){
+			instance = Frame.getInstance();
+			activePlayers = 0;
+		}
 		heigth = 60;
 		width = 40;
 		playerNumber = activePlayers++;
