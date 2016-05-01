@@ -104,18 +104,167 @@ public class Frame {
 	public long refreshTime;
 	public int frames;
 
-	private Frame() {}
-	
+	private Frame() {
+	}
+
 	public static Frame getInstance() {
-        if (game == null) {
-        	game = new Frame();
-        }
-        return game;
-    }
+		if (game == null) {
+			game = new Frame();
+		}
+		return game;
+	}
 
 	public void start(Stage primaryStage) throws Exception {
 		MainStage = primaryStage;
 		MainStage.setTitle("BlockInvaders");
+
+		connectScene();
+
+		// Game Scene
+		HBox cvcontainer = new HBox();
+		cv = new Canvas(GAME_WIDTH, GAME_LENGTH);
+		gc = cv.getGraphicsContext2D();
+		cvcontainer.getChildren().add(cv);
+		gc.setFill(Color.BLACK);
+		gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
+		GameScene = new Scene(cvcontainer, GAME_WIDTH, GAME_LENGTH);
+
+		MainStage.show();
+
+		// draw Thread
+		draw();
+		
+		
+		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.A) {
+					P1_inLeft = true;
+				} else if (event.getCode() == KeyCode.D) {
+					P1_inRight = true;
+				}
+				if (event.getCode() == KeyCode.W) {
+					P1_inShoot = true;
+				}
+				if (event.getCode() == KeyCode.CONTROL) {
+					if (Players[0].getHisSpecialWeapon() != null)
+						Players[0].getHisSpecialWeapon().shoot(Players[0].getX(), Players[0].getY());
+				}
+
+				if (event.getCode() == KeyCode.LEFT) {
+					P2_inLeft = true;
+				} else if (event.getCode() == KeyCode.RIGHT) {
+					P2_inRight = true;
+				}
+				if (event.getCode() == KeyCode.UP) {
+					P2_inShoot = true;
+				}
+				if (event.getCode() == KeyCode.NUMPAD0 && Coop_enabled) {
+					if (Players[1].getHisSpecialWeapon() != null)
+						Players[1].getHisSpecialWeapon().shoot(Players[1].getX(), Players[1].getY());
+				}
+
+			}
+		});
+
+		GameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.A) {
+					P1_inLeft = false;
+				} else if (event.getCode() == KeyCode.D) {
+					P1_inRight = false;
+				}
+				if (event.getCode() == KeyCode.W) {
+					P1_inShoot = false;
+				}
+
+				if (Coop_enabled) {
+					if (event.getCode() == KeyCode.LEFT) {
+						P2_inLeft = false;
+					} else if (event.getCode() == KeyCode.RIGHT) {
+						P2_inRight = false;
+					}
+					if (event.getCode() == KeyCode.UP) {
+						P2_inShoot = false;
+					}
+				}
+			}
+		});
+
+		MainStage.setOnCloseRequest(e -> {
+			System.exit(0);
+		});
+
+		if (loadSettings())
+			switchSceneToGame();
+	}
+
+	public void switchSceneToGame() {
+		Player P1 = new Player(GAME_WIDTH / 2 - 100, 10, null);
+		P1.giveWeapon(new StandardWaffe(P1));
+		P1.giveSpecialWeapon(new RocketLauncher(Players[0], 0));
+		Players[0] = P1;
+
+		if (Bot_enabled)
+			if (botID == 0)
+				bot = new Bot1(Players[0]);
+			else if (botID == 1)
+				bot = new Bot2(Players[0]);
+		if (Play_with_bot_enabled) {
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+			P2.giveWeapon(new StandardWaffe(P2));
+			Players[1] = P2;
+			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
+
+			if (botID == 0)
+				bot = new Bot1(Players[1]);
+			else if (botID == 1)
+				bot = new Bot2(Players[1]);
+		}
+
+		if (KI_Coop_enabled) {
+			bot = new Bot1(Players[0]);
+
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+			P2.giveWeapon(new StandardWaffe(P2));
+			Players[1] = P2;
+			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
+
+			bot2 = new Bot2(Players[1]);
+		}
+
+		if (Coop_enabled || Online_Coop) {
+			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
+			P2.giveWeapon(new StandardWaffe(P2));
+			Players[1] = P2;
+			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
+		}
+
+		if (KiPartyPlayers > 0) {
+			bots[0] = new Bot1(Players[0]);
+			for (int i = 1; i < KiPartyPlayers; i++) {
+				Players[i] = new Player(GAME_WIDTH / 2 + 100 + 100 * i, 10, null);
+				Players[i].giveWeapon(new StandardWaffe(Players[i]));
+				Players[i].giveSpecialWeapon(new RocketLauncher(Players[i], 0));
+				if (i % 2 == 0)
+					bots[i] = new Bot1(Players[i]);
+				else
+					bots[i] = new Bot2(Players[i]);
+			}
+		}
+
+		MonsterWaves.SpawnWave(0);
+		CreateTimers();
+		rTf.setCycleCount(Timeline.INDEFINITE);
+		tf.setCycleCount(Timeline.INDEFINITE);
+		tf.play();
+		rTf.play();
+
+		MainStage.setScene(GameScene);
+	}
+
+	public void connectScene() {
 		// Connect Scene
 		BorderPane connect_Bp = new BorderPane();
 		ImageView back = new ImageView(new Image("background.jpg"));
@@ -340,40 +489,39 @@ public class Frame {
 		CurrentLobby.setFill(Color.WHITE);
 
 		HBox Online_coop_hbox = new HBox();
-		
+
 		Button Confirm = new Button("Online Coop");
 		connect_MiddlePart.setAlignment(Pos.TOP_CENTER);
 		connect_MiddlePart.getChildren().add(Online_coop_hbox);
 		Confirm.setAlignment(Pos.BOTTOM_CENTER);
 
-		
 		TextField AlternativeIP = new TextField();
 		AlternativeIP.setPromptText("Alternative IP (Optional)");
 		Online_coop_hbox.getChildren().add(AlternativeIP);
 		Online_coop_hbox.getChildren().add(Confirm);
 		Online_coop_hbox.setAlignment(Pos.TOP_CENTER);
 		Online_coop_hbox.setSpacing(10);
-		
+
 		Confirm.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(AlternativeIP.getText().equals("")){
+				if (AlternativeIP.getText().equals("")) {
 					client = new Client("127.0.0.1", 1521); // for testing
-																// purposes. old
-																// value:
-																// "139.59.134.247"
+															// purposes. old
+															// value:
+															// "139.59.134.247"
 					connect_Bp.setRight(LobbyVBox);
 					DebugConsole.appendText("Connected to Server\n");
-				}else if(AlternativeIP.getText().contains(".") && AlternativeIP.getText().length() > 6 && AlternativeIP.getText().length() < 16 && !AlternativeIP.getText().matches("^[a-zA-Z]")){
+				} else if (AlternativeIP.getText().contains(".") && AlternativeIP.getText().length() > 6
+						&& AlternativeIP.getText().length() < 16 && !AlternativeIP.getText().matches("^[a-zA-Z]")) {
 					client = new Client(AlternativeIP.getText(), 1521);
 					connect_Bp.setRight(LobbyVBox);
 					DebugConsole.appendText("Connected to Server\n");
-				}else
+				} else
 					System.out.println("Wrong IP m8");
 			}
 		});
-		
-		
+
 		DebugConsole = new TextArea();
 		// DebugConsole.setDisable(true); -- disable user input
 		DebugConsole.textProperty().addListener(new ChangeListener<Object>() {
@@ -388,21 +536,13 @@ public class Frame {
 		MainStage.setScene(ConnectScene);
 
 		// Connect Scene fin
+	}
 
-		// Game Scene
-		HBox cvcontainer = new HBox();
-		cv = new Canvas(GAME_WIDTH, GAME_LENGTH);
-		gc = cv.getGraphicsContext2D();
-		cvcontainer.getChildren().add(cv);
-		gc.setFill(Color.BLACK);
-		gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
-		GameScene = new Scene(cvcontainer, GAME_WIDTH, GAME_LENGTH);
-
-		MainStage.show();
-
+	public void draw() {
 		tf = new Timeline(new KeyFrame(Duration.millis(5), ae -> {
 			frames++;
 			long time = System.nanoTime();
+			
 
 			gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 			gc.setFill(Color.BLACK);
@@ -526,133 +666,10 @@ public class Frame {
 			gc.setFont(new Font("Impact", 20));
 			gc.fillText("Wave: " + (clearcount + 1), GAME_WIDTH / 2 - 30, 40);
 
+			
 			frameTime += System.nanoTime() - time;
 		}));
 
-		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.A) {
-					P1_inLeft = true;
-				} else if (event.getCode() == KeyCode.D) {
-					P1_inRight = true;
-				}
-				if (event.getCode() == KeyCode.W) {
-					P1_inShoot = true;
-				}
-				if (event.getCode() == KeyCode.CONTROL) {
-					if (Players[0].getHisSpecialWeapon() != null)
-						Players[0].getHisSpecialWeapon().shoot(Players[0].getX(), Players[0].getY());
-				}
-
-				if (event.getCode() == KeyCode.LEFT) {
-					P2_inLeft = true;
-				} else if (event.getCode() == KeyCode.RIGHT) {
-					P2_inRight = true;
-				}
-				if (event.getCode() == KeyCode.UP) {
-					P2_inShoot = true;
-				}
-				if (event.getCode() == KeyCode.NUMPAD0 && Coop_enabled) {
-					if (Players[1].getHisSpecialWeapon() != null)
-						Players[1].getHisSpecialWeapon().shoot(Players[1].getX(), Players[1].getY());
-				}
-
-			}
-		});
-
-		GameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.A) {
-					P1_inLeft = false;
-				} else if (event.getCode() == KeyCode.D) {
-					P1_inRight = false;
-				}
-				if (event.getCode() == KeyCode.W) {
-					P1_inShoot = false;
-				}
-
-				if (Coop_enabled) {
-					if (event.getCode() == KeyCode.LEFT) {
-						P2_inLeft = false;
-					} else if (event.getCode() == KeyCode.RIGHT) {
-						P2_inRight = false;
-					}
-					if (event.getCode() == KeyCode.UP) {
-						P2_inShoot = false;
-					}
-				}
-			}
-		});
-
-		MainStage.setOnCloseRequest(e -> {
-			System.exit(0);
-		});
-	}
-
-	public void switchSceneToGame() {
-		Player P1 = new Player(GAME_WIDTH / 2 - 100, 10, null);
-		P1.giveWeapon(new StandardWaffe(P1));
-		P1.giveSpecialWeapon(new RocketLauncher(Players[0], 0));
-		Players[0] = P1;
-
-		if (Bot_enabled)
-			if (botID == 0)
-				bot = new Bot1(Players[0]);
-			else if (botID == 1)
-				bot = new Bot2(Players[0]);
-		if (Play_with_bot_enabled) {
-			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
-			P2.giveWeapon(new StandardWaffe(P2));
-			Players[1] = P2;
-			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
-
-			if (botID == 0)
-				bot = new Bot1(Players[1]);
-			else if (botID == 1)
-				bot = new Bot2(Players[1]);
-		}
-
-		if (KI_Coop_enabled) {
-			bot = new Bot1(Players[0]);
-
-			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
-			P2.giveWeapon(new StandardWaffe(P2));
-			Players[1] = P2;
-			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
-
-			bot2 = new Bot2(Players[1]);
-		}
-
-		if (Coop_enabled || Online_Coop) {
-			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
-			P2.giveWeapon(new StandardWaffe(P2));
-			Players[1] = P2;
-			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
-		}
-
-		if (KiPartyPlayers > 0) {
-			bots[0] = new Bot1(Players[0]);
-			for (int i = 1; i < KiPartyPlayers; i++) {
-				Players[i] = new Player(GAME_WIDTH / 2 + 100 + 100 * i, 10, null);
-				Players[i].giveWeapon(new StandardWaffe(Players[i]));
-				Players[i].giveSpecialWeapon(new RocketLauncher(Players[i], 0));
-				if (i % 2 == 0)
-					bots[i] = new Bot1(Players[i]);
-				else
-					bots[i] = new Bot2(Players[i]);
-			}
-		}
-
-		MonsterWaves.SpawnWave(0);
-		CreateTimers();
-		rTf.setCycleCount(Timeline.INDEFINITE);
-		tf.setCycleCount(Timeline.INDEFINITE);
-		tf.play();
-		rTf.play();
-
-		MainStage.setScene(GameScene);
 	}
 
 	public void CreateTimers() {
@@ -776,6 +793,9 @@ public class Frame {
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
 		PublishScores();
+
+		saveSettings();
+		Game.restart();
 	}
 
 	@SuppressWarnings("unused")
@@ -791,6 +811,73 @@ public class Frame {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public boolean loadSettings() {
+		if (Game.getSettings() == null)
+			return false;
+
+		GameSettings gs = Game.getSettings();
+
+		switch (gs.getGameMode()) {
+		case 0:
+			Coop_enabled = false;
+			break;
+
+		case 1:
+			Coop_enabled = true;
+			break;
+
+		case 2:
+			// not supported
+			return false;
+
+		case 3:
+			Play_with_bot_enabled = true;
+			break;
+
+		case 4:
+			Bot_enabled = true;
+			Bot1.Bot_debug = true;
+			break;
+
+		case 5:
+			KI_Coop_enabled = true;
+			break;
+
+		case 6:
+			KiPartyPlayers = gs.getPlayerNum();
+			break;
+		}
+
+		Players = new Player[gs.getPlayerNum()];
+		GameSpeed = gs.getGameSpeed();
+		botID = gs.getBotID();
+
+		Player1Name = gs.getPlayer1Name();
+		Player2Name = gs.getPlayer2Name();
+
+		return true;
+	}
+
+	public void saveSettings() {
+		int gameMode = 0;
+
+		if (Coop_enabled)
+			gameMode = 1;
+		else if (Online_Coop)
+			gameMode = 2;
+		else if (Play_with_bot_enabled)
+			gameMode = 3;
+		else if (Bot_enabled)
+			gameMode = 4;
+		else if (KI_Coop_enabled)
+			gameMode = 5;
+		else if (KiPartyPlayers > 0)
+			gameMode = 6;
+
+		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name);
+		Game.setSettings(gs);
 	}
 
 }
