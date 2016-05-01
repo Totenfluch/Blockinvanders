@@ -41,7 +41,16 @@ public class Bot1 implements BotKI{
 				moveToClosestEnemy();
 				bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 			}else{
-				if(bot.getHisWeapon().getAmmo() == 0)
+				boolean clear = true;
+				for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
+					for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
+						Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
+						if(bul.checkHit(bot.getX()-10, 0, bot.getWidth()+20, Frame.GAME_LENGTH)){
+							clear = false;
+						}
+					}
+				}
+				if(bot.getHisWeapon().getAmmo() == 0 || !clear)
 					bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 			}
 		}else{
@@ -184,7 +193,7 @@ public class Bot1 implements BotKI{
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-				if(bul.checkHit(bot.getX()+bot.width, bot.getY()-bot.getHeight(), bul.getWidth()+10, bot.heigth*2)){
+				if(bul.checkHit(bot.getX()+bot.width, bot.getY()-bot.getHeight(), bul.getWidth()+40, bot.heigth*2)){
 					clear = false;
 				}
 			}
@@ -198,7 +207,7 @@ public class Bot1 implements BotKI{
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-				if(bul.checkHit(bot.getX(), bot.getY()-bot.getHeight(), -bul.getWidth()-10, bot.heigth*2)){
+				if(bul.checkHit(bot.getX(), bot.getY()-bot.getHeight(), -bul.getWidth()-40, bot.heigth*2)){
 					clear = false;
 				}
 			}
