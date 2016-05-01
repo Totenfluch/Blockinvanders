@@ -411,7 +411,7 @@ public class Frame {
 			// Players
 
 			for (int i = 0; i < Players.length; i++) 
-				Players[i].draw(gc);;
+				Players[i].draw(gc);
 			
 
 			for (int i = 0; i < Monsters.size(); i++) {
