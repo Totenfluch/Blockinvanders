@@ -51,7 +51,7 @@ public class Bot1 implements BotKI{
 		if((game.Monsters.size() > 10  || (game.clearcount%5==4 && game.clearcount > 20)) && bot.getHisSpecialWeapon().getAmmo() > 0)
 			if((bot.getX() > 600 && bot.getX() < 1000))
 				bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
-			
+
 	}
 
 	public boolean checkForBullets(){
@@ -61,7 +61,7 @@ public class Bot1 implements BotKI{
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
 					if(bul.checkHit(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2)){
-						
+
 						escapeThis = bul;
 						if(bot.getX() < Frame.GAME_WIDTH/4)
 							inRight = true;
@@ -107,7 +107,7 @@ public class Bot1 implements BotKI{
 		}
 		return monti2;
 	}
-	
+
 	public void moveToClosestEnemy(){
 		Monster monti2 = null;
 		double wheretogo = 0;
@@ -131,9 +131,9 @@ public class Bot1 implements BotKI{
 		}
 
 		if(bot.getX() > wheretogo)
-			bot.moveLeft();
+			tryMoveLeft();
 		else
-			bot.moveRight();
+			tryMoveRight();
 	}
 
 	public boolean findWeaponUpgrade(){
@@ -170,12 +170,40 @@ public class Bot1 implements BotKI{
 			return false;
 		double wheretogo = p.xPos;
 		if(bot.getX() > wheretogo)
-			bot.moveLeft();
+			tryMoveLeft();
 		else
-			bot.moveRight();
+			tryMoveRight();
 		if(Bot_debug)
 			for(Monster ppp: game.Monsters)
 				ppp.setColor(Color.YELLOW);
 		return true;
+	}
+
+	private void tryMoveRight(){
+		boolean clear = true;
+		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
+			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
+				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
+				if(bul.checkHit(bot.getX()+bot.width, bot.getY()-bot.getHeight(), bul.getWidth()+10, bot.heigth*2)){
+					clear = false;
+				}
+			}
+		}
+		if(clear)
+			bot.moveRight();
+	}
+
+	private void tryMoveLeft(){
+		boolean clear = true;
+		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
+			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
+				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
+				if(bul.checkHit(bot.getX(), bot.getY()-bot.getHeight(), -bul.getWidth()-10, bot.heigth*2)){
+					clear = false;
+				}
+			}
+		}
+		if(clear)
+			bot.moveLeft();
 	}
 }
