@@ -89,7 +89,7 @@ public class Frame {
 	public int Monster_Direction = 0;
 	public int Monster_HP = 60;
 	public int clearcount = 0;
-	public int shootChance = 3;
+	public int shootChance = 3000;
 
 	public String Player1Name;
 	public String Player2Name;
