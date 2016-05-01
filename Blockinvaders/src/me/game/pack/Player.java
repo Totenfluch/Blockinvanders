@@ -1,17 +1,21 @@
 package me.game.pack;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import me.game.weapons.PlayerWeapon;
 
 public class Player extends Character {
 
 	private double movementSpeed = 6.0;
 	private int score;
+	public static int activePlayers = 0;
+	private int playerNumber;
 	
 	public Player(double xPos, int leben, PlayerWeapon waffe){
 		super(xPos, 800, leben, waffe);
 		heigth = 60;
 		width = 40;
+		playerNumber = activePlayers++;
 	}
 	
 	public void setSpeed(double speed){
@@ -75,6 +79,15 @@ public class Player extends Character {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO
+		if (playerNumber == 0)
+			gc.setFill(Color.PURPLE);
+		else if (playerNumber == 1)
+			gc.setFill(Color.LIME);
+		else if (playerNumber == 2)
+			gc.setFill(Color.BLUE);
+		else if (playerNumber == 3)
+			gc.setFill(Color.CRIMSON);
+		if(alive)
+			gc.fillRect(xPos, yPos, width, heigth);
 	}
 }

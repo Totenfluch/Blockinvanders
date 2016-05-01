@@ -550,20 +550,9 @@ public class Frame {
 
 			// Players
 
-			for (int i = 0; i < Players.length; i++) {
-				if (i == 0)
-					gc.setFill(Color.PURPLE);
-				else if (i == 1)
-					gc.setFill(Color.LIME);
-				else if (i == 2)
-					gc.setFill(Color.BLUE);
-				else if (i == 3)
-					gc.setFill(Color.CRIMSON);
-
-				Player p = Players[i];
-				if (p.isAlive())
-					gc.fillRect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
-			}
+			for (int i = 0; i < Players.length; i++) 
+				Players[i].draw(gc);
+			
 
 			for (int i = 0; i < Monsters.size(); i++) {
 				Monster Monti = Monsters.elementAt(i);
