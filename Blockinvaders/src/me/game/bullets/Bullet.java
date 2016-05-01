@@ -1,10 +1,11 @@
 package me.game.bullets;
 
 import javafx.scene.shape.Rectangle;
+import me.game.pack.Drawable;
 import me.game.weapons.Weapon;
 
 
-public abstract class Bullet {
+public abstract class Bullet implements Drawable{
 
 	double xPos, yPos;
 	double height, width;

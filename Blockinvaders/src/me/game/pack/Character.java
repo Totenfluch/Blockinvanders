@@ -5,7 +5,7 @@ import com.sun.javafx.geom.Rectangle;
 import me.game.weapons.SpecialWeapon;
 import me.game.weapons.Weapon;
 
-public abstract class Character {
+public abstract class Character implements Drawable{
 	public final Frame game;
 	protected int life;
 	protected boolean alive = true;

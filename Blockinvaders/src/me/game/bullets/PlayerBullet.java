@@ -1,5 +1,6 @@
 package me.game.bullets;
 
+import javafx.scene.canvas.GraphicsContext;
 import me.game.pack.Frame;
 import me.game.pack.Monster;
 import me.game.pack.Player;
@@ -31,6 +32,11 @@ public class PlayerBullet extends Bullet {
 		
 		xPos += dx;
 		yPos -= dy;
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		// TODO
 	}
 
 }

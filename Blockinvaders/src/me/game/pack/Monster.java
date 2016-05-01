@@ -2,11 +2,12 @@ package me.game.pack;
 
 import java.util.Random;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.Weapon;
 
-public class Monster extends Character{
+public class Monster extends Character {
 
 	private int worth;
 
@@ -115,6 +116,11 @@ public class Monster extends Character{
 
 	public int getWorth(){
 		return worth;
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		// TODO
 	}
 
 }

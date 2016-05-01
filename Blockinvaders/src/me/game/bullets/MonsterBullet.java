@@ -1,5 +1,6 @@
 package me.game.bullets;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import me.game.pack.Frame;
 import me.game.pack.Monster;
@@ -35,5 +36,10 @@ public class MonsterBullet extends Bullet {
 		
 		xPos += dx;
 		yPos += dy;
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		// TODO
 	}
 }

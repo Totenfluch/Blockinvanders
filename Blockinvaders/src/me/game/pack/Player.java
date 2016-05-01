@@ -1,5 +1,6 @@
 package me.game.pack;
 
+import javafx.scene.canvas.GraphicsContext;
 import me.game.weapons.PlayerWeapon;
 
 public class Player extends Character {
@@ -70,5 +71,10 @@ public class Player extends Character {
 	
 	public int getScore(){
 		return this.score;
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		// TODO
 	}
 }

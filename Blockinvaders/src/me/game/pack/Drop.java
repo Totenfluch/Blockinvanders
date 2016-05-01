@@ -3,12 +3,13 @@ package me.game.pack;
 import java.util.Random;
 import java.util.Vector;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import me.game.weapons.PlayerWeapon;
 import me.game.weapons.PlayerWeapon.WeaponType;
 import me.game.weapons.RocketLauncher;
 
-public class Drop {
+public class Drop implements Drawable{
 	final Frame game;
 	protected double xPos, yPos;
 	public static final int DropSizeX = 10;
@@ -112,5 +113,10 @@ public class Drop {
 		if(rt1.intersects(rt2.getBoundsInLocal()))
 			return true;
 		return false;
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		// TODO
 	}
 }

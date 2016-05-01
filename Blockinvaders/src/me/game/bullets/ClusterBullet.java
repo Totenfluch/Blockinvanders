@@ -2,6 +2,7 @@ package me.game.bullets;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
 import me.game.weapons.PlayerWeapon;
 import me.game.weapons.Weapon;
@@ -26,6 +27,11 @@ public class ClusterBullet extends TimedBullet{
 		tf.play();
 			
 		waffe.getKugeln().remove(this);
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		// TODO
 	}
 
 }
