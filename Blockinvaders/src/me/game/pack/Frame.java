@@ -559,27 +559,22 @@ public class Frame {
 			for(Monster monti : Monsters)
 				monti.draw(gc);
 
-			gc.setFill(Color.AQUA);
-			for (int i = 0; i < PlayerWeapon.ActiveWeapons.size(); i++) {
-				for (int x = 0; x < PlayerWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++) {
-					Bullet draw = PlayerWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-					gc.fillRect(draw.getxPos(), draw.getyPos(), draw.getWidth(), draw.getHeight());
-				}
-			}
+			// Draw Player Bullets
+			for(PlayerWeapon Pw : PlayerWeapon.ActiveWeapons)
+				for(Bullet Pb : Pw.getKugeln())
+					Pb.draw(gc);
 
-			gc.setFill(Color.RED);
-			for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++) {
-				for (int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++) {
-					Bullet draw = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-					gc.fillRect(draw.getxPos(), draw.getyPos(), draw.getWidth(), draw.getHeight());
-				}
-			}
+			// Draw Monster Bullets
+			for(MonsterWeapon Pw : MonsterWeapon.ActiveWeapons)
+				for(Bullet Pb : Pw.getKugeln())
+					Pb.draw(gc);
 
+			// Draw Drops
 			for(Drop drop : Drop.AllDrops)
 				drop.draw(gc);
 			
+			// Wave Counter
 			gc.setFill(Color.GOLD);
-
 			gc.setFont(new Font("Impact", 20));
 			gc.fillText("Wave: " + (clearcount + 1), GAME_WIDTH / 2 - 30, 40);
 

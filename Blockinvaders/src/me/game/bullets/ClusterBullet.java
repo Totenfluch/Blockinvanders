@@ -3,6 +3,7 @@ package me.game.bullets;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import me.game.weapons.PlayerWeapon;
 import me.game.weapons.Weapon;
@@ -31,7 +32,8 @@ public class ClusterBullet extends TimedBullet{
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO
+		gc.setFill(Color.AQUA);
+		gc.fillRect(xPos, yPos, width, height);
 	}
 
 }

@@ -40,6 +40,7 @@ public class MonsterBullet extends Bullet {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO
+		gc.setFill(Color.RED);
+		gc.fillRect(xPos, yPos, width, height);
 	}
 }
