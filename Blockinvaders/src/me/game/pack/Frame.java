@@ -50,20 +50,20 @@ public class Frame {
 	public static final int GAME_WIDTH = 1600;
 	public static final int GAME_LENGTH = 900;
 
-	public Timeline tf;
-	public Timeline rTf;
+	private Timeline tf;
+	private Timeline rTf;
 	private Timeline SpawnWaveDelay;
 
-	public Canvas cv;
-	public GraphicsContext gc;
+	private Canvas cv;
+	private GraphicsContext gc;
 	
-	public Canvas gOcanvas;
-	public GraphicsContext gOgc;
+	private Canvas gOcanvas;
+	private GraphicsContext gOgc;
 
-	public Stage MainStage;
-	public Scene ConnectScene;
-	public Scene GameScene;
-	public Scene gameOverScene;
+	private Stage MainStage;
+	private Scene ConnectScene;
+	private Scene GameScene;
+	private Scene gameOverScene;
 
 	public Player[] Players;
 
@@ -75,42 +75,43 @@ public class Frame {
 	public boolean Bot_enabled = false;
 	public boolean KI_Coop_enabled = false;
 	public boolean Play_with_bot_enabled = false;
-	public int KiPartyPlayers = 0;
-	public int botID = 0;
-	public BotKI bot;
-	public BotKI bot2;
-	public BotKI[] bots;
-	public TextArea DebugConsole;
-	public int GameSpeed = 8;
-	public boolean respawnDelayActive = false;
+	private int KiPartyPlayers = 0;
+	private int botID = 0;
+	private BotKI bot;
+	private BotKI bot2;
+	private BotKI[] bots;
+	private TextArea DebugConsole;
+	private int GameSpeed = 8;
+	private boolean respawnDelayActive = false;
 
-	public boolean P1_inRight = false;
-	public boolean P1_inLeft = false;
-	public boolean P1_inShoot = false;
-	public boolean P2_inRight = false;
-	public boolean P2_inLeft = false;
-	public boolean P2_inShoot = false;
+	public int Monster_HP = 60;
 	public Vector<Monster> Monsters = new Vector<Monster>(64, 5);
 	public int Monster_Direction = 0;
-	public int Monster_HP = 60;
-	public int clearcount = 0;
-	public int shootChance = 3000;
-
 	public String Player1Name;
 	public String Player2Name;
+	
+	
+	private boolean P1_inRight = false;
+	private boolean P1_inLeft = false;
+	private boolean P1_inShoot = false;
+	private boolean P2_inRight = false;
+	private boolean P2_inLeft = false;
+	private boolean P2_inShoot = false;
+	
+	public int clearcount = 0;
+	private int shootChance = 3000;
 
-	public int Tick = 0;
+	private int Tick = 0;
 	public int movetick = 0;
 
 	public ListView<String> Lobbys;
 	public Text CurrentLobby;
 
-	public long frameTime;
-	public long refreshTime;
-	public int frames;
+	private long frameTime;
+	private long refreshTime;
+	private int frames;
 
-	private Frame() {
-	}
+	private Frame() {}
 
 	public static Frame getInstance() {
 		if (game == null) {
