@@ -1,7 +1,11 @@
 package me.game.pack;
 
+import java.util.Vector;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
+import me.game.weapons.MonsterWeapon;
+import me.game.weapons.PlayerWeapon;
 
 public class Game extends Application {
 	static Frame spiel;
@@ -35,6 +39,11 @@ public class Game extends Application {
 	public static void restart(){
 		Frame.game = null;
 		spiel = Frame.getInstance();
+		
+		PlayerWeapon.ActiveWeapons = new Vector<PlayerWeapon>();
+		MonsterWeapon.ActiveWeapons = new Vector<MonsterWeapon>();
+		Drop.AllDrops = new Vector<Drop>();
+		
 		try {
 			spiel.start(primaryStage);
 		} catch (Exception e) {
