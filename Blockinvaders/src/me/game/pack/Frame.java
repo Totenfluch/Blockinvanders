@@ -81,6 +81,7 @@ public class Frame {
 	public BotKI[] bots;
 	public TextArea DebugConsole;
 	public int GameSpeed = 8;
+	public boolean respawnDelayActive = false;
 
 	public boolean P1_inRight = false;
 	public boolean P1_inLeft = false;
@@ -667,10 +668,15 @@ public class Frame {
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++)
 			MonsterWeapon.ActiveWeapons.elementAt(i).refresh();
 
-		if (Monsters.size() == 0) {
+		if (Monsters.size() == 0 && !respawnDelayActive) {
 			clearcount++;
 			shootChance = (int) (10.0 + 2990 * Math.pow(Math.E, -0.07 * (clearcount + 1)));
-			MonsterWaves.SpawnWave(clearcount);
+			Timeline SpawnWaveDelay = new Timeline(new KeyFrame(Duration.millis(GameSpeed*375), ae->{
+				MonsterWaves.SpawnWave(clearcount);
+				respawnDelayActive = false;
+			}));
+			SpawnWaveDelay.play();
+			respawnDelayActive = true;
 		}
 
 		int dead = 0;
