@@ -14,7 +14,6 @@ public class Bot1 implements BotKI{
 	 */
 	public final Frame game;
 	private Player bot;
-	private boolean inRight = true;
 	public static boolean Bot_debug = false;
 	public Monster Target = null;
 
@@ -70,22 +69,11 @@ public class Bot1 implements BotKI{
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
 					if(bul.checkHit(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2)){
-
 						escapeThis = bul;
-						if(bot.getX() < Frame.GAME_WIDTH/4)
-							inRight = true;
-						if(bot.getX() > Frame.GAME_WIDTH/4*3)
-							inRight = false;
 
-						/*if(bul.checkHit(bot.getX()-25, bot.getY()-50, bot.getWidth()*2+10, 150))
-							inRight = false;
-						else if(bul.checkHit(bot.getX()-bot.getWidth()*2-10, bot.getY()-50, bot.getX()+bot.getWidth()*2+10, 150))
-							inRight = true;*/
+						if(!tryMoveRight())
+							tryMoveLeft();
 
-						if(inRight)
-							bot.moveRight();
-						else
-							bot.moveLeft();
 						dogeing = true;
 						if(Bot_debug)
 							for(Monster p: game.Monsters)
@@ -188,7 +176,7 @@ public class Bot1 implements BotKI{
 		return true;
 	}
 
-	private void tryMoveRight(){
+	private boolean tryMoveRight(){
 		boolean clear = true;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
@@ -200,9 +188,10 @@ public class Bot1 implements BotKI{
 		}
 		if(clear)
 			bot.moveRight();
+		return clear;
 	}
 
-	private void tryMoveLeft(){
+	private boolean tryMoveLeft(){
 		boolean clear = true;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
@@ -214,5 +203,6 @@ public class Bot1 implements BotKI{
 		}
 		if(clear)
 			bot.moveLeft();
+		return clear;
 	}
 }
