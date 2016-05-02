@@ -52,6 +52,7 @@ public class Frame {
 
 	public Timeline tf;
 	public Timeline rTf;
+	private Timeline SpawnWaveDelay;
 
 	public Canvas cv;
 	public GraphicsContext gc;
@@ -671,7 +672,7 @@ public class Frame {
 		if (Monsters.size() == 0 && !respawnDelayActive) {
 			clearcount++;
 			shootChance = (int) (10.0 + 2990 * Math.pow(Math.E, -0.07 * (clearcount + 1)));
-			Timeline SpawnWaveDelay = new Timeline(new KeyFrame(Duration.millis(GameSpeed*375), ae->{
+			SpawnWaveDelay = new Timeline(new KeyFrame(Duration.millis(GameSpeed*375), ae->{
 				MonsterWaves.SpawnWave(clearcount);
 				respawnDelayActive = false;
 			}));
@@ -699,6 +700,7 @@ public class Frame {
 	public void EndGame() {
 		rTf.stop();
 		tf.stop();
+		SpawnWaveDelay.stop();
 		
 		VBox gameOver = new VBox();
 		gameOver.setStyle("-fx-background: #000000");
