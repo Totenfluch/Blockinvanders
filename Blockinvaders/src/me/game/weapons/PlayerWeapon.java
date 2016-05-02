@@ -28,7 +28,6 @@ public abstract class PlayerWeapon extends Weapon {
 	
 	public abstract void shoot(double playerX, double playerY);
 
-
 	public int getWert(){
 		return typ.ordinal();
 	}

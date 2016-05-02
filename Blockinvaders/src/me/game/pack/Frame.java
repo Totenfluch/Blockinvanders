@@ -41,7 +41,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.game.bullets.Bullet;
 import me.game.networking.Client;
-import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.PlayerWeapon;
 import me.game.weapons.RocketLauncher;
@@ -628,19 +627,9 @@ public class Frame {
 				}
 			}
 
-			for (int i = 0; i < Drop.AllDrops.size(); i++) {
-				Drop p = Drop.AllDrops.elementAt(i);
-				Drops pd = p.getDroptype();
-				if (pd.equals(Drops.NEXTWEAPON))
-					gc.setFill(Color.GOLD);
-				else if (pd.equals(Drops.ADDAMMO))
-					gc.setFill(Color.AQUAMARINE);
-				else if (pd.equals(Drops.ADDLEBEN))
-					gc.setFill(Color.FIREBRICK);
-				else if (pd.equals(Drops.ADDSCORE))
-					gc.setFill(Color.BLUE);
-				gc.fillOval(p.xPos, p.yPos, Drop.DropSizeX, Drop.DropSizeY);
-			}
+			for(Drop drop : Drop.AllDrops)
+				drop.draw(gc);
+			
 			gc.setFill(Color.GOLD);
 
 			gc.setFont(new Font("Impact", 20));

@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import me.game.weapons.PlayerWeapon;
 import me.game.weapons.PlayerWeapon.WeaponType;
@@ -117,6 +118,14 @@ public class Drop implements Drawable{
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO
+		if (drop.equals(Drops.NEXTWEAPON))
+			gc.setFill(Color.GOLD);
+		else if (drop.equals(Drops.ADDAMMO))
+			gc.setFill(Color.AQUAMARINE);
+		else if (drop.equals(Drops.ADDLEBEN))
+			gc.setFill(Color.FIREBRICK);
+		else if (drop.equals(Drops.ADDSCORE))
+			gc.setFill(Color.BLUE);
+		gc.fillOval(xPos, yPos, DropSizeX, DropSizeY);
 	}
 }
