@@ -547,31 +547,18 @@ public class Frame {
 			frames++;
 			long time = System.nanoTime();
 			
-
+			// Reset Canvas
 			gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 			gc.setFill(Color.BLACK);
 			gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 
-			// Players
-
-			for (int i = 0; i < Players.length; i++) 
-				Players[i].draw(gc);
+			// Draw Players
+			for(Player player : Players)
+				player.draw(gc);
 			
-
-			for (int i = 0; i < Monsters.size(); i++) {
-				Monster Monti = Monsters.elementAt(i);
-				if (Monti.isAlive()) {
-					gc.setFill(Monti.getColor());
-					gc.fillRect(Monti.getX(), Monti.getY(), Monti.getWidth(), Monti.getHeight());
-					if (Monti.getLife() != Monti.getInitHp()) {
-						double fragleben = (double) Monti.getLife() / (double) Monti.getInitHp();
-						Color HpColor = new Color(1.0f * (1 - fragleben), 1.0f * fragleben, 0, 1);
-						gc.setFill(HpColor);
-						gc.fillRect(Monti.getX() + Monti.getWidth() / 10, Monti.getY() + Monti.getHeight() / 2.5,
-								Monti.getWidth() * fragleben * 0.8, Monti.getHeight() - Monti.getHeight() * 0.8);
-					}
-				}
-			}
+			// Draw Monsters
+			for(Monster monti : Monsters)
+				monti.draw(gc);
 
 			gc.setFont(new Font("Impact", 20));
 			if (Players[0].isAlive()) {

@@ -120,7 +120,17 @@ public class Monster extends Character {
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		// TODO
+		if (alive) {
+			gc.setFill(color);
+			gc.fillRect(xPos, yPos, width, heigth);
+			if (life != InitialHp) {
+				double fragleben = (double)life / (double) InitialHp;
+				Color HpColor = new Color(1.0f * (1 - fragleben), 1.0f * fragleben, 0, 1);
+				gc.setFill(HpColor);
+				gc.fillRect(xPos + width / 10, yPos + heigth / 2.5,
+						width * fragleben * 0.8, heigth - heigth * 0.8);
+			}
+		}
 	}
 
 }
