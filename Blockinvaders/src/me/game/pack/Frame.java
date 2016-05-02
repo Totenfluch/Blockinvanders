@@ -56,10 +56,14 @@ public class Frame {
 
 	public Canvas cv;
 	public GraphicsContext gc;
+	
+	public Canvas gOcanvas;
+	public GraphicsContext gOgc;
 
 	public Stage MainStage;
 	public Scene ConnectScene;
 	public Scene GameScene;
+	public Scene gameOverScene;
 
 	public Player[] Players;
 
@@ -770,21 +774,52 @@ public class Frame {
 	public void EndGame() {
 		rTf.stop();
 		tf.stop();
-		gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
-		gc.setFont(new Font("Futura", 140));
-		gc.setFill(Color.BLACK);
-		gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
-		gc.setFill(Color.RED);
-		gc.fillText("Game Over", 450, GAME_LENGTH / 2 + 150);
-		gc.setFont(new Font("Futura", 30));
-		gc.fillText("You survived " + clearcount + " Rounds", 650, GAME_LENGTH / 2 + 200);
+		
+		VBox gameOver = new VBox();
+		gameOver.setStyle("-fx-background: #000000");
+		gOcanvas = new Canvas(800, 250);
+		gOgc = gOcanvas.getGraphicsContext2D();
+		
+		gameOverScene = new Scene(gameOver, GAME_WIDTH, GAME_LENGTH);
+		
+		gameOver.setSpacing(20);
+		
+		gameOver.getChildren().add(gOcanvas);
+		
+		
+		gOgc.setFont(new Font("Futura", 140));
+		gOgc.setFill(Color.BLACK);
+		gOgc.fillRect(0, 0, 800, 250);
+		gOgc.setFill(Color.RED);
+		gOgc.fillText("Game Over", 50, 150);
+		gOgc.setFont(new Font("Futura", 30));
+		gOgc.fillText("You survived " + clearcount + " Rounds", 250, 200);
+		
+		Button restart = new Button("Try Again");
+		restart.setOnAction(ae -> {
+			saveSettings();
+			Game.restart();
+		});
+		
+		
+		Button settings = new Button("Settings");
+		settings.setOnAction(ae -> {
+			Game.setSettings(null);
+			Game.restart();
+		});
+		
+		Button exit = new Button("Exit");
+		exit.setOnAction(ae -> System.exit(0));
+		
+		gameOver.getChildren().addAll(restart, settings, exit);	
+		gameOver.setAlignment(Pos.CENTER);
+		
+		MainStage.setScene(gameOverScene);
 
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
 		PublishScores();
 
-		saveSettings();
-		Game.restart();
 	}
 
 	@SuppressWarnings("unused")
