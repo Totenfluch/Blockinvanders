@@ -559,58 +559,6 @@ public class Frame {
 			for(Monster monti : Monsters)
 				monti.draw(gc);
 
-			gc.setFont(new Font("Impact", 20));
-			if (Players[0].isAlive()) {
-				gc.setFill(Color.LIGHTGRAY);
-				StringBuffer swb = new StringBuffer();
-				// gc.fillText(""+Players[0].waffe.getAmmo(), 50, 100);
-				swb.append(Players[0].hisWeapon.getWeaponType().toString() + ": ");
-				for (int i = 0; i < Players[0].hisWeapon.getAmmo(); i++)
-					swb.append("|");
-				swb.append("   ");
-				for (int x = 0; x < Players[0].getHisSpecialWeapon().getAmmo(); x++)
-					swb.append("<|> ");
-				gc.fillText(swb.toString(), 50, 100);
-			}
-			gc.setFont(new Font("Impact", 30));
-			gc.setFill(Color.BLUEVIOLET);
-			gc.fillText(Player1Name + "> " + Players[0].getScore(), 50, 50);
-			gc.setFill(Color.RED);
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < Players[0].getLife(); i++)
-				sb.append("+ ");
-			if (Players[0].isAlive())
-				gc.fillText(sb.toString(), 45, 75);
-			else
-				gc.fillText("DEAD", 45, 80);
-
-			if (Players.length > 1) {
-				gc.setFont(new Font("Impact", 20));
-				if (Players[1].isAlive()) {
-					gc.setFill(Color.LIGHTGRAY);
-					// gc.fillText(""+Players[1].waffe.getAmmo(), 50, 875);
-					StringBuffer swb2 = new StringBuffer();
-					swb2.append(Players[1].hisWeapon.getWeaponType().toString() + ": ");
-					for (int i = 0; i < Players[1].hisWeapon.getAmmo(); i++)
-						swb2.append("|");
-					swb2.append("   ");
-					for (int x = 0; x < Players[1].getHisSpecialWeapon().getAmmo(); x++)
-						swb2.append("<|> ");
-					gc.fillText(swb2.toString(), 50, 875);
-				}
-				gc.setFont(new Font("Impact", 30));
-				gc.setFill(Color.LIME);
-				gc.fillText(Player2Name + "> " + Players[1].getScore(), 50, 825);
-				gc.setFill(Color.RED);
-				StringBuffer sb2 = new StringBuffer();
-				for (int i = 0; i < Players[1].getLife(); i++)
-					sb2.append("+ ");
-				if (Players[1].isAlive())
-					gc.fillText(sb2.toString(), 45, 850);
-				else
-					gc.fillText("DEAD", 45, 855);
-			}
-
 			gc.setFill(Color.AQUA);
 			for (int i = 0; i < PlayerWeapon.ActiveWeapons.size(); i++) {
 				for (int x = 0; x < PlayerWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++) {

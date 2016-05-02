@@ -2,6 +2,7 @@ package me.game.pack;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import me.game.weapons.PlayerWeapon;
 
 public class Player extends Character {
@@ -94,7 +95,58 @@ public class Player extends Character {
 			gc.setFill(Color.BLUE);
 		else if (playerNumber == 3)
 			gc.setFill(Color.CRIMSON);
-		if(alive)
+		if(alive){
 			gc.fillRect(xPos, yPos, width, heigth);
+			if(playerNumber == 0){
+				gc.setFont(new Font("Impact", 20));
+				gc.setFill(Color.LIGHTGRAY);
+				StringBuffer swb = new StringBuffer();
+				swb.append(hisWeapon.getWeaponType().toString() + ": ");
+				for (int i = 0; i < hisWeapon.getAmmo(); i++)
+					swb.append("|");
+				swb.append("   ");
+				for (int x = 0; x < hisSpecialWeapon.getAmmo(); x++)
+					swb.append("<|> ");
+				gc.fillText(swb.toString(), 50, 100);
+				
+				gc.setFont(new Font("Impact", 30));
+				gc.setFill(Color.BLUEVIOLET);
+				gc.fillText(Frame.getInstance().Player1Name + "> " + score, 50, 50);
+				gc.setFill(Color.RED);
+				StringBuffer sb = new StringBuffer();
+				for (int i = 0; i < life; i++)
+					sb.append("+ ");
+				if(alive)
+					gc.fillText(sb.toString(), 45, 75);
+				else
+					gc.fillText("DEAD", 45, 80);
+			}else if(playerNumber == 1){
+				gc.setFont(new Font("Impact", 20));
+				if (alive) {
+					gc.setFill(Color.LIGHTGRAY);
+					StringBuffer swb2 = new StringBuffer();
+					swb2.append(hisWeapon.getWeaponType().toString() + ": ");
+					for (int i = 0; i < hisWeapon.getAmmo(); i++)
+						swb2.append("|");
+					swb2.append("   ");
+					for (int x = 0; x < hisSpecialWeapon.getAmmo(); x++)
+						swb2.append("<|> ");
+					gc.fillText(swb2.toString(), 50, 875);
+				}
+				gc.setFont(new Font("Impact", 30));
+				gc.setFill(Color.LIME);
+				gc.fillText(Frame.getInstance().Player1Name + "> " + score, 50, 825);
+				gc.setFill(Color.RED);
+				StringBuffer sb2 = new StringBuffer();
+				for (int i = 0; i < life; i++)
+					sb2.append("+ ");
+				if (alive)
+					gc.fillText(sb2.toString(), 45, 850);
+				else
+					gc.fillText("DEAD", 45, 855);
+			}
+		
+		
+		}
 	}
 }
