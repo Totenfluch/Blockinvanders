@@ -39,7 +39,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import me.game.bullets.Bullet;
 import me.game.networking.Client;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.PlayerWeapon;
@@ -581,22 +580,16 @@ public class Frame {
 					player.draw(gc);
 
 				// Draw Monsters
-				for(Monster monti : Monsters)
-					monti.draw(gc);
+				Monsters.forEach(m -> m.draw(gc));
 
 				// Draw Player Bullets
-				for(PlayerWeapon Pw : PlayerWeapon.ActiveWeapons)
-					for(Bullet Pb : Pw.getKugeln())
-						Pb.draw(gc);
-
+				PlayerWeapon.ActiveWeapons.forEach(Pw -> Pw.getKugeln().forEach(pb -> pb.draw(gc)));
+				
 				// Draw Monster Bullets
-				for(MonsterWeapon Pw : MonsterWeapon.ActiveWeapons)
-					for(Bullet Pb : Pw.getKugeln())
-						Pb.draw(gc);
-
+				MonsterWeapon.ActiveWeapons.forEach(Pw -> Pw.getKugeln().forEach(pb -> pb.draw(gc)));
+				
 				// Draw Drops
-				for(Drop drop : Drop.AllDrops)
-					drop.draw(gc);
+				Drop.AllDrops.forEach(b -> b.draw(gc));
 
 				// Wave Counter
 				gc.setFill(Color.GOLD);
