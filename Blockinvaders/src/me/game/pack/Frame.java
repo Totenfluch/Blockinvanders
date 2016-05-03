@@ -559,6 +559,7 @@ public class Frame {
 		LobbyVBox.getChildren().add(DebugConsole);
 
 		ConnectScene = new Scene(connect_Bp, GAME_WIDTH, GAME_LENGTH);
+		ConnectScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 		MainStage.setScene(ConnectScene);
 
 		// Connect Scene fin
