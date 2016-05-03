@@ -5,6 +5,7 @@ import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import me.game.pack.Drop.Drops;
+import me.game.weapons.MonsterWeapon;
 import me.game.weapons.Weapon;
 
 public class Monster extends Character {
@@ -90,6 +91,7 @@ public class Monster extends Character {
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
+		MonsterWeapon.ActiveWeapons.remove(getHisWeapon());
 		game.Monsters.remove(this);
 		try {
 			this.finalize();
