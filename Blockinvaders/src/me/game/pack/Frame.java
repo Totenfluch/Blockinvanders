@@ -110,7 +110,7 @@ public class Frame {
 	private long frameTime;
 	private long refreshTime;
 	private long lastRefresh;
-	private int frames;
+	private int frames = 1;
 
 	private Frame() {}
 
