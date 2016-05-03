@@ -56,7 +56,7 @@ public class Frame {
 
 	private Canvas cv;
 	private GraphicsContext gc;
-	
+
 	private Canvas gOcanvas;
 	private GraphicsContext gOgc;
 
@@ -75,6 +75,7 @@ public class Frame {
 	public boolean Bot_enabled = false;
 	public boolean KI_Coop_enabled = false;
 	public boolean Play_with_bot_enabled = false;
+	public boolean Performance_benchmark_enabled = false;
 	private int KiPartyPlayers = 0;
 	private int botID = 0;
 	private BotKI bot;
@@ -89,19 +90,19 @@ public class Frame {
 	public int Monster_Direction = 0;
 	public String Player1Name;
 	public String Player2Name;
-	
-	
+
+
 	private boolean P1_inRight = false;
 	private boolean P1_inLeft = false;
 	private boolean P1_inShoot = false;
 	private boolean P2_inRight = false;
 	private boolean P2_inLeft = false;
 	private boolean P2_inShoot = false;
-	
+
 	public int clearcount = 0;
 	private int shootChance = 3000;
 
-	private int Tick = 0;
+	private int Tick = 1;
 	public int movetick = 0;
 
 	public ListView<String> Lobbys;
@@ -109,6 +110,7 @@ public class Frame {
 
 	private long frameTime;
 	private long refreshTime;
+	private long lastRefresh;
 	private int frames;
 
 	private Frame() {}
@@ -137,10 +139,8 @@ public class Frame {
 
 		MainStage.show();
 
-		// draw Thread
-		draw();
-		
-		
+
+
 		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -259,7 +259,8 @@ public class Frame {
 					bots[i] = new Bot2(Players[i]);
 			}
 		}
-
+		
+		SetupDraw();
 		MonsterWaves.SpawnWave(0);
 		CreateTimers();
 		rTf.setCycleCount(Timeline.INDEFINITE);
@@ -409,6 +410,10 @@ public class Frame {
 			switchSceneToGame();
 		});
 
+		Text SpeedBoxDesc = new Text("Gamespeed");
+		SpeedBoxDesc.setFont(new Font("Futura", 15));
+		SpeedBoxDesc.setFill(Color.WHITE);
+		connect_MiddlePart.getChildren().add(SpeedBoxDesc);
 		ChoiceBox<String> SpeedBox = new ChoiceBox<String>();
 		SpeedBox.getItems().addAll("Slow", "Normal", "Fast", "Very Fast", "Insane", "Ok...");
 		SpeedBox.setValue("Normal");
@@ -427,6 +432,22 @@ public class Frame {
 				GameSpeed = 2;
 			else if (newValue.equals("Ok..."))
 				GameSpeed = 1;
+		});
+
+		Text BenchmarkDesc = new Text("Benchmark");
+		BenchmarkDesc.setFont(new Font("Futura", 15));
+		BenchmarkDesc.setFill(Color.WHITE);
+		connect_MiddlePart.getChildren().add(BenchmarkDesc);
+		ChoiceBox<String> BenchmarkBox = new ChoiceBox<String>();
+		BenchmarkBox.getItems().addAll("Disabled", "Enabled");
+		BenchmarkBox.setValue("Disabled");
+		connect_MiddlePart.getChildren().add(BenchmarkBox);
+
+		BenchmarkBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+			if (newValue.equals("Disabled"))
+				Performance_benchmark_enabled = false;
+			else if (newValue.equals("Enabled"))
+				Performance_benchmark_enabled = true;
 		});
 
 		VBox LobbyVBox = new VBox();
@@ -453,7 +474,7 @@ public class Frame {
 				if (LobbyName.getText().length() > 4 && LobbyName.getText().length() < 16) {
 					client.processMessage("createLobby " + LobbyName.getText().replace(" ", ""));
 					DebugConsole
-							.appendText("Attempting to create Lobby " + LobbyName.getText().replace(" ", "") + "\n");
+					.appendText("Attempting to create Lobby " + LobbyName.getText().replace(" ", "") + "\n");
 				} else {
 					DebugConsole.appendText("Invalid Lobby Name length\n");
 				}
@@ -513,9 +534,9 @@ public class Frame {
 			public void handle(ActionEvent event) {
 				if (AlternativeIP.getText().equals("")) {
 					client = new Client("127.0.0.1", 1521); // for testing
-															// purposes. old
-															// value:
-															// "139.59.134.247"
+					// purposes. old
+					// value:
+					// "139.59.134.247"
 					connect_Bp.setRight(LobbyVBox);
 					DebugConsole.appendText("Connected to Server\n");
 				} else if (AlternativeIP.getText().contains(".") && AlternativeIP.getText().length() > 6
@@ -544,47 +565,103 @@ public class Frame {
 		// Connect Scene fin
 	}
 
-	public void draw() {
-		tf = new Timeline(new KeyFrame(Duration.millis(5), ae -> {
-			frames++;
-			long time = System.nanoTime();
-			
-			// Reset Canvas
-			gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
-			gc.setFill(Color.BLACK);
-			gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
+	public void SetupDraw() {
+		if(!Performance_benchmark_enabled){
+			tf = new Timeline(new KeyFrame(Duration.millis(5), ae -> {
+				frames++;
+				long time = System.nanoTime();
 
-			// Draw Players
-			for(Player player : Players)
-				player.draw(gc);
-			
-			// Draw Monsters
-			for(Monster monti : Monsters)
-				monti.draw(gc);
+				// Reset Canvas
+				gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
+				gc.setFill(Color.BLACK);
+				gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 
-			// Draw Player Bullets
-			for(PlayerWeapon Pw : PlayerWeapon.ActiveWeapons)
-				for(Bullet Pb : Pw.getKugeln())
-					Pb.draw(gc);
+				// Draw Players
+				for(Player player : Players)
+					player.draw(gc);
 
-			// Draw Monster Bullets
-			for(MonsterWeapon Pw : MonsterWeapon.ActiveWeapons)
-				for(Bullet Pb : Pw.getKugeln())
-					Pb.draw(gc);
+				// Draw Monsters
+				for(Monster monti : Monsters)
+					monti.draw(gc);
 
-			// Draw Drops
-			for(Drop drop : Drop.AllDrops)
-				drop.draw(gc);
-			
-			// Wave Counter
-			gc.setFill(Color.GOLD);
-			gc.setFont(new Font("Impact", 20));
-			gc.fillText("Wave: " + (clearcount + 1), GAME_WIDTH / 2 - 30, 40);
+				// Draw Player Bullets
+				for(PlayerWeapon Pw : PlayerWeapon.ActiveWeapons)
+					for(Bullet Pb : Pw.getKugeln())
+						Pb.draw(gc);
 
-			
-			frameTime += System.nanoTime() - time;
-		}));
+				// Draw Monster Bullets
+				for(MonsterWeapon Pw : MonsterWeapon.ActiveWeapons)
+					for(Bullet Pb : Pw.getKugeln())
+						Pb.draw(gc);
 
+				// Draw Drops
+				for(Drop drop : Drop.AllDrops)
+					drop.draw(gc);
+
+				// Wave Counter
+				gc.setFill(Color.GOLD);
+				gc.setFont(new Font("Impact", 20));
+				gc.fillText("Wave: " + (clearcount + 1), GAME_WIDTH / 2 - 30, 40);
+
+
+				frameTime += System.nanoTime() - time;
+			}));
+		}else{
+			tf = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
+				gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
+				gc.setFill(Color.BLACK);
+				gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
+				gc.setFont(new Font("Futura", 30));
+				gc.setFill(Color.CRIMSON);
+				gc.fillText("Average Refreshtime: " + refreshTime/Tick/1000 + "ms", 50, 50);
+				gc.fillText("Current Refreshtime: " + lastRefresh/1000 + "ms", 50, 100);
+				gc.fillText("Wave: " + (clearcount+1), 50, 150);
+				gc.fillText("Monsters Alive: " + Monsters.size(), 50, 200);
+				gc.fillText("Active Weapons: " + (MonsterWeapon.ActiveWeapons.size()+PlayerWeapon.ActiveWeapons.size()), 50, 250);
+				gc.fillText("|-> Monster Weapons: " + MonsterWeapon.ActiveWeapons.size(), 125, 300);
+				gc.fillText("|-> Player Weapons: " + PlayerWeapon.ActiveWeapons.size(), 125, 350);
+				int Bullets=0;
+				int PlayerBullets=0;
+				int MonsterBullets=0;
+				for(PlayerWeapon w : PlayerWeapon.ActiveWeapons){
+					Bullets+=w.getKugeln().size();
+					PlayerBullets+=w.getKugeln().size();
+				}
+				for(MonsterWeapon w : MonsterWeapon.ActiveWeapons){
+					Bullets+=w.getKugeln().size();
+					MonsterBullets+=w.getKugeln().size();
+				}
+				gc.fillText("Active Bullets: " + Bullets, 50, 400);
+				gc.fillText("|-> Active Player Bullets: " + PlayerBullets, 125, 450);
+				gc.fillText("|-> Active Monster Bullets: " + MonsterBullets, 125, 500);
+				int players=0;
+				for(Player player : Players){
+					gc.setFill(Color.PURPLE);
+					gc.setFont(new Font("Futura", 25));
+					gc.fillText("Player - " + players, 600, 50+players*150);
+					gc.fillText("|-> Health: " + player.getLife(), 625, 75+players*150);
+					gc.fillText("|-> Score: " + player.getScore(), 625, 100+players*150);
+					gc.fillText("|-> Ammo: " + player.getHisWeapon().getAmmo(), 625, 125+players*150);
+					gc.fillText("|-> SpecialAmmo: " + player.getHisSpecialWeapon().getAmmo(), 625, 150+players*150);
+					players++;
+				}
+				int monsters=0;
+				for(Monster monti: Monsters){
+					if(monsters < 80){
+					gc.setFill(Color.CORAL);
+					gc.setFont(new Font("Futura", 10));
+					gc.fillText("Monster - " + monsters + " - Hp:" + monti.getLife() + " Droprate:" + monti.getDropRate() + " Worth: " + monti.getWorth(), 900, 50+monsters*10);
+					monsters++;
+					}else{
+						gc.setFill(Color.GREEN);
+						gc.setFont(new Font("Impact", 25));
+						gc.fillText(".   .   .", 900, 850);
+					}
+				}
+					
+				
+			}));
+		}
 	}
 
 	public void CreateTimers() {
@@ -600,8 +677,10 @@ public class Frame {
 				bot.refresh();
 				bot2.refresh();
 			}
-
-			refreshTime += System.nanoTime() - time;
+			
+			long timeEnd = System.nanoTime();
+			lastRefresh = timeEnd - time;
+			refreshTime += timeEnd - time;
 		}));
 	}
 
@@ -702,19 +781,19 @@ public class Frame {
 		rTf.stop();
 		tf.stop();
 		SpawnWaveDelay.stop();
-		
+
 		VBox gameOver = new VBox();
 		gameOver.setStyle("-fx-background: #000000");
 		gOcanvas = new Canvas(800, 250);
 		gOgc = gOcanvas.getGraphicsContext2D();
-		
+
 		gameOverScene = new Scene(gameOver, GAME_WIDTH, GAME_LENGTH);
-		
+
 		gameOver.setSpacing(20);
-		
+
 		gameOver.getChildren().add(gOcanvas);
-		
-		
+
+
 		gOgc.setFont(new Font("Futura", 140));
 		gOgc.setFill(Color.BLACK);
 		gOgc.fillRect(0, 0, 800, 250);
@@ -722,26 +801,26 @@ public class Frame {
 		gOgc.fillText("Game Over", 50, 150);
 		gOgc.setFont(new Font("Futura", 30));
 		gOgc.fillText("You survived " + clearcount + " Rounds", 250, 200);
-		
+
 		Button restart = new Button("Try Again");
 		restart.setOnAction(ae -> {
 			saveSettings();
 			Game.restart();
 		});
-		
-		
+
+
 		Button settings = new Button("Settings");
 		settings.setOnAction(ae -> {
 			Game.setSettings(null);
 			Game.restart();
 		});
-		
+
 		Button exit = new Button("Exit");
 		exit.setOnAction(ae -> System.exit(0));
-		
+
 		gameOver.getChildren().addAll(restart, settings, exit);	
 		gameOver.setAlignment(Pos.CENTER);
-		
+
 		MainStage.setScene(gameOverScene);
 
 		System.out.println("Frametime (ns): " + frameTime / frames);
