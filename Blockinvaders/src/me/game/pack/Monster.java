@@ -2,8 +2,11 @@ package me.game.pack;
 
 import java.util.Random;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 import me.game.weapons.Weapon;
@@ -91,7 +94,10 @@ public class Monster extends Character {
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
-		MonsterWeapon.ActiveWeapons.remove(getHisWeapon());
+		Timeline tf = new Timeline(new KeyFrame(Duration.millis(game.GameSpeed*500), ae->{
+			MonsterWeapon.ActiveWeapons.remove(getHisWeapon());
+		}));
+		tf.play();
 		game.Monsters.remove(this);
 		try {
 			this.finalize();

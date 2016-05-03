@@ -81,7 +81,7 @@ public class Frame {
 	private BotKI bot2;
 	private BotKI[] bots;
 	private TextArea DebugConsole;
-	private int GameSpeed = 8;
+	public int GameSpeed = 8;
 	private boolean respawnDelayActive = false;
 
 	public int Monster_HP = 60;
