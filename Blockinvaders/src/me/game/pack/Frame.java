@@ -651,8 +651,6 @@ public class Frame {
 						gc.fillText(".   .   .", 900, 850);
 					}
 				}
-					
-				
 			}));
 		}
 	}
@@ -689,13 +687,11 @@ public class Frame {
 			movetick = 0;
 		}
 
-		if (Monster_Direction == 1) {
-			for (int i = 0; i < Monsters.size(); i++)
-				Monsters.elementAt(i).moveRight();
-		} else if (Monster_Direction == 0) {
-			for (int i = 0; i < Monsters.size(); i++)
-				Monsters.elementAt(i).moveLeft();
-		}
+		if (Monster_Direction == 1)
+			Monsters.forEach(Monster::moveRight);
+		else if (Monster_Direction == 0) 
+			Monsters.forEach(Monster::moveLeft);
+		
 
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
@@ -733,14 +729,12 @@ public class Frame {
 			}
 		}
 
-		for (int i = 0; i < PlayerWeapon.ActiveWeapons.size(); i++)
-			PlayerWeapon.ActiveWeapons.elementAt(i).refresh();
+		PlayerWeapon.ActiveWeapons.forEach(PlayerWeapon::refresh);
+		
+		MonsterWeapon.ActiveWeapons.forEach(MonsterWeapon::refresh);
 
 		for (int i = 0; i < Drop.AllDrops.size(); i++)
 			Drop.AllDrops.elementAt(i).refresh();
-
-		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++)
-			MonsterWeapon.ActiveWeapons.elementAt(i).refresh();
 
 		if (Monsters.size() == 0 && !respawnDelayActive) {
 			clearcount++;
