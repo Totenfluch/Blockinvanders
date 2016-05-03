@@ -149,6 +149,61 @@ public class Player extends Character {
 				gc.fillText(sb2.toString(), 45, 850);
 			else
 				gc.fillText("DEAD", 45, 855);
+		} else if (playerNumber == 2) {
+			gc.setFont(new Font("Impact", 20));
+			if (alive) {
+				gc.setFill(Color.LIGHTGRAY);
+				StringBuffer swb2 = new StringBuffer();
+				for (int i = 0; i < hisWeapon.getAmmo() % 50; i++)
+					swb2.append("|");
+				swb2.append(" " + (hisWeapon.getAmmo() - hisWeapon.getAmmo() % 50));
+				swb2.append("x    <|>                ");
+				swb2.append(hisSpecialWeapon.getAmmo());
+				swb2.append("        " + hisWeapon.getWeaponType().toString());
+				swb2.append("    ");
+				gc.fillText(swb2.toString(), Frame.GAME_WIDTH-swb2.length()*6, 100);
+			}
+
+			gc.setFont(new Font("Impact", 30));
+			gc.setFill(Color.BLUEVIOLET);
+			String toDraw = score  + "< " + Frame.getInstance().Player1Name;
+			gc.fillText(toDraw, Frame.GAME_WIDTH-toDraw.length()*13.5, 50);
+			gc.setFill(Color.RED);
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < life; i++)
+				sb.append("+ ");
+			if (alive){
+				gc.fillText(sb.toString(), Frame.GAME_WIDTH-sb.toString().length()*12, 75);
+			}else{
+				gc.fillText("DEAD", Frame.GAME_WIDTH-245, 80);
+			}
+
+		} else if (playerNumber == 3) {
+			gc.setFont(new Font("Impact", 20));
+			if (alive) {
+				gc.setFill(Color.LIGHTGRAY);
+				StringBuffer swb2 = new StringBuffer();
+				for (int i = 0; i < hisWeapon.getAmmo() % 50; i++)
+					swb2.append("|");
+				swb2.append(" " + (hisWeapon.getAmmo() - hisWeapon.getAmmo() % 50));
+				swb2.append("x    <|>                ");
+				swb2.append(hisSpecialWeapon.getAmmo());
+				swb2.append("        " + hisWeapon.getWeaponType().toString());
+				swb2.append("    ");
+				gc.fillText(swb2.toString(), Frame.GAME_WIDTH-swb2.length()*6, 875);
+			}
+			gc.setFont(new Font("Impact", 30));
+			gc.setFill(Color.CRIMSON);
+			String toDraw = score  + "< " + Frame.getInstance().Player2Name;
+			gc.fillText(toDraw, Frame.GAME_WIDTH-toDraw.length()*13.5, 825);
+			gc.setFill(Color.RED);
+			StringBuffer sb2 = new StringBuffer();
+			for (int i = 0; i < life; i++)
+				sb2.append("+ ");
+			if (alive)
+				gc.fillText(sb2.toString(), Frame.GAME_WIDTH-sb2.toString().length()*12, 850);
+			else
+				gc.fillText("DEAD", Frame.GAME_WIDTH-245, 855);
 		}
 
 	}
