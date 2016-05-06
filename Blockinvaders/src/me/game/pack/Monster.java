@@ -32,6 +32,47 @@ public class Monster extends Character {
 		this.dropRate = dropRate;
 	}
 	
+	// Format: ;x|y|width|length|life|initialHp|color:red:green:blue:alpha|weapon|shootRate|dropRate|worth;
+	public Monster(String createString){
+		super(0, 0, 0, null);
+		if(!createString.startsWith(";"))
+			return;
+		if(!createString.endsWith(";"))
+			return;
+		String parts[];
+		if((parts = createString.split("|")).length != 11)
+			return;
+		try{
+			double x = Double.valueOf(parts[0]);
+			double y = Double.valueOf(parts[1]);
+			double width = Double.valueOf(parts[2]);
+			double height = Double.valueOf(parts[3]);
+			int life = Integer.valueOf(parts[4]);
+			int initialHp = Integer.valueOf(parts[5]);
+			String colorSplit[] = parts[6].split(":");
+			Color color = new Color(Double.valueOf(colorSplit[1]), Double.valueOf(colorSplit[2]), Double.valueOf(colorSplit[3]), Double.valueOf(colorSplit[4]));
+			MonsterWeapon weapon = null;
+			double shootRate = Double.valueOf(parts[8]);
+			int dropRate = Integer.valueOf(parts[9]);
+			int worth = Integer.valueOf(parts[10]);
+			
+			setX(x);
+			setY(y);
+			setLife(life);
+			giveWeapon(weapon);
+			this.width = width;
+			this.heigth = height;
+			this.worth = worth;
+			alive = true;
+			InitialHp = initialHp;
+			this.color = color;
+			this.shootRate = shootRate;
+			this.dropRate = dropRate;
+		}catch(Exception e){
+			return;
+		}
+	}
+	
 	public double getShootRate(){
 		return shootRate;
 	}
