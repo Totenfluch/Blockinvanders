@@ -11,7 +11,7 @@ public class Player extends Character implements Controllable{
 	private int score;
 	public static int activePlayers = 0;
 	private int playerNumber;
-	private Controllable controller;
+	private Controller controller;
 	private static Frame instance;
 	private String PlayerName;
 
@@ -220,13 +220,13 @@ public class Player extends Character implements Controllable{
 	}
 
 	@Override
-	public Controllable getController() {
+	public Controller getController() {
 		return controller;
 	}
 
 	@Override
-	public void setController(Controlling controller) {
-		this.controller = (Controllable) controller;
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
 	
 	@Override

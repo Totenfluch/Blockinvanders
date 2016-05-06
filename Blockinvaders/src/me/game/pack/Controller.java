@@ -1,5 +1,5 @@
 package me.game.pack;
 
-public interface Controller extends Controlling {
+public interface Controller {
 	//TODO
 }
