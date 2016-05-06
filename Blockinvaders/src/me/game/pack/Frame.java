@@ -629,14 +629,16 @@ public class Frame {
 				gc.fillText("|-> Active Player Bullets: " + PlayerBullets, 125, 450);
 				gc.fillText("|-> Active Monster Bullets: " + MonsterBullets, 125, 500);
 				int players=0;
+				int blockwidth = 200;
 				for(Player player : Players){
 					gc.setFill(Color.PURPLE);
 					gc.setFont(new Font("Futura", 25));
-					gc.fillText("Player - " + players, 600, 50+players*150);
-					gc.fillText("|-> Health: " + player.getLife(), 625, 75+players*150);
-					gc.fillText("|-> Score: " + player.getScore(), 625, 100+players*150);
-					gc.fillText("|-> Ammo: " + player.getHisWeapon().getAmmo(), 625, 125+players*150);
-					gc.fillText("|-> SpecialAmmo: " + player.getHisSpecialWeapon().getAmmo(), 625, 150+players*150);
+					gc.fillText("Player - " + players, 600, 50+players*blockwidth);
+					gc.fillText("|-> Health: " + player.getLife(), 625, 75+players*blockwidth);
+					gc.fillText("|-> Score: " + player.getScore(), 625, 100+players*blockwidth);
+					gc.fillText("|-> Ammo: " + player.getHisWeapon().getAmmo(), 625, 125+players*blockwidth);
+					gc.fillText("|-> SpecialAmmo: " + player.getHisSpecialWeapon().getAmmo(), 625, 150+players*blockwidth);
+					gc.fillText("|-> Weapon: " + player.getHisWeapon().getWeaponType().toString(), 625, 175+players*blockwidth);
 					players++;
 				}
 				int monsters=0;
@@ -644,12 +646,12 @@ public class Frame {
 					if(monsters < 80){
 					gc.setFill(Color.CORAL);
 					gc.setFont(new Font("Futura", 10));
-					gc.fillText("Monster - " + monsters + " - Hp:" + monti.getLife() + " Droprate:" + monti.getDropRate() + " Worth: " + monti.getWorth(), 900, 50+monsters*10);
+					gc.fillText("Monster - " + monsters + " - Hp:" + monti.getLife() + " Droprate:" + monti.getDropRate() + " Worth: " + monti.getWorth(), 925, 50+monsters*10);
 					monsters++;
 					}else{
 						gc.setFill(Color.GREEN);
 						gc.setFont(new Font("Impact", 25));
-						gc.fillText(".   .   .", 900, 850);
+						gc.fillText(".   .   .", 925, 850);
 					}
 				}
 			}));
