@@ -140,5 +140,67 @@ public class Monster extends Character {
 			}
 		}
 	}
+	
+	@Override
+	public int hashCode(){
+		int hc = 11;
+		int hashMultiplier = 47;
+		hc = hc * hashMultiplier + life;
+		hc = hc * hashMultiplier + InitialHp;
+		hc = hc * hashMultiplier + worth;
+		double colorMesh = color.getBlue()*color.getRed()*color.getGreen();
+		if(colorMesh != 0)
+			// convert double to long and shift bytes then convert to Int (Rule for hashing)
+			hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(colorMesh)>>>32);
+		double position = xPos*yPos;
+		if(position != 0)
+			hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(position)>>>32);
+		double size = width*heigth;
+		if(size != 0)
+			hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(size)>>>32);
+		hc = hc * hashMultiplier + dropRate;
+		hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(shootRate)>>>32);
+		hc = hc * hashMultiplier + hisWeapon.getWeaponType().ordinal();
+		hc = hc * hashMultiplier + hisSpecialWeapon.getWeaponType().ordinal();
+		
+		return hc;
+	}
 
+	@Override
+	public boolean equals(Object other){
+		if(other == null)
+			return false;
+		if(this != other)
+			return false;
+		if(this.getClass() != other.getClass())
+			return false;
+		if(!super.equals(other))
+			return false;
+		
+		Monster monti = (Monster)other;
+		if(hashCode() != monti.hashCode())
+			return false;
+		if(life != monti.life)
+			return false;
+		if(hisWeapon != monti.hisWeapon)
+			return false;
+		if(hisSpecialWeapon != monti.hisSpecialWeapon)
+			return false;
+		if(InitialHp != monti.InitialHp)
+			return false;
+		if(worth != monti.worth)
+			return false;
+		if(shootRate != monti.shootRate)
+			return false;
+		if(dropRate != monti.dropRate)
+			return false;
+		if(color != monti.getColor())
+			return false;
+		if(width != monti.width)
+			return false;
+		if(heigth != monti.heigth)
+			return false;
+		
+		return true;
+	}
 }
