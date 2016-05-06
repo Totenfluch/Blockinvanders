@@ -5,13 +5,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import me.game.weapons.PlayerWeapon;
 
-public class Player extends Character {
+public class Player extends Character implements Controllable{
 
 	private double movementSpeed = 6.0;
 	private int score;
 	public static int activePlayers = 0;
 	private int playerNumber;
+	private Controllable controller;
 	private static Frame instance;
+	private String PlayerName;
 
 	public Player(double xPos, int leben, PlayerWeapon waffe) {
 		super(xPos, 800, leben, waffe);
@@ -24,6 +26,15 @@ public class Player extends Character {
 		heigth = 60;
 		width = 40;
 		playerNumber = activePlayers++;
+		PlayerName = "Player-"+playerNumber;
+	}
+	
+	public String getPlayerName(){
+		return PlayerName;
+	}
+	
+	public void setPlayerName(String PlayerName){
+		this.PlayerName = PlayerName;
 	}
 
 	public void setSpeed(double speed) {
@@ -206,5 +217,22 @@ public class Player extends Character {
 				gc.fillText("DEAD", Frame.GAME_WIDTH-245, 855);
 		}
 
+	}
+
+	@Override
+	public Controllable getController() {
+		return controller;
+	}
+
+	@Override
+	public void setController(Controlling controller) {
+		this.controller = (Controllable) controller;
+	}
+	
+	@Override
+	public boolean isControlled(){
+		if(controller != null)
+			return true;
+		return false;
 	}
 }

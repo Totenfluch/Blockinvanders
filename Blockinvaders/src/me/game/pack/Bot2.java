@@ -3,7 +3,7 @@ package me.game.pack;
 import me.game.bullets.Bullet;
 import me.game.weapons.MonsterWeapon;
 
-public class Bot2 implements BotKI {
+public class Bot2 implements BotKI, Controller {
 
 	public final Frame game;
 	private Player player;
@@ -17,6 +17,7 @@ public class Bot2 implements BotKI {
 	public Bot2(Player player) {
 		this.game = Frame.getInstance();
 		this.player = player;
+		player.setController(this);
 	}
 
 	public void refresh() {

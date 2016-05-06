@@ -7,7 +7,7 @@ import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
 import me.game.weapons.MonsterWeapon;
 
-public class Bot1 implements BotKI{
+public class Bot1 implements BotKI, Controller{
 	/*
 		Bot to FIGHT FOR HONOR
 		By Totenfluch~
@@ -21,6 +21,7 @@ public class Bot1 implements BotKI{
 	public Bot1(Player p){
 		this.game = Frame.getInstance();
 		this.bot = p;
+		p.setController(this);
 	}
 
 	public void refresh(){
