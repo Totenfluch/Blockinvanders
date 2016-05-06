@@ -3,15 +3,17 @@ package me.game.networking;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import me.game.pack.Controller;
 import me.game.pack.Frame;
 import me.game.pack.Player;
 
-public class GetServerMessages{
+public class GetServerMessages implements Controller{
 	public String newestreply = null;
 	protected Frame game;
 	
 	public GetServerMessages(Frame game) {
 		this.game = game;
+		game.Players[1].setController(this);
 	}
 
 
