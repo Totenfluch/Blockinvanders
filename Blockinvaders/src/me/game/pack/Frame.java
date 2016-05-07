@@ -818,6 +818,10 @@ public class Frame {
 		PublishScores();
 
 	}
+	
+	public GraphicsContext getGraphicsContext(){
+		return gc;
+	}
 
 	@SuppressWarnings("unused")
 	public void PublishScores() {
