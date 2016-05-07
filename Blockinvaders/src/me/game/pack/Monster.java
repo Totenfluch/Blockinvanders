@@ -201,8 +201,10 @@ public class Monster extends Character {
 			hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(size)>>>32);
 		hc = hc * hashMultiplier + dropRate;
 		hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(shootRate)>>>32);
-		hc = hc * hashMultiplier + hisWeapon.getWeaponType().ordinal();
-		hc = hc * hashMultiplier + hisSpecialWeapon.getWeaponType().ordinal();
+		if(hisWeapon != null)
+			hc = hc * hashMultiplier + hisWeapon.hashCode();
+		if(hisSpecialWeapon != null)
+			hc = hc * hashMultiplier + hisSpecialWeapon.hashCode();
 		
 		return hc;
 	}
