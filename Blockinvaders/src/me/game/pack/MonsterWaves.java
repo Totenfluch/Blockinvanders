@@ -2,6 +2,7 @@ package me.game.pack;
 
 import javafx.scene.paint.Color;
 import me.game.weapons.MonsterBossWeapon;
+import me.game.weapons.MonsterDoubleHelixWeapon;
 import me.game.weapons.MonsterStandardWaffe;
 import me.game.weapons.MonsterTier2Weapon;
 
@@ -33,7 +34,7 @@ public class MonsterWaves {
 				//	game.Monster_HP /= 2;
 				Monster tempi = new Monster(null, 10+which*5*modifier, sub+600+ix*50, x*100+50, 30, 20, 1+which, Color.BROWN, 0.25, 20);
 				game.Monsters.add(tempi);
-				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
+				tempi.giveWeapon(new MonsterDoubleHelixWeapon(tempi));
 			}
 			break;
 		}
