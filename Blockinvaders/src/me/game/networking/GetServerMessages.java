@@ -3,6 +3,7 @@ package me.game.networking;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import me.game.pack.Controllable;
 import me.game.pack.Controller;
 import me.game.pack.Frame;
 import me.game.pack.Player;
@@ -10,6 +11,7 @@ import me.game.pack.Player;
 public class GetServerMessages implements Controller{
 	public String newestreply = null;
 	protected Frame game;
+	private Controllable controllable;
 	
 	public GetServerMessages(Frame game) {
 		this.game = game;
@@ -67,5 +69,11 @@ public class GetServerMessages implements Controller{
 			double yPos = Double.parseDouble(splinter[2]);
 			game.Players[1].getHisWeapon().shoot(xPos, yPos);
 		}
+	}
+
+
+	@Override
+	public void onSetControl(Controllable controllable) {
+		this.controllable = controllable;
 	}
 }

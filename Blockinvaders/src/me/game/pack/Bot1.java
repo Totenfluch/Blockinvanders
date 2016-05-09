@@ -16,6 +16,7 @@ public class Bot1 implements BotKI, Controller{
 	private Player bot;
 	public static boolean Bot_debug = false;
 	public Monster Target = null;
+	private Controllable controllable;
 
 	private Bullet escapeThis = null;
 	public Bot1(Player p){
@@ -205,5 +206,10 @@ public class Bot1 implements BotKI, Controller{
 		if(clear)
 			bot.moveLeft();
 		return clear;
+	}
+	
+	@Override
+	public void onSetControl(Controllable controllable) {
+		this.controllable = controllable;
 	}
 }

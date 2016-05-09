@@ -227,6 +227,7 @@ public class Player extends Character implements Controllable{
 	@Override
 	public void setController(Controller controller) {
 		this.controller = controller;
+		controller.onSetControl(this);
 	}
 	
 	@Override

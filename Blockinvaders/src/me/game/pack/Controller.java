@@ -1,5 +1,5 @@
 package me.game.pack;
 
 public interface Controller {
-	//TODO
+	public void onSetControl(Controllable controllable);
 }

@@ -10,6 +10,7 @@ public class Bot2 implements BotKI, Controller {
 	private double destX = 800;
 	private boolean lockLeft, lockRight;
 	int bal;
+	private Controllable controllable;
 
 	private Bullet dodge;
 	private Monster locked = null;
@@ -196,4 +197,11 @@ public class Bot2 implements BotKI, Controller {
 			}
 		}
 	}
+
+	@Override
+	public void onSetControl(Controllable controllable) {
+		this.controllable = controllable;
+	}
+
+
 }
