@@ -607,8 +607,8 @@ public class Frame {
 				gc.fillRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 				gc.setFont(new Font("Futura", 30));
 				gc.setFill(Color.CRIMSON);
-				gc.fillText("Average Refreshtime: " + refreshTime/Tick/1000 + "ms", 50, 50);
-				gc.fillText("Current Refreshtime: " + lastRefresh/1000 + "ms", 50, 100);
+				gc.fillText("Average Refreshtime: " + refreshTime/Tick/1000 + "µs", 50, 50);
+				gc.fillText("Current Refreshtime: " + lastRefresh/1000 + "µs", 50, 100);
 				gc.fillText("Wave: " + (clearcount+1), 50, 150);
 				gc.fillText("Monsters Alive: " + Monsters.size(), 50, 200);
 				gc.fillText("Active Weapons: " + (MonsterWeapon.ActiveWeapons.size()+PlayerWeapon.ActiveWeapons.size()), 50, 250);

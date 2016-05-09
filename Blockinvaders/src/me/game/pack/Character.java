@@ -77,7 +77,8 @@ public abstract class Character implements Drawable{
 	}
 	
 	public void giveWeapon(Weapon waffe){
-		PlayerWeapon.ActiveWeapons.remove(hisWeapon);
+		if(hisWeapon != waffe)
+			PlayerWeapon.ActiveWeapons.remove(hisWeapon);
 		this.hisWeapon = waffe;
 	}
 	
