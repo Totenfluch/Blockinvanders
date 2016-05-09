@@ -770,7 +770,8 @@ public class Frame {
 	public void EndGame() {
 		rTf.stop();
 		tf.stop();
-		SpawnWaveDelay.stop();
+		if(SpawnWaveDelay != null)
+			SpawnWaveDelay.stop();
 
 		VBox gameOver = new VBox();
 		gameOver.setStyle("-fx-background: #000000");
