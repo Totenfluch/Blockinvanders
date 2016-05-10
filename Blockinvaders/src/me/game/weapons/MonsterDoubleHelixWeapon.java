@@ -13,7 +13,7 @@ public class MonsterDoubleHelixWeapon extends MonsterWeapon{
 
 	@Override
 	public void shoot(double monsterX, double monsterY) {
-		DoubleHelixBullet main = new DoubleHelixBullet(this, monsterX, monsterY, bulletH+2, bulletW+2, bulletSpeed, damage, 0, true);
+		DoubleHelixBullet main = new DoubleHelixBullet(this, monsterX-60, monsterY, bulletH+2, bulletW+2, bulletSpeed, damage, 0, true);
 		kugeln.add(main);
 		DoubleHelixBullet sec = new DoubleHelixBullet(this, monsterX, monsterY, bulletH+2, bulletW+2, bulletSpeed, damage, 0, false);
 		kugeln.add(sec);

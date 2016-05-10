@@ -11,8 +11,12 @@ import me.game.weapons.PlayerWeapon;
 public class DoubleHelixBullet extends MonsterBullet{
 
 	boolean type;
-	double wave=0;
+	double wave = 0;
+	int refreshcounter = 0;
 	DoubleHelixBullet Partner;
+	int helixcounter = 0;
+	int removeInTicks = 40;
+	double[][][] helix = new double[3000][2][2];
 
 
 	public DoubleHelixBullet(MonsterWeapon waffe, double xPos, double yPos, double height, double width, int speed, int damage,
@@ -30,7 +34,21 @@ public class DoubleHelixBullet extends MonsterBullet{
 	}
 
 	public void refresh(){
+		if(refreshcounter >= 5){
+			refreshcounter = 0;
+			if(Partner != null){
+				helix[helixcounter][0][0] = xPos;
+				helix[helixcounter][0][1] = yPos;
+				helix[helixcounter][1][0] = Partner.xPos;
+				helix[helixcounter][1][1] = Partner.yPos;
+			}
+			helixcounter++;
+		}
+		refreshcounter++;
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
+			removeInTicks--;
+		
+		if(removeInTicks == 0)
 			waffe.getKugeln().remove(this);
 
 		for (int x = 0; x < waffe.getOwner().game.Players.length; x++) {
@@ -49,9 +67,9 @@ public class DoubleHelixBullet extends MonsterBullet{
 		}
 
 		if(type){
-			xPos = xPos+(Math.sin(wave+Math.PI)*3);
+			xPos = xPos+(Math.sin(wave)*3);
 		}else{
-			xPos = xPos+(Math.cos(wave)*3);
+			xPos = xPos+(Math.sin(wave+Math.PI)*3);
 		}
 		wave+=0.1;
 		yPos += dy;
@@ -70,7 +88,22 @@ public class DoubleHelixBullet extends MonsterBullet{
 			if(Partner.getxPos() > xPos)
 				gc.fillRect(xPos+width, yPos+height/2, Partner.getxPos()-xPos-width, Partner.getyPos()-yPos+height/4);
 			else
-				gc.fillRect(xPos+width, yPos+height/2, xPos-Partner.getxPos()-width, Partner.getyPos()-yPos+height/4);
-
+				gc.fillRect(Partner.xPos+width, yPos+height/2, xPos-Partner.getxPos()-width, Partner.getyPos()-yPos+height/4);
+		if(Partner != null){
+			for(int i=0;i<helixcounter;i++){
+				gc.setFill(Color.INDIANRED);
+				gc.fillRect(helix[i][0][0], helix[i][0][1], width, height);
+				gc.setFill(Color.INDIGO);
+				gc.fillRect(helix[i][1][0], helix[i][1][1], width, height);
+				if(removeInTicks >= 40)
+					gc.setFill(Color.GREEN);
+				else
+					gc.setFill(Color.RED);
+				if(helix[i][1][0] > helix[i][0][0])
+					gc.fillRect(helix[i][0][0]+width, helix[i][0][1]+height/2, helix[i][1][0]-helix[i][0][0]-width, helix[i][1][1]-helix[i][0][1]+height/4);
+				else
+					gc.fillRect(helix[i][1][0]+width, helix[i][0][1]+height/2, helix[i][0][0]-helix[i][1][0]-width, helix[i][1][1]-helix[i][0][1]+height/4);
+			}
+		}
 	}
 }
