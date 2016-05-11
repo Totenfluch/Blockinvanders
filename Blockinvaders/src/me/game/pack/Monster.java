@@ -213,8 +213,6 @@ public class Monster extends Character {
 	public boolean equals(Object other){
 		if(other == null)
 			return false;
-		if(this != other)
-			return false;
 		if(this.getClass() != other.getClass())
 			return false;
 		if(!super.equals(other))

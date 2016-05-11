@@ -69,6 +69,7 @@ public class Frame {
 	public Client client;
 	public static Frame game;
 
+	public boolean autoRestart = false;
 	public boolean Coop_enabled = false;
 	public boolean Online_Coop = false;
 	public boolean Bot_enabled = false;
@@ -276,7 +277,7 @@ public class Frame {
 		ImageView back = new ImageView(new Image("background.jpg"));
 		connect_Bp.getChildren().add(back);
 		VBox connect_MiddlePart = new VBox();
-		connect_MiddlePart.setPadding(new Insets(200, 500, 500, 500));
+		connect_MiddlePart.setPadding(new Insets(100, 500, 100, 500));
 		connect_MiddlePart.setSpacing(20);
 
 		connect_Bp.setCenter(connect_MiddlePart);
@@ -448,6 +449,22 @@ public class Frame {
 			else if (newValue.equals("Enabled"))
 				Performance_benchmark_enabled = true;
 		});
+		
+		Text restartDesc = new Text("Restart");
+		restartDesc.setFont(new Font("Futura", 15));
+		restartDesc.setFill(Color.WHITE);
+		connect_MiddlePart.getChildren().add(restartDesc);
+		ChoiceBox<String> restartToggle = new ChoiceBox<String>();
+		restartToggle.getItems().addAll("Disabled", "Enabled");
+		restartToggle.setValue("Disabled");
+		connect_MiddlePart.getChildren().add(restartToggle);
+
+		restartToggle.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+			if (newValue.equals("Disabled"))
+				autoRestart = false;
+			else if (newValue.equals("Enabled"))
+				autoRestart = true;
+		});
 
 		VBox LobbyVBox = new VBox();
 		LobbyVBox.setPrefHeight(500);
@@ -546,6 +563,8 @@ public class Frame {
 				} else
 					System.out.println("Wrong IP m8");
 			}
+			
+			
 		});
 
 		DebugConsole = new TextArea();
@@ -772,6 +791,17 @@ public class Frame {
 		tf.stop();
 		if(SpawnWaveDelay != null)
 			SpawnWaveDelay.stop();
+		
+
+		System.out.println("Frametime (ns): " + frameTime / frames);
+		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
+		PublishScores();
+		
+		if(autoRestart){
+			saveSettings();
+			Game.restart();
+			return;
+		}
 
 		VBox gameOver = new VBox();
 		gameOver.setStyle("-fx-background: #000000");
@@ -813,11 +843,7 @@ public class Frame {
 		gameOver.setAlignment(Pos.CENTER);
 
 		MainStage.setScene(gameOverScene);
-
-		System.out.println("Frametime (ns): " + frameTime / frames);
-		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
-		PublishScores();
-
+		
 	}
 	
 	public GraphicsContext getGraphicsContext(){
