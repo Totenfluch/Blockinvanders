@@ -47,13 +47,20 @@ public class DoubleHelixBullet extends MonsterBullet{
 		refreshcounter++;
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
 			removeInTicks--;
-		
+
 		if(removeInTicks == 0)
 			waffe.getKugeln().remove(this);
 
 		for (int x = 0; x < waffe.getOwner().game.Players.length; x++) {
 			Player p = waffe.getOwner().game.Players[x];
-			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight())) {
+			boolean hit = false;
+			if(helixcounter != 0)
+				if(p.checkHit(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1])){
+					hit = true;
+					System.out.println("hit H: " + (helix[0][0][0]-width) + " " + helix[0][0][1] + " " + (60+width*2) + " " + (helix[helixcounter-1][0][1]-helix[0][0][1]));
+					System.out.println("hit P: " + p.getX() + " " + p.getY() + " " + p.getWidth() + " " + p.getHeight());
+				}
+			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight()) || hit) {
 				if (p.isAlive()) {
 					waffe.getKugeln().remove(this);
 					p.setLife(p.getLife()-waffe.getDamage());
@@ -104,6 +111,9 @@ public class DoubleHelixBullet extends MonsterBullet{
 				else
 					gc.fillRect(helix[i][1][0]+width, helix[i][0][1]+height/2, helix[i][0][0]-helix[i][1][0]-width, helix[i][1][1]-helix[i][0][1]+height/4);
 			}
+			gc.setFill(Color.BLUE);
+			if(helixcounter != 0)
+				gc.fillRect(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1]);
 		}
 	}
 }

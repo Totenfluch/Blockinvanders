@@ -16,7 +16,7 @@ public class MonsterWaves {
 		// Reset current movement 
 		game.movetick = 0;
 		game.Monster_Direction = 0;
-		switch(which%5){
+		switch(which%6){
 		case 0: {
 			int x = 0;
 			int ix = 0;
@@ -48,7 +48,7 @@ public class MonsterWaves {
 					p++;
 					ip = 0;
 				}
-				
+
 				//if(!game.Coop_enabled)
 				//	game.Monster_HP /= 2;
 				Monster tempi = new Monster(null, 80+which*20*modifier, 600+ip*250, p*100+50, 200, 40, 3*which, Color.DARKSLATEGRAY, 1, 4);
@@ -57,7 +57,7 @@ public class MonsterWaves {
 			}
 			break;
 		}
-		
+
 		case 2: {
 			int x = 0;
 			int ix = 0;
@@ -76,7 +76,7 @@ public class MonsterWaves {
 			}
 			break;
 		}
-		
+
 		case 3: {
 			int x = 0;
 			int ix = 0;
@@ -86,11 +86,11 @@ public class MonsterWaves {
 					x++;
 					ix = 0;
 				}
-				
+
 				int sub = 0;
 				if(x%2 == 0)
 					sub = 50;
-				
+
 
 				//if(!game.Coop_enabled)
 				//	game.Monster_HP /= 2;
@@ -100,14 +100,31 @@ public class MonsterWaves {
 			}
 			break;
 		}
-		
+
 		case 4:{
-				Monster tempi = new Monster(null, 2500+which*200*modifier, 700, 150, 700, 300, 3*which, Color.HOTPINK, 2.0, 1);
-				game.Monsters.add(tempi);
-				tempi.giveWeapon(new MonsterBossWeapon(tempi));
+			Monster tempi = new Monster(null, 2500+which*200*modifier, 700, 150, 700, 300, 3*which, Color.HOTPINK, 2.0, 1);
+			game.Monsters.add(tempi);
+			tempi.giveWeapon(new MonsterBossWeapon(tempi));
 			break;
 		}
-		
+
+		case 5:{
+			Monster temp = new Monster(null, 500+which*50*modifier, 650, 150, 300, 125, 2*which, Color.CORAL, 0.5, 2);
+			game.Monsters.add(temp);
+			temp.giveWeapon(new MonsterDoubleHelixWeapon(temp));
+			Monster temp1 = new Monster(null, 500+which*50*modifier, 1000, 150, 300, 125, 2*which, Color.CORAL, 0.5, 2);
+			game.Monsters.add(temp1);
+			temp1.giveWeapon(new MonsterDoubleHelixWeapon(temp1));
+			Monster temp2 = new Monster(null, 500+which*50*modifier, 650, 300, 300, 125, 2*which, Color.CORAL, 0.5, 2);
+			game.Monsters.add(temp2);
+			temp2.giveWeapon(new MonsterDoubleHelixWeapon(temp2));
+			Monster temp3 = new Monster(null, 500+which*50*modifier, 1000, 300, 300, 125, 2*which, Color.CORAL, 0.5, 6);
+			game.Monsters.add(temp3);
+			temp3.giveWeapon(new MonsterDoubleHelixWeapon(temp3));
+
+			break;
+		}
+
 		}
 	}
 }
