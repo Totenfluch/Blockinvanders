@@ -26,4 +26,8 @@ public abstract class MonsterWeapon extends Weapon {
 
 	public abstract void shoot(double monsterX, double monsterY);
 
+	@Override
+	public void terminate(){
+		ActiveWeapons.remove(this);
+	}
 }

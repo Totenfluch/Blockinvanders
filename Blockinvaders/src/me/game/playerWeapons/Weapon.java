@@ -14,6 +14,7 @@ public abstract class Weapon {
 	protected int delay;
 	protected Character Owner;
 	protected WeaponType typ;
+	private boolean isAboutToBeRemoved = false;
 	
 	protected Vector<Bullet> kugeln = new Vector<Bullet>(10000, 500);
 
@@ -42,6 +43,9 @@ public abstract class Weapon {
 
 	public abstract void shoot(double playerX, double playerY);
 
+	public void requestRemoval(){
+		isAboutToBeRemoved = true;
+	}
 
 	public int getInitDelay() {
 		return INIT_DELAY;
@@ -95,8 +99,13 @@ public abstract class Weapon {
 			kugeln.elementAt(i).refresh();
 		
 		if(delay > 0)
-			delay--;			
+			delay--;		
+		
+		if(kugeln.size() == 0 && isAboutToBeRemoved)
+			terminate();
 	}
+	
+	public abstract void terminate();
 	
 
 }

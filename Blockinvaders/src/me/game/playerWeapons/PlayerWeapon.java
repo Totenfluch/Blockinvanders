@@ -85,5 +85,10 @@ public abstract class PlayerWeapon extends Weapon {
 			return this;
 		}
 	}
+	
+	@Override
+	public void terminate(){
+		ActiveWeapons.remove(this);
+	}
 
 }

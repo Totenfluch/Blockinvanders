@@ -751,9 +751,17 @@ public class Frame {
 			}
 		}
 
-		PlayerWeapon.ActiveWeapons.forEach(PlayerWeapon::refresh);
+		// Can't use lambda. Need to modify weapon in refresh
+		//PlayerWeapon.ActiveWeapons.forEach(PlayerWeapon::refresh);
+		//MonsterWeapon.ActiveWeapons.forEach(MonsterWeapon::refresh);
 		
-		MonsterWeapon.ActiveWeapons.forEach(MonsterWeapon::refresh);
+		for(int i = 0; i<PlayerWeapon.ActiveWeapons.size(); i++)
+			PlayerWeapon.ActiveWeapons.elementAt(i).refresh();
+		
+		for(int i = 0; i<MonsterWeapon.ActiveWeapons.size(); i++)
+			MonsterWeapon.ActiveWeapons.elementAt(i).refresh();
+			
+		
 
 		for (int i = 0; i < Drop.AllDrops.size(); i++)
 			Drop.AllDrops.elementAt(i).refresh();

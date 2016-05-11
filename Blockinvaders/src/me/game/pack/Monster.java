@@ -135,10 +135,8 @@ public class Monster extends Character {
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
-		new Timeline(new KeyFrame(Duration.millis(game.GameSpeed*650), ae->{
-			MonsterWeapon.ActiveWeapons.remove(getHisWeapon());
-		})).play();
 		
+		hisWeapon.requestRemoval();
 		game.Monsters.remove(this);
 		try {
 			this.finalize();

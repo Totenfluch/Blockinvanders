@@ -81,11 +81,8 @@ public abstract class Character implements Drawable{
 	}
 	
 	public void giveWeapon(Weapon waffe){
-		if(hisWeapon != waffe){
-			//new Timeline(new KeyFrame(Duration.millis(game.GameSpeed*375), ae->{
-				PlayerWeapon.ActiveWeapons.remove(hisWeapon);
-			//})).play();
-		}
+		if(hisWeapon != waffe && hisWeapon != null)
+				hisWeapon.requestRemoval();
 		this.hisWeapon = waffe;
 	}
 	
