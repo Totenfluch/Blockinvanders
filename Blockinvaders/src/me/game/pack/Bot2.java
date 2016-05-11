@@ -1,7 +1,7 @@
 package me.game.pack;
 
 import me.game.bullets.Bullet;
-import me.game.weapons.MonsterWeapon;
+import me.game.playerWeapons.MonsterWeapon;
 
 public class Bot2 implements BotKI, Controller {
 

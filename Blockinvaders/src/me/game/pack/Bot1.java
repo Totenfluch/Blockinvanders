@@ -5,7 +5,7 @@ import java.util.Iterator;
 import javafx.scene.paint.Color;
 import me.game.bullets.Bullet;
 import me.game.pack.Drop.Drops;
-import me.game.weapons.MonsterWeapon;
+import me.game.playerWeapons.MonsterWeapon;
 
 public class Bot1 implements BotKI, Controller{
 	/*

@@ -40,10 +40,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.game.networking.Client;
-import me.game.weapons.MonsterWeapon;
-import me.game.weapons.PlayerWeapon;
-import me.game.weapons.RocketLauncher;
-import me.game.weapons.StandardWaffe;
+import me.game.playerWeapons.MonsterWeapon;
+import me.game.playerWeapons.PlayerWeapon;
+import me.game.playerWeapons.RocketLauncher;
+import me.game.playerWeapons.StandardWaffe;
 
 public class Frame {
 	public static final int GAME_WIDTH = 1600;

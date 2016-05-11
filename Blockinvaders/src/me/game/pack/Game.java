@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import me.game.weapons.MonsterWeapon;
-import me.game.weapons.PlayerWeapon;
+import me.game.playerWeapons.MonsterWeapon;
+import me.game.playerWeapons.PlayerWeapon;
 
 public class Game extends Application {
 	static Frame spiel;

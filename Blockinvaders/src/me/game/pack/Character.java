@@ -2,9 +2,9 @@ package me.game.pack;
 
 import com.sun.javafx.geom.Rectangle;
 
-import me.game.weapons.PlayerWeapon;
-import me.game.weapons.SpecialWeapon;
-import me.game.weapons.Weapon;
+import me.game.playerWeapons.PlayerWeapon;
+import me.game.playerWeapons.SpecialWeapon;
+import me.game.playerWeapons.Weapon;
 
 public abstract class Character implements Drawable{
 	public final Frame game;

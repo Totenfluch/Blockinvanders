@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import me.game.pack.Frame;
 import me.game.pack.Monster;
 import me.game.pack.Player;
-import me.game.weapons.PlayerWeapon;
+import me.game.playerWeapons.PlayerWeapon;
 
 public class PlayerBullet extends Bullet {
 

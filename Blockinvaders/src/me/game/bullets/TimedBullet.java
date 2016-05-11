@@ -1,6 +1,6 @@
 package me.game.bullets;
 
-import me.game.weapons.Weapon;
+import me.game.playerWeapons.Weapon;
 
 public abstract class TimedBullet extends Bullet{
 	private int lifetimeticks;

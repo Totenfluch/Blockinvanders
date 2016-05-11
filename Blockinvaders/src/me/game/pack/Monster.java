@@ -8,8 +8,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import me.game.pack.Drop.Drops;
-import me.game.weapons.MonsterWeapon;
-import me.game.weapons.Weapon;
+import me.game.playerWeapons.MonsterWeapon;
+import me.game.playerWeapons.Weapon;
 
 public class Monster extends Character {
 

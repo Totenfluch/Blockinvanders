@@ -1,4 +1,4 @@
-package me.game.weapons;
+package me.game.playerWeapons;
 
 import me.game.pack.Player;
 

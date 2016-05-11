@@ -3,7 +3,7 @@ package me.game.pack;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import me.game.weapons.PlayerWeapon;
+import me.game.playerWeapons.PlayerWeapon;
 
 public class Player extends Character implements Controllable{
 

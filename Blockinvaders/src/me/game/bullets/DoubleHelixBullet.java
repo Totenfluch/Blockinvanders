@@ -2,11 +2,12 @@ package me.game.bullets;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import me.game.pack.Frame;
 import me.game.pack.Monster;
 import me.game.pack.Player;
-import me.game.weapons.MonsterWeapon;
-import me.game.weapons.PlayerWeapon;
+import me.game.playerWeapons.MonsterWeapon;
+import me.game.playerWeapons.PlayerWeapon;
 
 public class DoubleHelixBullet extends MonsterBullet{
 
@@ -55,11 +56,8 @@ public class DoubleHelixBullet extends MonsterBullet{
 			Player p = waffe.getOwner().game.Players[x];
 			boolean hit = false;
 			if(helixcounter != 0)
-				if(p.checkHit(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1])){
+				if(overlaps(new Rectangle(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1]), p))
 					hit = true;
-					System.out.println("hit H: " + (helix[0][0][0]-width) + " " + helix[0][0][1] + " " + (60+width*2) + " " + (helix[helixcounter-1][0][1]-helix[0][0][1]));
-					System.out.println("hit P: " + p.getX() + " " + p.getY() + " " + p.getWidth() + " " + p.getHeight());
-				}
 			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight()) || hit) {
 				if (p.isAlive()) {
 					waffe.getKugeln().remove(this);
@@ -112,8 +110,16 @@ public class DoubleHelixBullet extends MonsterBullet{
 					gc.fillRect(helix[i][1][0]+width, helix[i][0][1]+height/2, helix[i][0][0]-helix[i][1][0]-width, helix[i][1][1]-helix[i][0][1]+height/4);
 			}
 			gc.setFill(Color.BLUE);
-			if(helixcounter != 0)
-				gc.fillRect(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1]);
+			//if(helixcounter != 0)
+			//	gc.fillRect(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1]);
 		}
+	}
+	
+	private boolean overlaps (Rectangle r, Player p) {
+	    return p.getX() < r.getX() + r.getWidth() && p.getX() + p.getWidth() > r.getX() && p.getY() < r.getY() + r.getHeight() && p.getY() + p.getHeight() > r.getY();
+	}
+	
+	public boolean checkHit(double x, double y, double width, double height){
+		 return xPos < x + width && xPos + this.width > x && yPos < y + height && yPos + this.height > y;
 	}
 }

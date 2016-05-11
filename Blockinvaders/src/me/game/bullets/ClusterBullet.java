@@ -5,8 +5,8 @@ import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import me.game.weapons.PlayerWeapon;
-import me.game.weapons.Weapon;
+import me.game.playerWeapons.PlayerWeapon;
+import me.game.playerWeapons.Weapon;
 
 public class ClusterBullet extends TimedBullet{
 	private int count = 0;

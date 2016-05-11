@@ -1,8 +1,7 @@
 package me.game.bullets;
 
-import javafx.scene.shape.Rectangle;
 import me.game.pack.Drawable;
-import me.game.weapons.Weapon;
+import me.game.playerWeapons.Weapon;
 
 
 public abstract class Bullet implements Drawable{
@@ -52,12 +51,13 @@ public abstract class Bullet implements Drawable{
 
 	public abstract void refresh();
 	
-	public boolean checkHit(double ox, double oy, double owidth, double olength){
-		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
+	public boolean checkHit(double ox, double oy, double owidth, double oheight){
+		/*Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
 		Rectangle rt2 = new Rectangle((int)xPos, (int)yPos, (int)width, (int)height);
 		if(rt1.intersects(rt2.getBoundsInLocal()))
 			return true;
-		return false;
+		return false;*/
+		return ox < xPos + width && ox + owidth > xPos && oy < yPos + height && oy + oheight > yPos;
 	}
 	
 	
