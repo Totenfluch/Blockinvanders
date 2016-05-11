@@ -18,11 +18,11 @@ public abstract class Weapon {
 	protected Vector<Bullet> kugeln = new Vector<Bullet>(10000, 500);
 
 
-	public Weapon(Character Besitzer, int damage,int delay, int bulletSpeed){
+	public Weapon(Character owner, int damage,int delay, int bulletSpeed){
 		this.damage = damage;
 		this.INIT_DELAY = delay;
 		this.bulletSpeed = bulletSpeed;
-		this.Owner = Besitzer;
+		this.Owner = owner;
 	}
 	
 	public Character getOwner(){

@@ -3,17 +3,17 @@ package me.game.playerWeapons;
 import me.game.bullets.PlayerBullet;
 import me.game.pack.Player;
 
-public class StandardWaffe extends PlayerWeapon {
+public class StandardWeapon extends PlayerWeapon {
 	
 	double bulletW = 5.0,
 			bulletH = 5.0;
 	
-	public StandardWaffe(Player Besitzer) {
+	public StandardWeapon(Player Besitzer) {
 		super(Besitzer, 10, 12, 5);
 		typ = WeaponType.STANDARD;
 	}
 
-	public StandardWaffe(Player Besitzer,int ammo) {
+	public StandardWeapon(Player Besitzer,int ammo) {
 		super(Besitzer, 10, 12, 5);
 		typ = WeaponType.STANDARD;
 		this.ammo = ammo;

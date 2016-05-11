@@ -7,8 +7,8 @@ import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop.Drops;
-import me.game.playerWeapons.MonsterWeapon;
 import me.game.playerWeapons.Weapon;
 
 public class Monster extends Character {
@@ -135,10 +135,10 @@ public class Monster extends Character {
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
-		Timeline tf = new Timeline(new KeyFrame(Duration.millis(game.GameSpeed*500), ae->{
+		new Timeline(new KeyFrame(Duration.millis(game.GameSpeed*650), ae->{
 			MonsterWeapon.ActiveWeapons.remove(getHisWeapon());
-		}));
-		tf.play();
+		})).play();
+		
 		game.Monsters.remove(this);
 		try {
 			this.finalize();

@@ -3,7 +3,7 @@ package me.game.pack;
 import javafx.scene.paint.Color;
 import me.game.monsterWeapons.MonsterBossWeapon;
 import me.game.monsterWeapons.MonsterDoubleHelixWeapon;
-import me.game.monsterWeapons.MonsterStandardWaffe;
+import me.game.monsterWeapons.MonsterStandardWeapon;
 import me.game.monsterWeapons.MonsterTier2Weapon;
 
 public class MonsterWaves {
@@ -34,7 +34,7 @@ public class MonsterWaves {
 				//	game.Monster_HP /= 2;
 				Monster tempi = new Monster(null, 10+which*5*modifier, sub+600+ix*50, x*100+50, 30, 20, 1+which, Color.BROWN, 0.25, 20);
 				game.Monsters.add(tempi);
-				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
+				tempi.giveWeapon(new MonsterStandardWeapon(tempi));
 			}
 			break;
 		}
@@ -72,7 +72,7 @@ public class MonsterWaves {
 				//	game.Monster_HP /= 2;
 				Monster tempi = new Monster(null, 30+which*10*modifier, 800+ix*70, x*100+50, 50, 20, 1+2*which, Color.CORAL, 0.5, 8);
 				game.Monsters.add(tempi);
-				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
+				tempi.giveWeapon(new MonsterStandardWeapon(tempi));
 			}
 			break;
 		}
@@ -96,7 +96,7 @@ public class MonsterWaves {
 				//	game.Monster_HP /= 2;
 				Monster tempi = new Monster(null, 5+which*3*modifier, 530+ix*30+sub, x*100+50, 20, 40, 1+which, Color.CRIMSON, 0.125, 32);
 				game.Monsters.add(tempi);
-				tempi.giveWeapon(new MonsterStandardWaffe(tempi));
+				tempi.giveWeapon(new MonsterStandardWeapon(tempi));
 			}
 			break;
 		}

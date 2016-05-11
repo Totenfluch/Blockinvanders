@@ -1,5 +1,9 @@
 package me.game.pack;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
 import com.sun.javafx.geom.Rectangle;
 
 import me.game.playerWeapons.PlayerWeapon;
@@ -77,8 +81,11 @@ public abstract class Character implements Drawable{
 	}
 	
 	public void giveWeapon(Weapon waffe){
-		if(hisWeapon != waffe)
-			PlayerWeapon.ActiveWeapons.remove(hisWeapon);
+		if(hisWeapon != waffe){
+			//new Timeline(new KeyFrame(Duration.millis(game.GameSpeed*375), ae->{
+				PlayerWeapon.ActiveWeapons.remove(hisWeapon);
+			//})).play();
+		}
 		this.hisWeapon = waffe;
 	}
 	

@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import me.game.playerWeapons.MonsterWeapon;
+import me.game.monsterWeapons.MonsterWeapon;
 import me.game.playerWeapons.PlayerWeapon;
 
 public class Game extends Application {

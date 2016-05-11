@@ -39,11 +39,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import me.game.monsterWeapons.MonsterWeapon;
 import me.game.networking.Client;
-import me.game.playerWeapons.MonsterWeapon;
 import me.game.playerWeapons.PlayerWeapon;
 import me.game.playerWeapons.RocketLauncher;
-import me.game.playerWeapons.StandardWaffe;
+import me.game.playerWeapons.StandardWeapon;
 
 public class Frame {
 	public static final int GAME_WIDTH = 1600;
@@ -208,7 +208,7 @@ public class Frame {
 
 	public void switchSceneToGame() {
 		Player P1 = new Player(GAME_WIDTH / 2 - 100, 10, null);
-		P1.giveWeapon(new StandardWaffe(P1));
+		P1.giveWeapon(new StandardWeapon(P1));
 		P1.giveSpecialWeapon(new RocketLauncher(Players[0], 0));
 		Players[0] = P1;
 
@@ -219,7 +219,7 @@ public class Frame {
 				bot = new Bot2(Players[0]);
 		if (Play_with_bot_enabled) {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
-			P2.giveWeapon(new StandardWaffe(P2));
+			P2.giveWeapon(new StandardWeapon(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 
@@ -233,7 +233,7 @@ public class Frame {
 			bot = new Bot1(Players[0]);
 
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
-			P2.giveWeapon(new StandardWaffe(P2));
+			P2.giveWeapon(new StandardWeapon(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 
@@ -242,7 +242,7 @@ public class Frame {
 
 		if (Coop_enabled || Online_Coop) {
 			Player P2 = new Player(GAME_WIDTH / 2 + 100, 10, null);
-			P2.giveWeapon(new StandardWaffe(P2));
+			P2.giveWeapon(new StandardWeapon(P2));
 			Players[1] = P2;
 			Players[1].giveSpecialWeapon(new RocketLauncher(Players[1], 0));
 		}
@@ -251,7 +251,7 @@ public class Frame {
 			bots[0] = new Bot1(Players[0]);
 			for (int i = 1; i < KiPartyPlayers; i++) {
 				Players[i] = new Player(GAME_WIDTH / 2 + 100 + 100 * i, 10, null);
-				Players[i].giveWeapon(new StandardWaffe(Players[i]));
+				Players[i].giveWeapon(new StandardWeapon(Players[i]));
 				Players[i].giveSpecialWeapon(new RocketLauncher(Players[i], 0));
 				if (i % 2 == 0)
 					bots[i] = new Bot1(Players[i]);

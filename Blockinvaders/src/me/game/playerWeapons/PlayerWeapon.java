@@ -13,8 +13,8 @@ public abstract class PlayerWeapon extends Weapon {
 	public static Vector<PlayerWeapon> ActiveWeapons = new Vector<PlayerWeapon>();
 
 
-	public PlayerWeapon(Player Besitzer, int damage,int delay,int bulletSpeed){
-		super(Besitzer, damage, delay, bulletSpeed);
+	public PlayerWeapon(Player owner, int damage,int delay,int bulletSpeed){
+		super(owner, damage, delay, bulletSpeed);
 		ActiveWeapons.add(this);
 	}
 
@@ -64,7 +64,7 @@ public abstract class PlayerWeapon extends Weapon {
 			return this;
 			
 		case DUALS:
-			return new StandardWaffe((Player)this.Owner, this.ammo);
+			return new StandardWeapon((Player)this.Owner, this.ammo);
 			
 		case SHOTGUN:
 			return new DualsWeapon((Player)this.Owner, this.ammo);
