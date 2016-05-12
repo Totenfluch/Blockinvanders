@@ -16,7 +16,7 @@ public abstract class Weapon {
 	protected WeaponType typ;
 	private boolean isAboutToBeRemoved = false;
 	
-	protected Vector<Bullet> kugeln = new Vector<Bullet>(10000, 500);
+	protected Vector<Bullet> kugeln = new Vector<Bullet>(400, 20);
 
 
 	public Weapon(Character owner, int damage,int delay, int bulletSpeed){

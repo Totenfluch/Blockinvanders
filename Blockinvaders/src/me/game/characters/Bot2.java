@@ -38,7 +38,7 @@ public class Bot2 implements BotKI, Controller {
 		move();
 
 		if (player.getHisWeapon().getAmmo() == 0 ||
-				Math.abs(player.getX()-destX) <= 10)
+				(Math.abs(player.getX()-destX) <= 10 && game.Monsters.size() > 0))
 			player.getHisWeapon().shoot(player.getX(), player.getY());
 	}
 
