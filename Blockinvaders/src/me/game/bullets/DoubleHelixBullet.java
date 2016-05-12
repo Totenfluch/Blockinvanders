@@ -54,11 +54,11 @@ public class DoubleHelixBullet extends MonsterBullet{
 
 		for (int x = 0; x < waffe.getOwner().game.Players.length; x++) {
 			Player p = waffe.getOwner().game.Players[x];
-			boolean hit = false;
+			/*boolean hit = false;
 			if(helixcounter != 0)
 				if(overlaps(new Rectangle(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1]), p))
-					hit = true;
-			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight()) || hit) {
+					hit = true;*/
+			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight()) /*|| hit*/) {
 				if (p.isAlive()) {
 					waffe.getKugeln().remove(this);
 					p.setLife(p.getLife()-waffe.getDamage());
@@ -114,12 +114,14 @@ public class DoubleHelixBullet extends MonsterBullet{
 			//	gc.fillRect(helix[0][0][0]-width, helix[0][0][1], 60+width*2, helix[helixcounter-1][0][1]-helix[0][0][1]);
 		}
 	}
-	
+
 	private boolean overlaps (Rectangle r, Player p) {
-	    return p.getX() < r.getX() + r.getWidth() && p.getX() + p.getWidth() > r.getX() && p.getY() < r.getY() + r.getHeight() && p.getY() + p.getHeight() > r.getY();
+		return p.getX() < r.getX() + r.getWidth() && p.getX() + p.getWidth() > r.getX() && p.getY() < r.getY() + r.getHeight() && p.getY() + p.getHeight() > r.getY();
 	}
-	
+
 	public boolean checkHit(double x, double y, double width, double height){
-		 return xPos < x + width && xPos + this.width > x && yPos < y + height && yPos + this.height > y;
+		boolean isHit =  xPos < x + width && xPos + this.width > x && yPos < y + height && yPos + this.height > y;
+		boolean isHit2 = helix[0][0][0]-this.width < x + width && helix[0][0][0]-this.width + 60+this.width*2 > x && helix[0][0][1] < y + height && helix[0][0][1] + helix[helixcounter-1][0][1]-helix[0][0][1] > y;
+		return isHit || isHit2;
 	}
 }
