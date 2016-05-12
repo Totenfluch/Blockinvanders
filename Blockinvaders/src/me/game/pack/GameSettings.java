@@ -10,6 +10,8 @@ public class GameSettings {
 	private String Player1Name;
 	private String Player2Name;
 	
+	private boolean restart;
+	
 	/*
 	 * GameType:
 	 * 	
@@ -70,14 +72,22 @@ public class GameSettings {
 	}
 	
 	
+	public boolean isRestart() {
+		return restart;
+	}
+	public void setRestart(boolean restart) {
+		this.restart = restart;
+	}
 	
-	public GameSettings(int gameType, int playerNum, int gameSpeed, int botID, String player1Name, String player2Name) {
+	
+	public GameSettings(int gameType, int playerNum, int gameSpeed, int botID, String player1Name, String player2Name, boolean restart) {
 		this.gameMode = gameType;
 		this.playerNum = playerNum;
 		this.gameSpeed = gameSpeed;
 		this.botID = botID;
 		Player1Name = player1Name;
 		Player2Name = player2Name;
+		this.restart = restart;	
 	}
 	
 	

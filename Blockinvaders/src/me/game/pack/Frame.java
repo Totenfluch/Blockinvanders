@@ -922,6 +922,8 @@ public class Frame {
 
 		Player1Name = gs.getPlayer1Name();
 		Player2Name = gs.getPlayer2Name();
+		
+		autoRestart = gs.isRestart();
 
 		return true;
 	}
@@ -942,7 +944,7 @@ public class Frame {
 		else if (KiPartyPlayers > 0)
 			gameMode = 6;
 
-		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name);
+		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart);
 		Game.setSettings(gs);
 	}
 
