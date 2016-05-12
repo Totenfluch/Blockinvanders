@@ -159,6 +159,10 @@ public class Bot2 implements BotKI, Controller {
 			bal += 1000;
 		else if (!lockLeft && dir < 0)
 			bal -= 1000;
+		else if(!lockRight)
+			bal += 1000;
+		else if(!lockLeft)
+			bal -= 1000;
 
 	}
 
@@ -170,7 +174,7 @@ public class Bot2 implements BotKI, Controller {
 					alive++;
 
 			int initMonsters = 0;
-			switch (game.clearcount % 5) {
+			switch (game.clearcount % 6) {
 			case 0:
 				initMonsters = 64;
 				break;
@@ -185,6 +189,9 @@ public class Bot2 implements BotKI, Controller {
 				break;
 			case 4:
 				initMonsters = 1;
+				break;
+			case 5:
+				initMonsters = 4;
 				break;
 			}
 
