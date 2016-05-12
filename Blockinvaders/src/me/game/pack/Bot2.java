@@ -202,6 +202,4 @@ public class Bot2 implements BotKI, Controller {
 	public void onSetControl(Controllable controllable) {
 		this.controllable = controllable;
 	}
-
-
 }
