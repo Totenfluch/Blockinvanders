@@ -57,6 +57,8 @@ public class Player extends Character implements Controllable{
 	}
 
 	public boolean setLife(int leben) {
+		if(game.Online_Coop && game.Players[1].isControlled())
+			game.client.processMessage("hitPlayer " + leben);
 		if (alive && leben > 0) {
 			this.life = leben;
 			return true;
@@ -66,6 +68,16 @@ public class Player extends Character implements Controllable{
 		}
 	}
 
+	public boolean setLife(int leben, boolean online) {
+		if (alive && leben > 0) {
+			this.life = leben;
+			return true;
+		} else {
+			alive = false;
+			return false;
+		}
+	}
+	
 	public void addLeben() {
 		if (alive)
 			this.life++;
@@ -80,6 +92,8 @@ public class Player extends Character implements Controllable{
 	public void incScore(int score) {
 		if (score > 0)
 			this.score += score;
+		if(game.Online_Coop && game.Players[1].isControlled())
+			game.client.processMessage("syncScore " + this.score);
 	}
 
 	public void decScore(int score) {
@@ -88,6 +102,10 @@ public class Player extends Character implements Controllable{
 				score = 0;
 			else
 				this.score -= score;
+	}
+	
+	public void setScore(int score){
+		this.score = score;
 	}
 
 	public int getScore() {
@@ -104,6 +122,8 @@ public class Player extends Character implements Controllable{
 			gc.setFill(Color.BLUE);
 		else if (playerNumber == 3)
 			gc.setFill(Color.CRIMSON);
+		else
+			gc.setFill(Color.WHITE);
 		if (alive)
 			gc.fillRect(xPos, yPos, width, heigth);
 

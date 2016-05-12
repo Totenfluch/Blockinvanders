@@ -11,7 +11,7 @@ import me.game.pack.Frame;
 public class GetServerMessages implements Controller{
 	public String newestreply = null;
 	protected Frame game;
-	private Controllable controllable;
+	private Player controllable;
 	
 	public GetServerMessages(Frame game) {
 		this.game = game;
@@ -48,6 +48,7 @@ public class GetServerMessages implements Controller{
 				}
 			});
 		}else if(message.equals("StartGame")){
+			GetServerMessages gsm = this;
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
@@ -55,25 +56,42 @@ public class GetServerMessages implements Controller{
 					game.Player1Name = "PH";
 					game.Players = new Player[2];
 					game.switchSceneToGame();
+					game.Players[1].setController(gsm);
 				}
 			});
 		}else if(message.startsWith("playerPos")){
+			// playerpos x y
 			String[] splinter = message.split(" ");
 			double xPos = Double.parseDouble(splinter[1]);
 			double yPos = Double.parseDouble(splinter[2]);
-			game.Players[1].setX(xPos);
-			game.Players[1].setY(yPos);
+			controllable.setX(xPos);
+			controllable.setY(yPos);
 		}else if(message.startsWith("shoot")){
+			// shoot x y
 			String[] splinter = message.split(" ");
 			double xPos = Double.parseDouble(splinter[1]);
 			double yPos = Double.parseDouble(splinter[2]);
-			game.Players[1].getHisWeapon().shoot(xPos, yPos);
+			controllable.getHisWeapon().shoot(xPos, yPos);
+		}else if(message.startsWith("hitMonster")){
+			// hitMonser Hashcode dmg amount
+			String[] splinter = message.split(" ");
+			game.Monsters.stream().filter(m -> (m.hashCode() == Integer.parseInt(splinter[1]))).forEach(monti -> monti.setLife(Integer.parseInt(splinter[2]), true));
+		}else if(message.startsWith("hitPlayer")){
+			// hitPlayer dmg amount
+			String[] splinter = message.split(" ");
+			controllable.setLife(Integer.parseInt(splinter[1]), true);
+		}else if(message.startsWith("playerDeath")){
+			controllable.setLife(0, true);
+		}else if(message.startsWith("syncScore")){
+			String[] splinter = message.split(" ");
+			controllable.setScore(Integer.valueOf(splinter[1]));
 		}
 	}
 
 
 	@Override
 	public void onSetControl(Controllable controllable) {
-		this.controllable = controllable;
+		this.controllable = (Player)controllable;
+		
 	}
 }
