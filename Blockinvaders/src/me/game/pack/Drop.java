@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import me.game.characters.Player;
 import me.game.playerWeapons.PlayerWeapon;
-import me.game.playerWeapons.RocketLauncher;
 import me.game.playerWeapons.PlayerWeapon.WeaponType;
+import me.game.playerWeapons.RocketLauncher;
 
 public class Drop implements Drawable{
 	final Frame game;

@@ -6,8 +6,8 @@ import javafx.scene.paint.Color;
 import me.game.bullets.Bullet;
 import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop;
-import me.game.pack.Frame;
 import me.game.pack.Drop.Drops;
+import me.game.pack.Frame;
 
 public class Bot1 implements BotKI, Controller{
 	/*
@@ -38,7 +38,7 @@ public class Bot1 implements BotKI, Controller{
 					break;
 			}
 		}
-
+	
 		if(!checkForBullets() && !escapeLock ){
 			if(!findWeaponUpgrade()){
 				moveToClosestEnemy();

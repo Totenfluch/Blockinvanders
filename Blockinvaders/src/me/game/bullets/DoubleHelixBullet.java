@@ -2,7 +2,6 @@ package me.game.bullets;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import me.game.characters.Monster;
 import me.game.characters.Player;
 import me.game.monsterWeapons.MonsterWeapon;
@@ -115,9 +114,9 @@ public class DoubleHelixBullet extends MonsterBullet{
 		}
 	}
 
-	private boolean overlaps (Rectangle r, Player p) {
+	/*private boolean overlaps (Rectangle r, Player p) {
 		return p.getX() < r.getX() + r.getWidth() && p.getX() + p.getWidth() > r.getX() && p.getY() < r.getY() + r.getHeight() && p.getY() + p.getHeight() > r.getY();
-	}
+	}*/
 
 	public boolean checkHit(double x, double y, double width, double height){
 		boolean isHit =  xPos < x + width && xPos + this.width > x && yPos < y + height && yPos + this.height > y;

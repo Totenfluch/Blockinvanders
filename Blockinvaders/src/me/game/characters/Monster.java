@@ -2,11 +2,8 @@ package me.game.characters;
 
 import java.util.Random;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop;
 import me.game.pack.Drop.Drops;

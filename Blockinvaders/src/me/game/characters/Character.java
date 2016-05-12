@@ -1,9 +1,5 @@
 package me.game.characters;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-
 import com.sun.javafx.geom.Rectangle;
 
 import me.game.pack.Drawable;
