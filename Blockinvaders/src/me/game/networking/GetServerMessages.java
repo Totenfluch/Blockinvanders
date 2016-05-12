@@ -3,10 +3,10 @@ package me.game.networking;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import me.game.pack.Controllable;
-import me.game.pack.Controller;
+import me.game.characters.Controllable;
+import me.game.characters.Controller;
+import me.game.characters.Player;
 import me.game.pack.Frame;
-import me.game.pack.Player;
 
 public class GetServerMessages implements Controller{
 	public String newestreply = null;

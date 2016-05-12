@@ -3,7 +3,7 @@ package me.game.playerWeapons;
 import java.util.Vector;
 
 import me.game.bullets.PlayerBullet;
-import me.game.pack.Player;
+import me.game.characters.Player;
 
 public abstract class PlayerWeapon extends Weapon {
 	

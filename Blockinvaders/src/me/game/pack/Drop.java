@@ -6,6 +6,7 @@ import java.util.Vector;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import me.game.characters.Player;
 import me.game.playerWeapons.PlayerWeapon;
 import me.game.playerWeapons.RocketLauncher;
 import me.game.playerWeapons.PlayerWeapon.WeaponType;
@@ -20,7 +21,7 @@ public class Drop implements Drawable{
 	public static final int weaponUpgradeDropLimitPerWave = 2;
 	public static int weaponUpgradesDroppedThisWave = 0;
 
-	protected enum Drops{
+	public enum Drops{
 		NEXTWEAPON,
 		ADDLEBEN,
 		ADDAMMO,

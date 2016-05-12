@@ -2,10 +2,10 @@ package me.game.bullets;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import me.game.characters.Monster;
+import me.game.characters.Player;
 import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Frame;
-import me.game.pack.Monster;
-import me.game.pack.Player;
 import me.game.playerWeapons.PlayerWeapon;
 
 public class MonsterBullet extends Bullet {

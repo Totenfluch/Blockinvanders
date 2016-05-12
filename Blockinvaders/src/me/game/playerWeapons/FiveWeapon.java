@@ -1,7 +1,7 @@
 package me.game.playerWeapons;
 
 import me.game.bullets.PlayerBullet;
-import me.game.pack.Player;
+import me.game.characters.Player;
 
 public class FiveWeapon extends PlayerWeapon{
 	double bulletW = 3.0,

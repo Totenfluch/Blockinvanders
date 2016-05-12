@@ -1,6 +1,6 @@
 package me.game.playerWeapons;
 
-import me.game.pack.Player;
+import me.game.characters.Player;
 
 public abstract class SpecialWeapon extends PlayerWeapon{
 	public SpecialWeapon(Player Besitzer, int damage, int delay, int bulletSpeed) {

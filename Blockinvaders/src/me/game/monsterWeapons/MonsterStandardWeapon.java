@@ -2,7 +2,7 @@ package me.game.monsterWeapons;
 
 import java.util.Random;
 
-import me.game.pack.Monster;
+import me.game.characters.Monster;
 
 public class MonsterStandardWeapon extends MonsterWeapon{
 	double bulletW = 5.0,

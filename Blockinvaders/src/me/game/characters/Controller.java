@@ -1,4 +1,4 @@
-package me.game.pack;
+package me.game.characters;
 
 public interface Controller {
 	public void onSetControl(Controllable controllable);

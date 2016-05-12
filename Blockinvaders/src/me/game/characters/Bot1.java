@@ -1,10 +1,12 @@
-package me.game.pack;
+package me.game.characters;
 
 import java.util.Iterator;
 
 import javafx.scene.paint.Color;
 import me.game.bullets.Bullet;
 import me.game.monsterWeapons.MonsterWeapon;
+import me.game.pack.Drop;
+import me.game.pack.Frame;
 import me.game.pack.Drop.Drops;
 
 public class Bot1 implements BotKI, Controller{
@@ -167,7 +169,7 @@ public class Bot1 implements BotKI, Controller{
 			return false;
 		else if(bot.getY()-p.getyPos() > 500)
 			return false;
-		double wheretogo = p.xPos;
+		double wheretogo = p.getxPos();
 		if(bot.getX() > wheretogo)
 			tryMoveLeft();
 		else

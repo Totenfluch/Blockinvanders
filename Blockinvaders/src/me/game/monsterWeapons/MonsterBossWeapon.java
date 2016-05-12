@@ -2,7 +2,7 @@ package me.game.monsterWeapons;
 
 
 import me.game.bullets.MonsterBullet;
-import me.game.pack.Monster;
+import me.game.characters.Monster;
 
 public class MonsterBossWeapon extends MonsterWeapon{
 	double bulletW = 10.0,

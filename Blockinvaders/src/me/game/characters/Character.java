@@ -1,4 +1,4 @@
-package me.game.pack;
+package me.game.characters;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -6,6 +6,8 @@ import javafx.util.Duration;
 
 import com.sun.javafx.geom.Rectangle;
 
+import me.game.pack.Drawable;
+import me.game.pack.Frame;
 import me.game.playerWeapons.PlayerWeapon;
 import me.game.playerWeapons.SpecialWeapon;
 import me.game.playerWeapons.Weapon;

@@ -3,7 +3,7 @@ package me.game.monsterWeapons;
 import java.util.Vector;
 
 import me.game.bullets.MonsterBullet;
-import me.game.pack.Monster;
+import me.game.characters.Monster;
 import me.game.playerWeapons.Weapon;
 
 public abstract class MonsterWeapon extends Weapon {

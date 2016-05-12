@@ -1,6 +1,7 @@
 package me.game.pack;
 
 import javafx.scene.paint.Color;
+import me.game.characters.Monster;
 import me.game.monsterWeapons.MonsterBossWeapon;
 import me.game.monsterWeapons.MonsterDoubleHelixWeapon;
 import me.game.monsterWeapons.MonsterStandardWeapon;
