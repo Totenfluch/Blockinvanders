@@ -59,6 +59,4 @@ public abstract class Bullet implements Drawable{
 		return false;*/
 		return ox < xPos + width && ox + owidth > xPos && oy < yPos + height && oy + oheight > yPos;
 	}
-	
-	
 }

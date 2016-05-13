@@ -1,6 +1,9 @@
 package me.game.characters;
 
 import java.util.Iterator;
+import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javafx.scene.paint.Color;
 import me.game.bullets.Bullet;
@@ -30,29 +33,37 @@ public class Bot1 implements BotKI, Controller{
 	public void refresh(){
 		if(!bot.isAlive())
 			return;
-		boolean escapeLock = false;
+		/*boolean oldEscapeLock = false;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
-				escapeLock = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x).equals(escapeThis);
-				if(escapeLock)
+				oldEscapeLock = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x).equals(escapeThis);
+				if(oldEscapeLock)
 					break;
 			}
-		}
-	
+		}*/
+		
+		Vector<Bullet> scont = new Vector<Bullet>(400, 20);
+		MonsterWeapon.ActiveWeapons.forEach(weap -> weap.getKugeln().forEach(bul -> scont.add(bul)));
+		boolean escapeLock = scont.stream().anyMatch(b -> b.equals(escapeThis));
+		
+		
 		if(!checkForBullets() && !escapeLock ){
 			if(!findWeaponUpgrade()){
 				moveToClosestEnemy();
 				bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 			}else{
-				boolean clear = true;
-				for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
+
+				boolean clear = scont.stream().noneMatch(b -> b.checkHit(bot.getX()-10, 0, bot.getWidth()+20, Frame.GAME_LENGTH));
+				//boolean oldclear = true;
+				/*for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 					for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 						Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 						if(bul.checkHit(bot.getX()-10, 0, bot.getWidth()+20, Frame.GAME_LENGTH)){
 							clear = false;
 						}
 					}
-				}
+				}*/
+				//System.out.println(clear + " " + newClear);
 				if(bot.getHisWeapon().getAmmo() == 0 || !clear)
 					bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 			}

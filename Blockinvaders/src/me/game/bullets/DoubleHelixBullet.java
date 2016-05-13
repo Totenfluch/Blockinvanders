@@ -120,7 +120,9 @@ public class DoubleHelixBullet extends MonsterBullet{
 
 	public boolean checkHit(double x, double y, double width, double height){
 		boolean isHit =  xPos < x + width && xPos + this.width > x && yPos < y + height && yPos + this.height > y;
-		boolean isHit2 = helix[0][0][0]-this.width < x + width && helix[0][0][0]-this.width + 60+this.width*2 > x && helix[0][0][1] < y + height && helix[0][0][1] + helix[helixcounter-1][0][1]-helix[0][0][1] > y;
+		boolean isHit2 = false;
+		if(helixcounter != 0)
+			isHit2 = helix[0][0][0]-this.width < x + width && helix[0][0][0]-this.width + 60+this.width*2 > x && helix[0][0][1] < y + height && helix[0][0][1] + helix[helixcounter-1][0][1]-helix[0][0][1] > y;
 		return isHit || isHit2;
 	}
 }

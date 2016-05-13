@@ -81,6 +81,7 @@ public class Frame {
 	public boolean KI_Coop_enabled = false;
 	public boolean Play_with_bot_enabled = false;
 	public boolean Performance_benchmark_enabled = false;
+	public boolean Bot_Performance_benchmark_enabled = false;
 	private int KiPartyPlayers = 0;
 	private int botID = 0;
 	private BotKI bot;
@@ -264,7 +265,7 @@ public class Frame {
 					bots[i] = new Bot2(Players[i]);
 			}
 		}
-		
+
 		SetupDraw();
 		MonsterWaves.SpawnWave(0);
 		CreateTimers();
@@ -444,7 +445,7 @@ public class Frame {
 		BenchmarkDesc.setFill(Color.WHITE);
 		connect_MiddlePart.getChildren().add(BenchmarkDesc);
 		ChoiceBox<String> BenchmarkBox = new ChoiceBox<String>();
-		BenchmarkBox.getItems().addAll("Disabled", "Enabled");
+		BenchmarkBox.getItems().addAll("Disabled", "Enabled", "Bot Benchmark");
 		BenchmarkBox.setValue("Disabled");
 		connect_MiddlePart.getChildren().add(BenchmarkBox);
 
@@ -453,8 +454,12 @@ public class Frame {
 				Performance_benchmark_enabled = false;
 			else if (newValue.equals("Enabled"))
 				Performance_benchmark_enabled = true;
+			else if (newValue.equals("Bot Benchmark")){
+				Bot_Performance_benchmark_enabled = true;
+				Performance_benchmark_enabled = true;
+			}
 		});
-		
+
 		Text restartDesc = new Text("Restart");
 		restartDesc.setFont(new Font("Futura", 15));
 		restartDesc.setFill(Color.WHITE);
@@ -568,8 +573,8 @@ public class Frame {
 				} else
 					System.out.println("Wrong IP m8");
 			}
-			
-			
+
+
 		});
 
 		DebugConsole = new TextArea();
@@ -609,10 +614,10 @@ public class Frame {
 
 				// Draw Player Bullets
 				PlayerWeapon.ActiveWeapons.forEach(Pw -> Pw.getKugeln().forEach(pb -> pb.draw(gc)));
-				
+
 				// Draw Monster Bullets
 				MonsterWeapon.ActiveWeapons.forEach(Pw -> Pw.getKugeln().forEach(pb -> pb.draw(gc)));
-				
+
 				// Draw Drops
 				Drop.AllDrops.forEach(b -> b.draw(gc));
 
@@ -668,10 +673,10 @@ public class Frame {
 				int monsters=0;
 				for(Monster monti: Monsters){
 					if(monsters < 80){
-					gc.setFill(Color.CORAL);
-					gc.setFont(new Font("Futura", 10));
-					gc.fillText("Monster - " + monsters + " - Hp:" + monti.getLife() + " Droprate:" + monti.getDropRate() + " Worth: " + monti.getWorth(), 925, 50+monsters*10);
-					monsters++;
+						gc.setFill(Color.CORAL);
+						gc.setFont(new Font("Futura", 10));
+						gc.fillText("Monster - " + monsters + " - Hp:" + monti.getLife() + " Droprate:" + monti.getDropRate() + " Worth: " + monti.getWorth(), 925, 50+monsters*10);
+						monsters++;
 					}else{
 						gc.setFill(Color.GREEN);
 						gc.setFont(new Font("Impact", 25));
@@ -683,7 +688,7 @@ public class Frame {
 	}
 
 	public void CreateTimers() {
-		rTf = new Timeline(new KeyFrame(Duration.millis(GameSpeed), ae -> {
+		KeyFrame mainRefresh = new KeyFrame(Duration.millis(GameSpeed), ae -> {
 			long time = System.nanoTime();
 
 			Refresh();
@@ -695,11 +700,15 @@ public class Frame {
 				bot.refresh();
 				bot2.refresh();
 			}
-			
+
 			long timeEnd = System.nanoTime();
 			lastRefresh = timeEnd - time;
 			refreshTime += timeEnd - time;
-		}));
+		});
+		rTf = new Timeline(mainRefresh);
+		if(Bot_Performance_benchmark_enabled)
+			for(int i = 0; i<32; i++)
+				rTf.getKeyFrames().add(mainRefresh);
 	}
 
 	public void Refresh() {
@@ -718,7 +727,7 @@ public class Frame {
 			Monsters.forEach(Monster::moveRight);
 		else if (Monster_Direction == 0) 
 			Monsters.forEach(Monster::moveLeft);
-		
+
 
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
@@ -759,14 +768,14 @@ public class Frame {
 		// Can't use lambda. Need to modify weapon in refresh
 		//PlayerWeapon.ActiveWeapons.forEach(PlayerWeapon::refresh);
 		//MonsterWeapon.ActiveWeapons.forEach(MonsterWeapon::refresh);
-		
+
 		for(int i = 0; i<PlayerWeapon.ActiveWeapons.size(); i++)
 			PlayerWeapon.ActiveWeapons.elementAt(i).refresh();
-		
+
 		for(int i = 0; i<MonsterWeapon.ActiveWeapons.size(); i++)
 			MonsterWeapon.ActiveWeapons.elementAt(i).refresh();
-			
-		
+
+
 
 		for (int i = 0; i < Drop.AllDrops.size(); i++)
 			Drop.AllDrops.elementAt(i).refresh();
@@ -774,12 +783,16 @@ public class Frame {
 		if (Monsters.size() == 0 && !respawnDelayActive) {
 			clearcount++;
 			shootChance = (int) (10.0 + 2990 * Math.pow(Math.E, -0.07 * (clearcount + 1)));
-			SpawnWaveDelay = new Timeline(new KeyFrame(Duration.millis(GameSpeed*375), ae->{
+			if(!Bot_Performance_benchmark_enabled){
+				SpawnWaveDelay = new Timeline(new KeyFrame(Duration.millis(GameSpeed*375), ae->{
+					MonsterWaves.SpawnWave(clearcount);
+					respawnDelayActive = false;
+				}));
+				SpawnWaveDelay.play();
+				respawnDelayActive = true;
+			}else{
 				MonsterWaves.SpawnWave(clearcount);
-				respawnDelayActive = false;
-			}));
-			SpawnWaveDelay.play();
-			respawnDelayActive = true;
+			}
 		}
 
 		int dead = 0;
@@ -787,7 +800,13 @@ public class Frame {
 			if (!Players[i].isAlive())
 				dead++;
 			if (dead == Players.length)
-				EndGame();
+				if(!Bot_Performance_benchmark_enabled){
+					EndGame();
+				}else{
+					EndGame();
+					System.out.println("Wave reached: " + clearcount);
+				}
+				
 		}
 
 		if (KiPartyPlayers > 0)
@@ -804,12 +823,12 @@ public class Frame {
 		tf.stop();
 		if(SpawnWaveDelay != null)
 			SpawnWaveDelay.stop();
-		
+
 
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
 		PublishScores();
-		
+
 		if(autoRestart){
 			saveSettings();
 			Game.restart();
@@ -856,9 +875,9 @@ public class Frame {
 		gameOver.setAlignment(Pos.CENTER);
 
 		MainStage.setScene(gameOverScene);
-		
+
 	}
-	
+
 	public GraphicsContext getGraphicsContext(){
 		return gc;
 	}
@@ -922,7 +941,7 @@ public class Frame {
 
 		Player1Name = gs.getPlayer1Name();
 		Player2Name = gs.getPlayer2Name();
-		
+
 		autoRestart = gs.isRestart();
 
 		return true;
