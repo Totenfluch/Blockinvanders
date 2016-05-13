@@ -15,7 +15,6 @@ public class GetServerMessages implements Controller{
 	
 	public GetServerMessages(Frame game) {
 		this.game = game;
-		game.Players[1].setController(this);
 	}
 
 
