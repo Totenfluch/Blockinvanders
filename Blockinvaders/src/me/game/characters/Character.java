@@ -69,6 +69,8 @@ public abstract class Character implements Drawable{
 	
 	public abstract boolean setLife(int leben);
 	
+	public abstract void triggerDeath();
+	
 
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
 		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);

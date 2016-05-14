@@ -65,11 +65,11 @@ public class Drop implements Drawable{
 
 		switch (drop) {
 		case ADDLEBEN:
-			p.addLeben();
+			p.setLife(p.getLife()+1);
 			break;
 
 		case ADDAMMO:
-			p.hisWeapon.addAmmo(20+r.nextInt(50));
+			p.hisWeapon.addAmmo(20+r.nextInt((game.clearcount+1)*2));
 			break;
 
 		case NEXTWEAPON:

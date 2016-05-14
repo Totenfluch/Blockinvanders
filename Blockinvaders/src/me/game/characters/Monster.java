@@ -106,7 +106,7 @@ public class Monster extends Character {
 		this.life = Leben;
 		if(this.life <= 0){
 			alive = false;
-			TriggerDeath();
+			triggerDeath();
 			return false;
 		}else{
 			alive = true;
@@ -118,7 +118,7 @@ public class Monster extends Character {
 		this.life = Life;
 		if(this.life <= 0){
 			alive = false;
-			TriggerDeath();
+			triggerDeath();
 			return false;
 		}else{
 			alive = true;
@@ -132,7 +132,7 @@ public class Monster extends Character {
 		life -= amount;
 		if(life <= 0){
 			alive = false;
-			TriggerDeath();
+			triggerDeath();
 			return false;
 		}else{
 			alive = true;
@@ -141,7 +141,7 @@ public class Monster extends Character {
 	}
 
 
-	public void TriggerDeath(){
+	public void triggerDeath(){
 		Random r = new Random();
 		Drops[] theDrops = Drops.values();
 		if(r.nextInt(dropRate) == 1){

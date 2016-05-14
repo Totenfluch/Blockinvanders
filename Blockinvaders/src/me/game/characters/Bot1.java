@@ -2,8 +2,6 @@ package me.game.characters;
 
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javafx.scene.paint.Color;
 import me.game.bullets.Bullet;
@@ -135,6 +133,8 @@ public class Bot1 implements BotKI, Controller{
 		if(monti2 == null)
 			return;
 		wheretogo = monti2.getX();
+		if(!monti2.isAlive())
+			return;
 		double timevalue = (bot.getY()-monti2.getY())/bot.getHisWeapon().getBulletSpeed();
 		if(game.Monster_Direction == 1){
 			wheretogo+=timevalue;
@@ -196,7 +196,7 @@ public class Bot1 implements BotKI, Controller{
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-				if(bul.checkHit(bot.getX()+bot.width, bot.getY()-bot.getHeight(), bul.getWidth()+40, bot.heigth*2)){
+				if(bul.checkHit(bot.getX()+bot.width, bot.getY()-bot.getHeight(), bul.getWidth()+10, bot.heigth*2)){
 					clear = false;
 				}
 			}
@@ -211,7 +211,7 @@ public class Bot1 implements BotKI, Controller{
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-				if(bul.checkHit(bot.getX(), bot.getY()-bot.getHeight(), -bul.getWidth()-40, bot.heigth*2)){
+				if(bul.checkHit(bot.getX(), bot.getY()-bot.getHeight(), -bul.getWidth()-10, bot.heigth*2)){
 					clear = false;
 				}
 			}

@@ -943,6 +943,9 @@ public class Frame {
 		Player2Name = gs.getPlayer2Name();
 
 		autoRestart = gs.isRestart();
+		
+		Performance_benchmark_enabled = gs.getPerformance_benchmark_enabled();
+		Bot_Performance_benchmark_enabled = gs.getBot_Performance_benchmark_enabled();
 
 		return true;
 	}
@@ -963,7 +966,7 @@ public class Frame {
 		else if (KiPartyPlayers > 0)
 			gameMode = 6;
 
-		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart);
+		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled);
 		Game.setSettings(gs);
 	}
 

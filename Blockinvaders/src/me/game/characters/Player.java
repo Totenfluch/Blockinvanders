@@ -64,6 +64,7 @@ public class Player extends Character implements Controllable{
 			return true;
 		} else {
 			alive = false;
+			triggerDeath();
 			return false;
 		}
 	}
@@ -74,19 +75,9 @@ public class Player extends Character implements Controllable{
 			return true;
 		} else {
 			alive = false;
+			triggerDeath();
 			return false;
 		}
-	}
-	
-	public void addLeben() {
-		if (alive)
-			this.life++;
-	}
-
-	public void removeLeben() {
-		life--;
-		if (life <= 0)
-			alive = false;
 	}
 
 	public void incScore(int score) {
@@ -256,5 +247,11 @@ public class Player extends Character implements Controllable{
 		if(controller != null)
 			return true;
 		return false;
+	}
+
+	@Override
+	public void triggerDeath() {
+		if(game.Online_Coop)
+			game.client.processMessage("playerDeath");
 	}
 }
