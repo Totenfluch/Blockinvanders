@@ -1,7 +1,8 @@
 # Blockinvanders
 
-Blockinvaders is an JavaFX open source University Project
-The game is about shooting monsters with your character and collecting upgrades for you weapon to beat even harder waves
+Blockinvaders is an JavaFX open source University Project.
+
+The game is about shooting monsters with your character and collecting upgrades for your weapon to beat even harder waves
 
 The following feature are included to date
   - Single Player
