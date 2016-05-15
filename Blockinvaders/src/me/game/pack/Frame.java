@@ -873,6 +873,7 @@ public class Frame {
 
 		gameOver.getChildren().addAll(restart, settings, exit);	
 		gameOver.setAlignment(Pos.CENTER);
+		gameOverScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
 		MainStage.setScene(gameOverScene);
 
