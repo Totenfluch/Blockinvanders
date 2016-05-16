@@ -12,9 +12,9 @@ public class GameResults {
 	private GameSettings gs;
 	private Player[] players;
 	private int wavesCompleted;
-	private int gameDuration;
+	private long gameDuration;
 
-	public GameResults(GameSettings gs, Player players[], int wavesCompleted, int gameDuration){
+	public GameResults(GameSettings gs, Player players[], int wavesCompleted, long gameDuration){
 		this.gs = gs;
 		this.players = players;
 		this.wavesCompleted = wavesCompleted;
@@ -28,7 +28,7 @@ public class GameResults {
 		return wavesCompleted;
 	}
 
-	public int getGameDuration(){
+	public long getGameDuration(){
 		return gameDuration;
 	}
 
@@ -48,7 +48,7 @@ public class GameResults {
 		}
 		return sb.toString();
 	}
-	
+
 	public String getPlayerStatsToString(int Player_Id){
 		StringBuffer sb = new StringBuffer();
 		if(Player_Id < players.length){
@@ -66,26 +66,39 @@ public class GameResults {
 	public String getGameSettingsToString(){
 		StringBuffer sb = new StringBuffer();
 		sb.append("Gamespeed: " + gs.getGameSpeed() + "\n");
-		sb.append("GameMode: " + gs.getGameMode() + "\n");
+		sb.append("GameMode: " + getGameModeToString() + "\n");
 		sb.append("Auto restart: " + gs.isRestart() + "\n");
 		sb.append("Benchmark Settings: \n");
 		sb.append("|- Performance: " + gs.getPerformance_benchmark_enabled() + "\n");
 		sb.append("|- Bot Performance: " + gs.getBot_Performance_benchmark_enabled() + "\n");
 		return sb.toString();
 	}
-	
+
+	public String getGameModeToString(){
+		switch(gs.getGameMode()){
+		case 0: return "Singleplayer";
+		case 1: return "Local Coop";
+		case 2: return "Online Coop";
+		case 3: return "Play with KI";
+		case 4: return "Watch KI";
+		case 5: return "KI Coop";
+		case 6: return "KI Party";
+		}
+		return "Invalid GameMode";
+	}
+
 	public String getWavesCompletedToString(){
 		return "Waves completed: " + wavesCompleted + "\n";
 	}
-	
+
 	public String getIdToString(){
 		return "Game Id: " + gameResultId + "\n";
 	}
-	
+
 	public String getGameDurationInMsToString(){
 		return "Game duration: " + gameDuration/10000 + "\n";
 	}
-	
+
 	@Override
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
@@ -95,7 +108,7 @@ public class GameResults {
 		sb.append(getPlayerStatsToString());
 		return sb.toString();
 	}
-	
+
 	public static String AllGamesToString(){
 		StringBuffer sb = new StringBuffer();
 		for(GameResults gs : resultSet)

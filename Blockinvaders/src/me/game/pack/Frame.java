@@ -799,14 +799,12 @@ public class Frame {
 		for (int i = 0; i < Players.length; i++) {
 			if (!Players[i].isAlive())
 				dead++;
-			if (dead == Players.length)
-				if(!Bot_Performance_benchmark_enabled){
-					EndGame();
-				}else{
-					EndGame();
+			if (dead == Players.length){
+				EndGame();
+				if(Bot_Performance_benchmark_enabled)
 					System.out.println("Wave reached: " + clearcount);
-				}
-				
+			}
+
 		}
 
 		if (KiPartyPlayers > 0)
@@ -828,6 +826,7 @@ public class Frame {
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
 		PublishScores();
+		new GameResults(new GameSettings(getGameMode(), Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled), Players, clearcount, refreshTime);
 
 		if(autoRestart){
 			saveSettings();
@@ -944,7 +943,7 @@ public class Frame {
 		Player2Name = gs.getPlayer2Name();
 
 		autoRestart = gs.isRestart();
-		
+
 		Performance_benchmark_enabled = gs.getPerformance_benchmark_enabled();
 		Bot_Performance_benchmark_enabled = gs.getBot_Performance_benchmark_enabled();
 
@@ -952,6 +951,13 @@ public class Frame {
 	}
 
 	public void saveSettings() {
+		int gameMode = getGameMode();
+
+		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled);
+		Game.setSettings(gs);
+	}
+	
+	public int getGameMode(){
 		int gameMode = 0;
 
 		if (Coop_enabled)
@@ -966,9 +972,8 @@ public class Frame {
 			gameMode = 5;
 		else if (KiPartyPlayers > 0)
 			gameMode = 6;
-
-		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled);
-		Game.setSettings(gs);
+		
+		return gameMode;
 	}
 
 }
