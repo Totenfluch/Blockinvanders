@@ -629,7 +629,7 @@ public class Frame {
 
 				frameTime += System.nanoTime() - time;
 			}));
-		}else{
+		}else if(Performance_benchmark_enabled && !Bot_Performance_benchmark_enabled){
 			tf = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
 				gc.clearRect(0, 0, GAME_WIDTH, GAME_LENGTH);
 				gc.setFill(Color.BLACK);
@@ -681,6 +681,21 @@ public class Frame {
 						gc.setFill(Color.GREEN);
 						gc.setFont(new Font("Impact", 25));
 						gc.fillText(".   .   .", 925, 850);
+					}
+				}
+			}));
+		}else{
+			tf = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
+				gc.setFill(Color.AZURE);
+				gc.setFont(new Font("Futura", 15));
+				int x = 25;
+				int y = 25;
+				for(GameResults gs : GameResults.getGameResultsResultSet()){
+					gc.fillText(gs.toString(), x, y);
+					y+= 245 + Players.length*65;
+					if(y>= 650){
+						x+= 155;
+						y = 25;
 					}
 				}
 			}));

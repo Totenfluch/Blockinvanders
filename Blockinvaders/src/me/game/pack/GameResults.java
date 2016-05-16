@@ -42,8 +42,8 @@ public class GameResults {
 		for(int i = 0; i<players.length; i++){
 			Player p = players[i];
 			sb.append("("+i+") Name: " + p.getPlayerName() + "\n");
-			sb.append("|- Score:" + p.getScore() + "\n");
-			sb.append("|- Final Weapon: " + p.getHisWeapon().getWeaponType() + "\n");
+			sb.append("|- Score: " + p.getScore() + "\n");
+			sb.append("|- Weapon: " + p.getHisWeapon().getWeaponType() + "\n");
 			sb.append("|- Final Health: " + p.getLife() + "\n\n");
 		}
 		return sb.toString();
@@ -54,8 +54,8 @@ public class GameResults {
 		if(Player_Id < players.length){
 			Player p = players[Player_Id];
 			sb.append("("+Player_Id+") Name: " + p.getPlayerName() + "\n");
-			sb.append("|- Score:" + p.getScore() + "\n");
-			sb.append("|- Final Weapon: " + p.getHisWeapon().getWeaponType() + "\n");
+			sb.append("|- Score: " + p.getScore() + "\n");
+			sb.append("|- Weapon: " + p.getHisWeapon().getWeaponType() + "\n");
 			sb.append("|- Final Health: " + p.getLife() + "\n\n");
 		}else{
 			return "Invalid ID";
@@ -114,5 +114,9 @@ public class GameResults {
 		for(GameResults gs : resultSet)
 			sb.append(gs.toString());
 		return sb.toString();
+	}
+	
+	public static Vector<GameResults> getGameResultsResultSet(){
+		return resultSet;
 	}
 }
