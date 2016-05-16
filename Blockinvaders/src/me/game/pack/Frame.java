@@ -573,8 +573,6 @@ public class Frame {
 				} else
 					System.out.println("Wrong IP m8");
 			}
-
-
 		});
 
 		DebugConsole = new TextArea();
@@ -686,8 +684,10 @@ public class Frame {
 			}));
 		}else{
 			tf = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
-				gc.setFill(Color.AZURE);
+				gc.setFill(Color.RED);
 				gc.setFont(new Font("Futura", 15));
+				gc.fillText(GameResults.averagesToString(), 5, 12);
+				gc.setFill(Color.AZURE);
 				int x = 25;
 				int y = 25;
 				for(GameResults gs : GameResults.getGameResultsResultSet()){
@@ -695,7 +695,7 @@ public class Frame {
 					y+= 245 + Players.length*65;
 					if(y>= 650){
 						x+= 155;
-						y = 25;
+						y = 25;	
 					}
 				}
 			}));
@@ -897,7 +897,6 @@ public class Frame {
 		return gc;
 	}
 
-	@SuppressWarnings("unused")
 	public void PublishScores() {
 		if (Coop_enabled) {
 			try {
@@ -906,6 +905,9 @@ public class Frame {
 				URL oracle = new URL(request);
 				URLConnection yc = oracle.openConnection();
 				BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+				String line;
+				while((line = in.readLine()) != null)
+					System.out.println(line);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

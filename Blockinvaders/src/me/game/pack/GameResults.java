@@ -7,6 +7,9 @@ import me.game.characters.Player;
 public class GameResults {
 	private static int gameResultsIdCounter = 0;
 	private static Vector<GameResults> resultSet = new Vector<GameResults>(20, 5);
+	private static int avgerageScore;
+	private static int averageWave;
+	
 	private int gameResultId;
 
 	private GameSettings gs;
@@ -22,6 +25,24 @@ public class GameResults {
 		resultSet.add(this);
 		gameResultId = gameResultsIdCounter;
 		gameResultsIdCounter++;
+		calcAverage();
+	}
+	
+	private static void calcAverage(){
+		int scores = 0;
+		int players = 0;
+		int waves = 0;
+		int rounds = 0;
+		for(GameResults grs : resultSet){
+			waves += grs.getWavesCompleted();
+			for(Player p : grs.getPlayers()){
+				scores += p.getScore();
+				players = grs.getPlayers().length;
+			}
+			rounds++;
+		}
+		avgerageScore = (scores/players)/rounds;
+		averageWave = waves/rounds;
 	}
 
 	public int getWavesCompleted(){
@@ -34,6 +55,10 @@ public class GameResults {
 
 	public int getId(){
 		return gameResultId;
+	}
+	
+	public Player[] getPlayers(){
+		return players;
 	}
 
 	public String getPlayerStatsToString(){
@@ -118,5 +143,17 @@ public class GameResults {
 	
 	public static Vector<GameResults> getGameResultsResultSet(){
 		return resultSet;
+	}
+	
+	public static int getAverageScore(){
+		return avgerageScore;
+	}
+	
+	public static int getAverageWave(){
+		return averageWave;
+	}
+	
+	public static String averagesToString(){
+		return "Avg. Wave: " + averageWave + " | Avg. Score: " + avgerageScore;
 	}
 }
