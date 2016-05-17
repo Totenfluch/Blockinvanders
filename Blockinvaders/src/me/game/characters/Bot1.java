@@ -20,6 +20,7 @@ public class Bot1 implements BotKI, Controller{
 	public static boolean Bot_debug = false;
 	public Monster Target = null;
 	private Controllable controllable;
+	private String status = "";
 
 	private Bullet escapeThis = null;
 	public Bot1(Player p){
@@ -29,6 +30,7 @@ public class Bot1 implements BotKI, Controller{
 	}
 
 	public void refresh(){
+		status = "";
 		if(!bot.isAlive())
 			return;
 		/*boolean oldEscapeLock = false;
@@ -76,6 +78,7 @@ public class Bot1 implements BotKI, Controller{
 	}
 
 	public boolean checkForBullets(){
+		status = "checking for Bullets";
 		boolean dogeing = false;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
@@ -99,6 +102,7 @@ public class Bot1 implements BotKI, Controller{
 	}
 
 	public Monster findTarget(){
+		status = "finding target";
 		Monster monti2 = null;
 		double closest = 5000;
 		Iterator<Monster> it = game.Monsters.iterator();
@@ -119,28 +123,32 @@ public class Bot1 implements BotKI, Controller{
 	}
 
 	public void moveToClosestEnemy(){
+		status = "moving to closest Enemy";
 		Monster monti2 = null;
 		double wheretogo = 0;
+		
 		if(Target == null){
 			monti2 = findTarget();
 			Target = monti2;
-		}else if(!Target.isAlive()){
+		}else if(!Target.isAlive() || !Frame.getInstance().Monsters.contains(monti2)){
 			monti2 = findTarget();
 			Target = monti2;
-		}else{
+		}else
 			monti2 = Target;
-		}
-		if(monti2 == null)
+		
+		
+		if(monti2 == null || Target == null)
 			return;
+		if(!monti2.isAlive() || !Target.isAlive())
+			return;
+		
 		wheretogo = monti2.getX();
-		if(!monti2.isAlive())
-			return;
 		double timevalue = (bot.getY()-monti2.getY())/bot.getHisWeapon().getBulletSpeed();
-		if(game.Monster_Direction == 1){
+		if(game.Monster_Direction == 1)
 			wheretogo+=timevalue;
-		}else{
+		else
 			wheretogo-=timevalue;
-		}
+		
 
 		if(bot.getX() > wheretogo)
 			tryMoveLeft();
@@ -149,6 +157,7 @@ public class Bot1 implements BotKI, Controller{
 	}
 
 	public boolean findWeaponUpgrade(){
+		status = "finding Weapon Upgrade";
 		Drop p = null;
 		for(int i = 0; i<Drop.AllDrops.size(); i++){
 			if(Drop.AllDrops.elementAt(i).getDroptype() == Drops.NEXTWEAPON){
@@ -224,5 +233,10 @@ public class Bot1 implements BotKI, Controller{
 	@Override
 	public void onSetControl(Controllable controllable) {
 		this.controllable = controllable;
+	}
+	
+	@Override
+	public String toString(){
+		return status;
 	}
 }

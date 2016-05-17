@@ -657,6 +657,7 @@ public class Frame {
 				gc.fillText("|-> Active Monster Bullets: " + MonsterBullets, 125, 500);
 				int players=0;
 				int blockwidth = 200;
+
 				for(Player player : Players){
 					gc.setFill(Color.PURPLE);
 					gc.setFont(new Font("Futura", 25));
