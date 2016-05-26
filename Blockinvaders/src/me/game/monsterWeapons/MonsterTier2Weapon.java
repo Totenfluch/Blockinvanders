@@ -9,7 +9,7 @@ public class MonsterTier2Weapon extends MonsterWeapon{
 	double bulletW = 5.0,
 			bulletH = 5.0;
 	public MonsterTier2Weapon(Monster Besitzer) {
-		super(Besitzer, 2, 12, 4);
+		super(Besitzer, 1, 12, 4);
 	}
 
 	@Override

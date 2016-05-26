@@ -60,12 +60,18 @@ public class DoubleHelixBullet extends MonsterBullet{
 			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight()) /*|| hit*/) {
 				if (p.isAlive()) {
 					waffe.getKugeln().remove(this);
-					p.setLife(p.getLife()-waffe.getDamage());
 					Monster m = (Monster) waffe.getOwner();
-					m.setInitHp(m.getInitHp() + 300);
+					m.setInitHp(m.getInitHp() + (Frame.getInstance().clearcount+1)*10);
 					m.setLife(m.getInitHp());
 					m.setColor(Color.DARKMAGENTA);
-					p.giveWeapon(((PlayerWeapon) p.hisWeapon).prevWaffe());
+					if(!p.isHitImmume()){
+						p.setLife(p.getLife()-waffe.getDamage());
+						p.setHitImmume(625);
+					}
+					if(!p.isDowngradeImmume()){
+						p.giveWeapon(((PlayerWeapon) p.hisWeapon).prevWaffe());
+						p.setDowngradeImmume(1000);
+					}
 				}
 			}
 		}

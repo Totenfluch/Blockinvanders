@@ -15,6 +15,8 @@ public class Player extends Character implements Controllable{
 	private Controller controller;
 	private static Frame instance;
 	private String PlayerName;
+	private int hitImmume = 0;
+	private int downgradeImmume = 0;
 
 	public Player(double xPos, int leben, PlayerWeapon waffe) {
 		super(xPos, 800, leben, waffe);
@@ -102,6 +104,43 @@ public class Player extends Character implements Controllable{
 	public int getScore() {
 		return this.score;
 	}
+	
+	public int getHitImmume(){
+		return hitImmume;
+	}
+	
+	public int getDowngradeImmume() {
+		return downgradeImmume;
+	}
+	
+	public boolean isHitImmume(){
+		if(hitImmume > 0)
+			return true;
+		return false;
+	}
+	
+	public boolean isDowngradeImmume(){
+		if(downgradeImmume > 0)
+			return true;
+		return false;
+	}
+	
+	public void setHitImmume(int hitImmume) {
+		this.hitImmume = hitImmume;
+	}
+	
+	public void setDowngradeImmume(int downgradeImmume) {
+		this.downgradeImmume = downgradeImmume;
+	}
+	
+	public void refresh(){
+		if(hitImmume > 0)
+			hitImmume--;
+		if(downgradeImmume > 0)
+			downgradeImmume--;
+	}
+	
+	
 
 	@Override
 	public void draw(GraphicsContext gc) {

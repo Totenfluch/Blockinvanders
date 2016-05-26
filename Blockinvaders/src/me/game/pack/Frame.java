@@ -813,6 +813,7 @@ public class Frame {
 
 		int dead = 0;
 		for (int i = 0; i < Players.length; i++) {
+			Players[i].refresh();
 			if (!Players[i].isAlive())
 				dead++;
 			if (dead == Players.length){
