@@ -2,6 +2,7 @@ package me.game.characters;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import me.game.pack.Frame;
 import me.game.playerWeapons.PlayerWeapon;
@@ -144,6 +145,14 @@ public class Player extends Character implements Controllable{
 
 	@Override
 	public void draw(GraphicsContext gc) {
+		if(alive && hitImmume > 0){
+			gc.setFill(Color.AQUAMARINE);
+			gc.fillRect(xPos-2, yPos-2, width+4, heigth+4);
+		}else if(alive && downgradeImmume > 0){
+			gc.setFill(Color.ORANGE);
+			gc.fillRect(xPos-2, yPos-2, width+4, heigth+4);
+		}
+		
 		if (playerNumber == 0)
 			gc.setFill(Color.PURPLE);
 		else if (playerNumber == 1)
@@ -154,6 +163,7 @@ public class Player extends Character implements Controllable{
 			gc.setFill(Color.CRIMSON);
 		else
 			gc.setFill(Color.WHITE);
+
 		if (alive)
 			gc.fillRect(xPos, yPos, width, heigth);
 
