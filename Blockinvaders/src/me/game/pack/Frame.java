@@ -152,7 +152,8 @@ public class Frame {
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.A) {
 					P1_inLeft = true;
-				} else if (event.getCode() == KeyCode.D) {
+				} 
+				if(event.getCode() == KeyCode.D) {
 					P1_inRight = true;
 				}
 				if (event.getCode() == KeyCode.W) {
@@ -165,7 +166,8 @@ public class Frame {
 
 				if (event.getCode() == KeyCode.LEFT) {
 					P2_inLeft = true;
-				} else if (event.getCode() == KeyCode.RIGHT) {
+				}
+				if(event.getCode() == KeyCode.RIGHT) {
 					P2_inRight = true;
 				}
 				if (event.getCode() == KeyCode.UP) {
@@ -184,7 +186,8 @@ public class Frame {
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.A) {
 					P1_inLeft = false;
-				} else if (event.getCode() == KeyCode.D) {
+				}
+				if (event.getCode() == KeyCode.D) {
 					P1_inRight = false;
 				}
 				if (event.getCode() == KeyCode.W) {
@@ -194,7 +197,8 @@ public class Frame {
 				if (Coop_enabled) {
 					if (event.getCode() == KeyCode.LEFT) {
 						P2_inLeft = false;
-					} else if (event.getCode() == KeyCode.RIGHT) {
+					}
+					if (event.getCode() == KeyCode.RIGHT) {
 						P2_inRight = false;
 					}
 					if (event.getCode() == KeyCode.UP) {
@@ -975,7 +979,7 @@ public class Frame {
 		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled);
 		Game.setSettings(gs);
 	}
-	
+
 	public int getGameMode(){
 		int gameMode = 0;
 
@@ -991,7 +995,7 @@ public class Frame {
 			gameMode = 5;
 		else if (KiPartyPlayers > 0)
 			gameMode = 6;
-		
+
 		return gameMode;
 	}
 
