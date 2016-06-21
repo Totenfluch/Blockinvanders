@@ -110,11 +110,7 @@ public class Drop implements Drawable{
 	}
 
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
-		Rectangle rt1 = new Rectangle(ox, oy, owidth, olength);
-		Circle rt2 = new Circle(xPos, yPos, DropSize);
-		if(rt1.intersects(rt2.getBoundsInLocal()))
-			return true;
-		return false;
+		return new Rectangle(ox, oy, owidth, olength).intersects(new Circle(xPos, yPos, DropSize).getBoundsInLocal());
 	}
 
 	@Override
