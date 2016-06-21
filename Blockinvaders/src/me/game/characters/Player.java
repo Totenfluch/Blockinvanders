@@ -2,18 +2,16 @@ package me.game.characters;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import me.game.pack.Frame;
 import me.game.playerWeapons.PlayerWeapon;
 
-public class Player extends Character implements Controllable{
+public class Player extends Character{
 
 	private double movementSpeed = 6.0;
 	private int score;
 	public static int activePlayers = 0;
 	private int playerNumber;
-	private Controller controller;
 	private static Frame instance;
 	private String PlayerName;
 	private int hitImmume = 0;
@@ -60,7 +58,7 @@ public class Player extends Character implements Controllable{
 	}
 
 	public boolean setLife(int leben) {
-		if(game.Online_Coop && game.Players[1].isControlled())
+		if(game.Online_Coop)
 			game.client.processMessage("hitPlayer " + leben);
 		if (alive && leben > 0) {
 			this.life = leben;
@@ -86,7 +84,7 @@ public class Player extends Character implements Controllable{
 	public void incScore(int score) {
 		if (score > 0)
 			this.score += score;
-		if(game.Online_Coop && game.Players[1].isControlled())
+		if(game.Online_Coop)
 			game.client.processMessage("syncScore " + this.score);
 	}
 
@@ -278,24 +276,6 @@ public class Player extends Character implements Controllable{
 				gc.fillText("DEAD", Frame.GAME_WIDTH-245, 855);
 		}
 
-	}
-
-	@Override
-	public Controller getController() {
-		return controller;
-	}
-
-	@Override
-	public void setController(Controller controller) {
-		this.controller = controller;
-		controller.onSetControl(this);
-	}
-	
-	@Override
-	public boolean isControlled(){
-		if(controller != null)
-			return true;
-		return false;
 	}
 
 	@Override

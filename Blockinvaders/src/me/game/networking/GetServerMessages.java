@@ -3,15 +3,13 @@ package me.game.networking;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import me.game.characters.Controllable;
-import me.game.characters.Controller;
 import me.game.characters.Player;
 import me.game.pack.Frame;
 
-public class GetServerMessages implements Controller{
+public class GetServerMessages{
 	public String newestreply = null;
 	protected Frame game;
-	private Player controllable;
+	private Player player;
 	
 	public GetServerMessages(Frame game) {
 		this.game = game;
@@ -47,7 +45,6 @@ public class GetServerMessages implements Controller{
 				}
 			});
 		}else if(message.equals("StartGame")){
-			GetServerMessages gsm = this;
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
@@ -55,7 +52,6 @@ public class GetServerMessages implements Controller{
 					game.Player1Name = "PH";
 					game.Players = new Player[2];
 					game.switchSceneToGame();
-					game.Players[1].setController(gsm);
 				}
 			});
 		}else if(message.startsWith("playerPos")){
@@ -63,14 +59,14 @@ public class GetServerMessages implements Controller{
 			String[] splinter = message.split(" ");
 			double xPos = Double.parseDouble(splinter[1]);
 			double yPos = Double.parseDouble(splinter[2]);
-			controllable.setX(xPos);
-			controllable.setY(yPos);
+			player.setX(xPos);
+			player.setY(yPos);
 		}else if(message.startsWith("shoot")){
 			// shoot x y
 			String[] splinter = message.split(" ");
 			double xPos = Double.parseDouble(splinter[1]);
 			double yPos = Double.parseDouble(splinter[2]);
-			controllable.getHisWeapon().shoot(xPos, yPos);
+			player.getHisWeapon().shoot(xPos, yPos);
 		}else if(message.startsWith("hitMonster")){
 			// hitMonser Hashcode dmg amount
 			String[] splinter = message.split(" ");
@@ -78,19 +74,12 @@ public class GetServerMessages implements Controller{
 		}else if(message.startsWith("hitPlayer")){
 			// hitPlayer dmg amount
 			String[] splinter = message.split(" ");
-			controllable.setLife(Integer.parseInt(splinter[1]), true);
+			player.setLife(Integer.parseInt(splinter[1]), true);
 		}else if(message.startsWith("playerDeath")){
-			controllable.setLife(0, true);
+			player.setLife(0, true);
 		}else if(message.startsWith("syncScore")){
 			String[] splinter = message.split(" ");
-			controllable.setScore(Integer.valueOf(splinter[1]));
+			player.setScore(Integer.valueOf(splinter[1]));
 		}
-	}
-
-
-	@Override
-	public void onSetControl(Controllable controllable) {
-		this.controllable = (Player)controllable;
-		
 	}
 }

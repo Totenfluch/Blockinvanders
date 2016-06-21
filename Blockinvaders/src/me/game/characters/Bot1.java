@@ -10,7 +10,7 @@ import me.game.pack.Drop;
 import me.game.pack.Drop.Drops;
 import me.game.pack.Frame;
 
-public class Bot1 implements BotKI, Controller{
+public class Bot1 implements BotKI{
 	/*
 		Bot to FIGHT FOR HONOR
 		By Totenfluch~
@@ -19,14 +19,12 @@ public class Bot1 implements BotKI, Controller{
 	private Player bot;
 	public static boolean Bot_debug = false;
 	public Monster Target = null;
-	private Controllable controllable;
 	private String status = "";
 
 	private Bullet escapeThis = null;
 	public Bot1(Player p){
 		this.game = Frame.getInstance();
 		this.bot = p;
-		p.setController(this);
 	}
 
 	public void refresh(){
@@ -230,10 +228,6 @@ public class Bot1 implements BotKI, Controller{
 		return clear;
 	}
 	
-	@Override
-	public void onSetControl(Controllable controllable) {
-		this.controllable = controllable;
-	}
 	
 	@Override
 	public String toString(){

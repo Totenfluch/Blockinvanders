@@ -5,14 +5,13 @@ import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop;
 import me.game.pack.Frame;
 
-public class Bot2 implements BotKI, Controller {
+public class Bot2 implements BotKI {
 
 	public final Frame game;
 	private Player player;
 	private double destX = 800;
 	private boolean lockLeft, lockRight;
 	int bal;
-	private Controllable controllable;
 
 	private Bullet dodge;
 	private Monster locked = null;
@@ -20,7 +19,6 @@ public class Bot2 implements BotKI, Controller {
 	public Bot2(Player player) {
 		this.game = Frame.getInstance();
 		this.player = player;
-		player.setController(this);
 	}
 
 	public void refresh() {
@@ -205,10 +203,5 @@ public class Bot2 implements BotKI, Controller {
 					destX = Frame.GAME_WIDTH / 2;
 			}
 		}
-	}
-
-	@Override
-	public void onSetControl(Controllable controllable) {
-		this.controllable = controllable;
 	}
 }
