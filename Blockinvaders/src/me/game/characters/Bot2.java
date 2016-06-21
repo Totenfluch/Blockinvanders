@@ -71,9 +71,9 @@ public class Bot2 implements BotKI {
 		Drop nextDrop = null;
 		double minDistance = 400;
 		for (Drop d : Drop.AllDrops) {
-			if (d.getyPos() <= player.getY() + player.getHeight() && d.getxPos() + Drop.DropSizeX >= player.getX() - 800
+			if (d.getyPos() <= player.getY() + player.getHeight() && d.getxPos() + Drop.DropSize >= player.getX() - 800
 					&& d.getxPos() <= player.getX() + player.getWidth() + 800) {
-				double distance = player.getY() - d.getyPos() - Drop.DropSizeY;
+				double distance = player.getY() - d.getyPos() - Drop.DropSize;
 				if (distance < minDistance) {
 					minDistance = distance;
 					nextDrop = d;
@@ -82,8 +82,8 @@ public class Bot2 implements BotKI {
 		}
 		if (nextDrop != null) {
 			findMonster();
-			double dir = player.getX() + player.getWidth() / 2 - nextDrop.getxPos() - Drop.DropSizeX / 2;
-			if (player.getY() - nextDrop.getyPos() - Drop.DropSizeY <= 100) {
+			double dir = player.getX() + player.getWidth() / 2 - nextDrop.getxPos() - Drop.DropSize / 2;
+			if (player.getY() - nextDrop.getyPos() - Drop.DropSize <= 100) {
 				if (!lockRight && dir < -5)
 					bal += 100;
 				else if (!lockLeft && dir > 5)

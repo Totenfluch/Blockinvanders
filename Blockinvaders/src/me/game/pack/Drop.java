@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import me.game.characters.Player;
 import me.game.playerWeapons.PlayerWeapon;
@@ -14,8 +15,7 @@ import me.game.playerWeapons.RocketLauncher;
 public class Drop implements Drawable{
 	final Frame game;
 	protected double xPos, yPos;
-	public static final int DropSizeX = 10;
-	public static final int DropSizeY = 10;
+	public static final int DropSize = 10;
 	protected Drops drop;
 	public static Vector<Drop> AllDrops = new Vector<Drop>();
 	public static final int weaponUpgradeDropLimitPerWave = 2;
@@ -23,7 +23,7 @@ public class Drop implements Drawable{
 
 	public enum Drops{
 		NEXTWEAPON,
-		ADDLEBEN,
+		ADDLIFE,
 		ADDAMMO,
 		ADDSCORE;
 	}
@@ -64,7 +64,7 @@ public class Drop implements Drawable{
 		Random r = new Random();
 
 		switch (drop) {
-		case ADDLEBEN:
+		case ADDLIFE:
 			p.setLife(p.getLife()+1);
 			break;
 
@@ -110,8 +110,8 @@ public class Drop implements Drawable{
 	}
 
 	public boolean checkHit(double ox, double oy, double owidth, double olength){
-		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
-		Rectangle rt2 = new Rectangle((int)xPos, (int)yPos, DropSizeX, DropSizeY);
+		Rectangle rt1 = new Rectangle(ox, oy, owidth, olength);
+		Circle rt2 = new Circle(xPos, yPos, DropSize);
 		if(rt1.intersects(rt2.getBoundsInLocal()))
 			return true;
 		return false;
@@ -123,10 +123,10 @@ public class Drop implements Drawable{
 			gc.setFill(Color.GOLD);
 		else if (drop.equals(Drops.ADDAMMO))
 			gc.setFill(Color.AQUAMARINE);
-		else if (drop.equals(Drops.ADDLEBEN))
+		else if (drop.equals(Drops.ADDLIFE))
 			gc.setFill(Color.FIREBRICK);
 		else if (drop.equals(Drops.ADDSCORE))
 			gc.setFill(Color.BLUE);
-		gc.fillOval(xPos, yPos, DropSizeX, DropSizeY);
+		gc.fillOval(xPos, yPos, DropSize, DropSize);
 	}
 }
