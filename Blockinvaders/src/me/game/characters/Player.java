@@ -6,7 +6,7 @@ import javafx.scene.text.Font;
 import me.game.pack.Frame;
 import me.game.playerWeapons.PlayerWeapon;
 
-public class Player extends Character{
+public class Player extends Characters{
 
 	private double movementSpeed = 6.0;
 	private int score;

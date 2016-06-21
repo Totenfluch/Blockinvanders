@@ -8,7 +8,7 @@ import me.game.playerWeapons.PlayerWeapon;
 import me.game.playerWeapons.SpecialWeapon;
 import me.game.playerWeapons.Weapon;
 
-public abstract class Character implements Drawable{
+public abstract class Characters implements Drawable{
 	public final Frame game;
 	protected int life;
 	protected boolean alive = true;
@@ -54,7 +54,7 @@ public abstract class Character implements Drawable{
 		return life;
 	}
 	
-	public Character(double xPos, double yPos,int leben, Weapon waffe){
+	public Characters(double xPos, double yPos,int leben, Weapon waffe){
 		this.game = Frame.getInstance();
 		this.xPos = xPos;
 		this.yPos = yPos;

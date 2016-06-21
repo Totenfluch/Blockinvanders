@@ -13,26 +13,28 @@ public class PlayerBullet extends Bullet {
 			int damage, double angle) {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle);
 	}
-	
+
 	public void refresh(){
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
 			waffe.getKugeln().remove(this);
-		
+
 		for (int i = 0; i < waffe.getOwner().game.Monsters.size(); i++) {
 			Monster Monti = waffe.getOwner().game.Monsters.elementAt(i);
 			if (checkHit(Monti.getX(), Monti.getY(), Monti.getWidth(), Monti.getHeight())) {
-				if (Monti.isAlive()) {
-					waffe.getKugeln().remove(this);
-					if (!Monti.subLeben(damage)){
-						Player p = (Player)waffe.getOwner();
-						 p.incScore(Monti.getWorth());
-					}
-				}
+				onHit(Monti, (Player)waffe.getOwner());
 			}
 		}
-		
+
 		xPos += dx;
 		yPos -= dy;
+	}
+
+	public void onHit(Monster victim, Player attacker){
+		if(victim.isAlive()){
+			if (!victim.subLeben(damage)){
+				attacker.incScore(victim.getWorth());
+			}
+		}
 	}
 
 	@Override

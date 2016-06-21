@@ -51,12 +51,11 @@ public abstract class Bullet implements Drawable{
 
 	public abstract void refresh();
 	
+	public void onHit(){
+		waffe.getKugeln().remove(this);
+	}
+	
 	public boolean checkHit(double ox, double oy, double owidth, double oheight){
-		/*Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
-		Rectangle rt2 = new Rectangle((int)xPos, (int)yPos, (int)width, (int)height);
-		if(rt1.intersects(rt2.getBoundsInLocal()))
-			return true;
-		return false;*/
 		return ox < xPos + width && ox + owidth > xPos && oy < yPos + height && oy + oheight > yPos;
 	}
 }

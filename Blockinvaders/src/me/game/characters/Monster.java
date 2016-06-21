@@ -9,7 +9,7 @@ import me.game.pack.Drop;
 import me.game.pack.Drop.Drops;
 import me.game.playerWeapons.Weapon;
 
-public class Monster extends Character {
+public class Monster extends Characters {
 
 	private int worth;
 

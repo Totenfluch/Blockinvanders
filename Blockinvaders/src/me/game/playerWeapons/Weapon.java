@@ -3,7 +3,7 @@ package me.game.playerWeapons;
 import java.util.Vector;
 
 import me.game.bullets.Bullet;
-import me.game.characters.Character;
+import me.game.characters.Characters;
 import me.game.playerWeapons.PlayerWeapon.WeaponType;
 
 public abstract class Weapon {
@@ -12,21 +12,21 @@ public abstract class Weapon {
 	protected int ammo = 20;
 	protected int bulletSpeed;
 	protected int delay;
-	protected Character Owner;
+	protected Characters Owner;
 	protected WeaponType typ;
 	private boolean isAboutToBeRemoved = false;
 	
 	protected Vector<Bullet> kugeln = new Vector<Bullet>(400, 20);
 
 
-	public Weapon(Character owner, int damage,int delay, int bulletSpeed){
+	public Weapon(Characters owner, int damage,int delay, int bulletSpeed){
 		this.damage = damage;
 		this.INIT_DELAY = delay;
 		this.bulletSpeed = bulletSpeed;
 		this.Owner = owner;
 	}
 	
-	public Character getOwner(){
+	public Characters getOwner(){
 		return Owner;
 	}
 	

@@ -18,30 +18,33 @@ public class MonsterBullet extends Bullet {
 	public void refresh(){
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
 			waffe.getKugeln().remove(this);
-		
+
 		for (int x = 0; x < waffe.getOwner().game.Players.length; x++) {
 			Player p = waffe.getOwner().game.Players[x];
 			if (checkHit(p.getX(), p.getY(), p.getWidth(), p.getHeight())) {
-				if (p.isAlive()) {
-					waffe.getKugeln().remove(this);
-					Monster m = (Monster) waffe.getOwner();
-					m.setInitHp(m.getInitHp() + (Frame.getInstance().clearcount+1)*10);
-					m.setLife(m.getInitHp());
-					m.setColor(Color.DARKMAGENTA);
-					if(!p.isHitImmume()){
-						p.setLife(p.getLife()-waffe.getDamage());
-						p.setHitImmume(625);
-					}
-					if(!p.isDowngradeImmume()){
-						p.giveWeapon(((PlayerWeapon) p.hisWeapon).prevWaffe());
-						p.setDowngradeImmume(1000);
-					}
-				}
+				onHit((Monster)waffe.getOwner(), p);
 			}
 		}
-		
+
 		xPos += dx;
 		yPos += dy;
+	}
+
+	public void onHit(Monster attacker, Player victim){
+		if(victim.isAlive()){
+			super.onHit();
+			attacker.setInitHp(attacker.getInitHp() + (Frame.getInstance().clearcount+1)*10);
+			attacker.setLife(attacker.getInitHp());
+			attacker.setColor(Color.DARKMAGENTA);
+			if(!victim.isHitImmume()){
+				victim.setLife(victim.getLife()-waffe.getDamage());
+				victim.setHitImmume(625);
+			}
+			if(!victim.isDowngradeImmume()){
+				victim.giveWeapon(((PlayerWeapon) victim.hisWeapon).prevWaffe());
+				victim.setDowngradeImmume(1000);
+			}
+		}
 	}
 
 	@Override
