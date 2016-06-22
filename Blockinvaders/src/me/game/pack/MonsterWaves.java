@@ -5,7 +5,7 @@ import me.game.characters.Monster;
 import me.game.monsterWeapons.MonsterBossWeapon;
 import me.game.monsterWeapons.MonsterDoubleHelixWeapon;
 import me.game.monsterWeapons.MonsterStandardWeapon;
-import me.game.monsterWeapons.MonsterTier2Weapon;
+import me.game.monsters.FlatMonster;
 import me.game.monsters.SmallMonster;
 
 public class MonsterWaves {
@@ -23,24 +23,10 @@ public class MonsterWaves {
 			SmallMonster.spawnSmallMonsterWave(which);
 			break;
 
-		case 1: {
-			int p  = 0;
-			int ip = 0;
-			for(int i = 0; i<12; i++){
-				ip++;
-				if(i%4 == 0){
-					p++;
-					ip = 0;
-				}
-
-				//if(!game.Coop_enabled)
-				//	game.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 80+which*20*modifier, 600+ip*250, p*100+50, 200, 40, 3*which, Color.DARKSLATEGRAY, 1, 4);
-				game.Monsters.add(tempi);
-				tempi.giveWeapon(new MonsterTier2Weapon(tempi));
-			}
+		case 1: 
+			FlatMonster.spawnFlatMonsterWave(which);
 			break;
-		}
+		
 
 		case 2: {
 			int x = 0;
