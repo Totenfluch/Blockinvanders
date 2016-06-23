@@ -6,6 +6,7 @@ import me.game.monsterWeapons.MonsterBossWeapon;
 import me.game.monsterWeapons.MonsterDoubleHelixWeapon;
 import me.game.monsterWeapons.MonsterStandardWeapon;
 import me.game.monsters.FlatMonster;
+import me.game.monsters.MediumMonster;
 import me.game.monsters.SmallMonster;
 
 public class MonsterWaves {
@@ -28,24 +29,10 @@ public class MonsterWaves {
 			break;
 		
 
-		case 2: {
-			int x = 0;
-			int ix = 0;
-			for(int i = 0; i<32; i++){
-				ix++;
-				if(i%8 == 0){
-					x++;
-					ix = 0;
-				}
-
-				//if(!game.Coop_enabled)
-				//	game.Monster_HP /= 2;
-				Monster tempi = new Monster(null, 30+which*10*modifier, 800+ix*70, x*100+50, 50, 20, 1+2*which, Color.CORAL, 0.5, 8);
-				game.Monsters.add(tempi);
-				tempi.giveWeapon(new MonsterStandardWeapon(tempi));
-			}
+		case 2: 
+			MediumMonster.spawnMediumMonsterWave(which);
 			break;
-		}
+		
 
 		case 3: {
 			int x = 0;
