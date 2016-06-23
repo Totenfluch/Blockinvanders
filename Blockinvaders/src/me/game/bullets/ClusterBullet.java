@@ -1,16 +1,18 @@
 package me.game.bullets;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
-import me.game.pack.Frame;
 import me.game.playerWeapons.PlayerWeapon;
 import me.game.playerWeapons.Weapon;
 
 public class ClusterBullet extends TimedBullet{
 	private int count = 0;
+	boolean triggered = false;
+	int clustersSpawned = 0;
+	final int maxClusters = 2;
+	int clusterTime = 0;
+	final int clusterDelay = 35;
+	
 	public ClusterBullet(Weapon waffe, double xPos, double yPos, double height, double width, int speed, int damage,
 			double angle, int lifetimeticks) {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle, lifetimeticks);
@@ -18,23 +20,39 @@ public class ClusterBullet extends TimedBullet{
 
 	@Override
 	public void Trigger() {
+		triggered = true;
 		for(int angle = -180; angle< 180; angle+=10)
 			waffe.getKugeln().add(new PlayerBullet((PlayerWeapon) this.waffe, this.xPos, yPos, 7.0, 7.0, waffe.getBulletSpeed()+4, damage, angle ));
-		
-		Timeline tf = new Timeline(new KeyFrame(Duration.millis(Frame.getInstance().GameSpeed*19), ae->{
-			for(int angle = -180-count*90; angle< 180+count*90; angle+=10+count*2.5)
-				waffe.getKugeln().add(new PlayerBullet((PlayerWeapon) this.waffe, this.xPos, yPos, 7.0, 7.0, waffe.getBulletSpeed()+4, damage, angle ));
-		}));
-		tf.setCycleCount(3);
-		tf.play();
-			
-		waffe.getKugeln().remove(this);
+	}
+	
+	public void spawnBulletCluster(){
+		for(int angle = -180-count*90; angle< 180+count*90; angle+=10+count*2.5)
+			waffe.getKugeln().add(new PlayerBullet((PlayerWeapon) this.waffe, this.xPos, yPos, 7.0, 7.0, waffe.getBulletSpeed()+4, damage, angle ));
+	}
+	
+	@Override
+	public void refresh(){
+		if(triggered){
+			if(clustersSpawned >= maxClusters)
+				waffe.getKugeln().remove(this);
+			if(clusterTime >= clusterDelay){
+				clusterTime = 0;
+				spawnBulletCluster();
+				clustersSpawned++;
+			}else{
+				clusterTime++;
+			}
+		}else{
+			super.refresh();
+		}
 	}
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		gc.setFill(Color.AQUA);
-		gc.fillRect(xPos, yPos, width, height);
+		if(!triggered){
+			gc.setFill(Color.AQUA);
+			gc.fillRect(xPos, yPos, width, height);
+		}
 	}
 
 }

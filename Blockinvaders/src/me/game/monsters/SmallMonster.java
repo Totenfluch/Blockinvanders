@@ -7,7 +7,7 @@ import me.game.monsterWeapons.MonsterStandardWeapon;
 public class SmallMonster extends Monster{
 
 	public SmallMonster(int level, double xPos, double yPos){
-		super(null, (11+level)*5, xPos, yPos, 30, 20, 1+level, Color.BROWN, 0.25, 20);
+		super(null, 11+level*5, xPos, yPos, 30, 20, 1+level, Color.BROWN, 0.25, 20);
 		hisWeapon = new MonsterStandardWeapon(this);
 		game.Monsters.add(this);
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){

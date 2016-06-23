@@ -6,7 +6,7 @@ import me.game.monsterWeapons.MonsterTier2Weapon;
 
 public class FlatMonster extends Monster{
 	public FlatMonster(int level, double xPos, double yPos){
-		super(null, 80+level*20, xPos, yPos, 200, 40, 3*level, Color.DARKSLATEGRAY, 1, 4);
+		super(null, 250+level*10, xPos, yPos, 200, 40, 3*level, Color.DARKSLATEGRAY, 1, 4);
 		hisWeapon = new MonsterTier2Weapon(this);
 		game.Monsters.add(this);
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){
