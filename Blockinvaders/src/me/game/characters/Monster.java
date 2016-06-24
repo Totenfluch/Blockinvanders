@@ -178,6 +178,8 @@ public class Monster extends Characters {
 	public int getWorth(){
 		return worth;
 	}
+	
+	public void refresh(){}
 
 	@Override
 	public void draw(GraphicsContext gc) {
