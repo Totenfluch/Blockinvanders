@@ -5,6 +5,7 @@ import me.game.monsters.FlatMonster;
 import me.game.monsters.HelixMonster;
 import me.game.monsters.MediumMonster;
 import me.game.monsters.SmallMonster;
+import me.game.monsters.SwarmMonster;
 import me.game.monsters.TinyMonster;
 
 public class MonsterWaves {
@@ -20,6 +21,7 @@ public class MonsterWaves {
 		switch(which%6){
 		case 0: 
 			SmallMonster.spawnSmallMonsterWave(which);
+			//SwarmMonster.spawnSwarmMonsterWave(which);
 			break;
 
 		case 1: 

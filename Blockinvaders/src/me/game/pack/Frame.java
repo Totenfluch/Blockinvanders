@@ -748,7 +748,8 @@ public class Frame {
 		else if (Monster_Direction == 0) 
 			Monsters.forEach(Monster::moveLeft);
 
-		Monsters.forEach(Monster::refresh);
+		for(int i = 0; i < Monsters.size(); i++)
+			Monsters.elementAt(i).refresh();
 
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
