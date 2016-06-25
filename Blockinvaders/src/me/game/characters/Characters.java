@@ -1,7 +1,5 @@
 package me.game.characters;
 
-import com.sun.javafx.geom.Rectangle;
-
 import me.game.pack.Drawable;
 import me.game.pack.Frame;
 import me.game.playerWeapons.PlayerWeapon;
@@ -20,7 +18,7 @@ public abstract class Characters implements Drawable{
 	protected double yPos;
 	
 	protected double width;
-	protected double heigth;
+	protected double height;
 
 	
 	public double getX(){
@@ -44,7 +42,7 @@ public abstract class Characters implements Drawable{
 	}
 	
 	public double getHeight(){
-		return heigth;
+		return height;
 	}
 	
 	public boolean isAlive(){
@@ -72,12 +70,8 @@ public abstract class Characters implements Drawable{
 	public abstract void triggerDeath();
 	
 
-	public boolean checkHit(double ox, double oy, double owidth, double olength){
-		Rectangle rt1 = new Rectangle((int)ox, (int)oy, (int)owidth, (int)olength);
-		Rectangle rt2 = new Rectangle((int)xPos, (int)yPos, (int)width, (int)heigth);
-		if(rt1.intersection(rt2) != null)
-			return true;
-		return false;
+	public boolean checkHit(double ox, double oy, double owidth, double oheight){
+		return ox < xPos + width && ox + owidth > xPos && oy < yPos + height && oy + oheight > yPos;
 	}
 	
 	public void giveWeapon(Weapon waffe){

@@ -11,12 +11,13 @@ public class SwarmMonster extends Monster{
 
 	protected ArrayList<Monster> swarm = new ArrayList<Monster>();
 	private int level;
-	private final int maxMonsters = 20;
-	private final int spawnDelay = 500;
-	private int currentSpawnDelay = 0;
+	private final int maxMonsters = 32;
+	private final int spawnDelay = 49;
+	boolean spawnFinished = false;
+	private int spawnCount = 0;
 
 	public SwarmMonster(int level, int xPos, int yPos){
-		super(null, 1000+level*45, xPos, yPos, 400, 300, level*5, Color.KHAKI, 1.5, 1);
+		super(null, 2000+level*55, xPos, yPos, 400, 300, level*5, Color.KHAKI, 1.5, 1);
 		hisWeapon = new MonsterBossWeapon(this);
 		game.Monsters.add(this);
 		this.level = level;
@@ -33,28 +34,39 @@ public class SwarmMonster extends Monster{
 
 	@Override
 	public void refresh(){
-		if(swarm.size() < maxMonsters)
-			if(++currentSpawnDelay >= spawnDelay){
-				//swarm.add(new SwarmMonsterMinion(level, xPos, yPos-30, this));
-				currentSpawnDelay = 0;
+		if(swarm.size() < maxMonsters){
+			boolean free = true;
+			for(int i = 0; i<swarm.size(); i++)
+				if(swarm.get(i).checkHit(xPos, yPos-30, spawnDelay, 20))
+					free = false;
+
+			if(free){
+				new SwarmMonsterMinion(level, xPos, yPos-30, this);
+				spawnCount++;
 			}
-		swarm.forEach(Monster::refresh);
+		}
+		for(int i = 0 ; i<swarm.size(); i++)
+			swarm.get(i).refresh();
 	}
 
 	@Override
 	public void draw(GraphicsContext gc) {
 		if (alive) {
 			gc.setFill(getColor());
-			gc.fillRect(xPos, yPos, width, heigth);
+			gc.fillRect(xPos, yPos, width, height);
 			if (life != getInitHp()) {
 				double fragleben = (double)life / (double) getInitHp();
 				Color HpColor = new Color(1.0f * (1 - fragleben), 1.0f * fragleben, 0, 1);
 				gc.setFill(HpColor);
-				gc.fillRect(xPos + width / 10, yPos + heigth / 2.5,
-						width * fragleben * 0.8, heigth - heigth * 0.8);
+				gc.fillRect(xPos + width / 10, yPos + height / 2.5,
+						width * fragleben * 0.8, height - height * 0.8);
 			}
 		}
 		for(Monster m : swarm)
 			m.draw(gc);
+	}
+	
+	public int getSpawnCount(){
+		return spawnCount;
 	}
 }

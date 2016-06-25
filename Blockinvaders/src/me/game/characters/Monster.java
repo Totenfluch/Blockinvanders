@@ -21,7 +21,7 @@ public class Monster extends Characters {
 	public Monster(Weapon waffe, int Leben, double x, double y, double width, double length, int worth, Color color, double shootRate, int dropRate){
 		super(x, y, Leben, waffe);
 		this.width = width;
-		this.heigth = length;
+		this.height = length;
 		this.worth = worth;
 		alive = true;
 		InitialHp = Leben;
@@ -59,7 +59,7 @@ public class Monster extends Characters {
 			setLife(life);
 			giveWeapon(weapon);
 			this.width = width;
-			this.heigth = height;
+			this.height = height;
 			this.worth = worth;
 			alive = true;
 			InitialHp = initialHp;
@@ -185,13 +185,13 @@ public class Monster extends Characters {
 	public void draw(GraphicsContext gc) {
 		if (alive) {
 			gc.setFill(color);
-			gc.fillRect(xPos, yPos, width, heigth);
+			gc.fillRect(xPos, yPos, width, height);
 			if (life != InitialHp) {
 				double fragleben = (double)life / (double) InitialHp;
 				Color HpColor = new Color(1.0f * (1 - fragleben), 1.0f * fragleben, 0, 1);
 				gc.setFill(HpColor);
-				gc.fillRect(xPos + width / 10, yPos + heigth / 2.5,
-						width * fragleben * 0.8, heigth - heigth * 0.8);
+				gc.fillRect(xPos + width / 10, yPos + height / 2.5,
+						width * fragleben * 0.8, height - height * 0.8);
 			}
 		}
 	}
@@ -210,7 +210,7 @@ public class Monster extends Characters {
 		double position = xPos*yPos;
 		if(position != 0)
 			hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(position)>>>32);
-		double size = width*heigth;
+		double size = width*height;
 		if(size != 0)
 			hc = hc * hashMultiplier + (int)(Double.doubleToLongBits(size)>>>32);
 		hc = hc * hashMultiplier + dropRate;
@@ -253,7 +253,7 @@ public class Monster extends Characters {
 			return false;
 		if(width != monti.width)
 			return false;
-		if(heigth != monti.heigth)
+		if(height != monti.height)
 			return false;
 		
 		return true;

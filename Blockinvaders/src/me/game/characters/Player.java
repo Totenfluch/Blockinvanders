@@ -25,7 +25,7 @@ public class Player extends Characters{
 			instance = Frame.getInstance();
 			activePlayers = 0;
 		}
-		heigth = 60;
+		height = 60;
 		width = 40;
 		playerNumber = activePlayers++;
 		PlayerName = "Player-"+playerNumber;
@@ -145,10 +145,10 @@ public class Player extends Characters{
 	public void draw(GraphicsContext gc) {
 		if(alive && hitImmume > 0){
 			gc.setFill(Color.AQUAMARINE);
-			gc.fillRect(xPos-2, yPos-2, width+4, heigth+4);
+			gc.fillRect(xPos-2, yPos-2, width+4, height+4);
 		}else if(alive && downgradeImmume > 0){
 			gc.setFill(Color.ORANGE);
-			gc.fillRect(xPos-2, yPos-2, width+4, heigth+4);
+			gc.fillRect(xPos-2, yPos-2, width+4, height+4);
 		}
 		
 		if (playerNumber == 0)
@@ -163,7 +163,7 @@ public class Player extends Characters{
 			gc.setFill(Color.WHITE);
 
 		if (alive)
-			gc.fillRect(xPos, yPos, width, heigth);
+			gc.fillRect(xPos, yPos, width, height);
 
 		if (playerNumber == 0) {
 			if (alive) {

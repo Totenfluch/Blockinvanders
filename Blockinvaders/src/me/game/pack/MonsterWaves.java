@@ -18,10 +18,9 @@ public class MonsterWaves {
 		// Reset current movement 
 		game.movetick = 0;
 		game.Monster_Direction = 0;
-		switch(which%6){
+		switch(which%7){
 		case 0: 
 			SmallMonster.spawnSmallMonsterWave(which);
-			//SwarmMonster.spawnSwarmMonsterWave(which);
 			break;
 
 		case 1: 
@@ -43,6 +42,9 @@ public class MonsterWaves {
 			
 		case 5:
 			HelixMonster.spawnHelixMonsterWave(which);
+			break;
+		case 6:
+			SwarmMonster.spawnSwarmMonsterWave(which);
 			break;
 		}
 	}

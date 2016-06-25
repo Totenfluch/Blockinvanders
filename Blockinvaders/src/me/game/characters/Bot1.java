@@ -82,7 +82,7 @@ public class Bot1 implements BotKI{
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
 				if(bot.getY() - bul.getyPos() < 200){
-					if(bul.checkHit(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.heigth*2)){
+					if(bul.checkHit(bot.getX()-10, bot.getY()-bot.getHeight(), bot.getWidth()+20, bot.height*2)){
 						escapeThis = bul;
 
 						if(!tryMoveRight())
@@ -203,7 +203,7 @@ public class Bot1 implements BotKI{
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-				if(bul.checkHit(bot.getX()+bot.width, bot.getY()-bot.getHeight(), bul.getWidth()+10, bot.heigth*2)){
+				if(bul.checkHit(bot.getX()+bot.width, bot.getY()-bot.getHeight(), bul.getWidth()+10, bot.height*2)){
 					clear = false;
 				}
 			}
@@ -218,7 +218,7 @@ public class Bot1 implements BotKI{
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
 			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
 				Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-				if(bul.checkHit(bot.getX(), bot.getY()-bot.getHeight(), -bul.getWidth()-10, bot.heigth*2)){
+				if(bul.checkHit(bot.getX(), bot.getY()-bot.getHeight(), -bul.getWidth()-10, bot.height*2)){
 					clear = false;
 				}
 			}
