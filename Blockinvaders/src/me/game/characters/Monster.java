@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop;
 import me.game.pack.Drop.Drops;
+import me.game.pack.Frame;
 import me.game.playerWeapons.Weapon;
 
 public class Monster extends Characters {
@@ -29,7 +30,7 @@ public class Monster extends Characters {
 		this.shootRate = shootRate;
 		this.dropRate = dropRate;
 	}
-	
+
 	// Format: ;x|y|width|length|life|initialHp|color:red:green:blue:alpha|weapon|shootRate|dropRate|worth;
 	public Monster(String createString){
 		super(0, 0, 0, null);
@@ -53,7 +54,7 @@ public class Monster extends Characters {
 			double shootRate = Double.valueOf(parts[8]);
 			int dropRate = Integer.valueOf(parts[9]);
 			int worth = Integer.valueOf(parts[10]);
-			
+
 			setX(x);
 			setY(y);
 			setLife(life);
@@ -70,23 +71,23 @@ public class Monster extends Characters {
 			return;
 		}
 	}
-	
+
 	public double getShootRate(){
 		return shootRate;
 	}
-	
+
 	public int getDropRate(){
 		return dropRate;
 	}
-	
+
 	public void setColor(Color c){
 		this.color = c;
 	}
-	
+
 	public Color getColor(){
 		return color;
 	}
-	
+
 	public void setWorth(int amount){
 		worth = amount;
 	}
@@ -125,7 +126,7 @@ public class Monster extends Characters {
 			return true;
 		}
 	}
-	
+
 	public boolean subLeben(int amount){
 		if (game.Online_Coop)
 			game.client.processMessage("hitMonster " + hashCode() + " " + (life-amount));
@@ -149,7 +150,7 @@ public class Monster extends Characters {
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
-		
+
 		hisWeapon.requestRemoval();
 		game.Monsters.remove(this);
 		try {
@@ -160,27 +161,31 @@ public class Monster extends Characters {
 	}
 
 	public void moveLeft(){
-		xPos--;
+		if(xPos >= 0)
+			xPos--;
 	}
 
 	public void moveRight(){
-		xPos++;
+		if(xPos <= Frame.GAME_WIDTH-width)
+			xPos++;
 	}
 
 	public void moveUp(){
-		yPos--;
+		if(yPos >= 0)
+			yPos--;
 	}
 
 	public void moveDown(){
-		yPos++;
+		if(yPos <= Frame.GAME_LENGTH-300)
+			yPos++;
 	}
 
 	public int getWorth(){
 		return worth;
 	}
-	
+
 	public void refresh(){}
-	
+
 	public void doMovement(){
 		if (game.movetick == 500 && game.Monster_Direction == 0) {
 			game.Monster_Direction = 1;
@@ -210,7 +215,7 @@ public class Monster extends Characters {
 			}
 		}
 	}
-	
+
 	@Override
 	public int hashCode(){
 		int hc = 11;
@@ -234,7 +239,7 @@ public class Monster extends Characters {
 			hc = hc * hashMultiplier + hisWeapon.hashCode();
 		if(hisSpecialWeapon != null)
 			hc = hc * hashMultiplier + hisSpecialWeapon.hashCode();
-		
+
 		return hc;
 	}
 
@@ -246,7 +251,7 @@ public class Monster extends Characters {
 			return false;
 		if(!super.equals(other))
 			return false;
-		
+
 		Monster monti = (Monster)other;
 		if(hashCode() != monti.hashCode())
 			return false;
@@ -270,7 +275,7 @@ public class Monster extends Characters {
 			return false;
 		if(height != monti.height)
 			return false;
-		
+
 		return true;
 	}
 }

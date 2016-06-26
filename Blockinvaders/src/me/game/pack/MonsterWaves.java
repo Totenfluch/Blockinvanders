@@ -4,6 +4,7 @@ import me.game.monsters.BigBossMonster;
 import me.game.monsters.FlatMonster;
 import me.game.monsters.HelixMonster;
 import me.game.monsters.MediumMonster;
+import me.game.monsters.RandomMovementMonster;
 import me.game.monsters.SmallMonster;
 import me.game.monsters.SwarmMonster;
 import me.game.monsters.TinyMonster;
@@ -18,7 +19,7 @@ public class MonsterWaves {
 		// Reset current movement 
 		game.movetick = 0;
 		game.Monster_Direction = 0;
-		switch(which%7){
+		switch(which%8){
 		case 0: 
 			SmallMonster.spawnSmallMonsterWave(which);
 			break;
@@ -43,8 +44,13 @@ public class MonsterWaves {
 		case 5:
 			HelixMonster.spawnHelixMonsterWave(which);
 			break;
+			
 		case 6:
 			SwarmMonster.spawnSwarmMonsterWave(which);
+			break;
+			
+		case 7:
+			RandomMovementMonster.spawnRandomMovementMonsterWave(which);
 			break;
 		}
 	}
