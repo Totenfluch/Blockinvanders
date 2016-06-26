@@ -21,6 +21,7 @@ public class Bot2 implements BotKI {
 		this.player = player;
 	}
 
+	@Override
 	public void refresh() {
 		if(!player.isAlive())
 			return;

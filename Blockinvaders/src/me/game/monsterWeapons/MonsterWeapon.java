@@ -17,6 +17,7 @@ public abstract class MonsterWeapon extends Weapon {
 	}
 
 
+	@Override
 	public void shoot(double playerX, double playerY, double bulletW, double bulletH, double angle) {
 		if(delay <= 0){
 			delay = INIT_DELAY;
@@ -24,6 +25,7 @@ public abstract class MonsterWeapon extends Weapon {
 		}
 	}
 
+	@Override
 	public abstract void shoot(double monsterX, double monsterY);
 
 	@Override
