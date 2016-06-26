@@ -180,6 +180,21 @@ public class Monster extends Characters {
 	}
 	
 	public void refresh(){}
+	
+	public void doMovement(){
+		if (game.movetick == 500 && game.Monster_Direction == 0) {
+			game.Monster_Direction = 1;
+			game.movetick = 0;
+		} else if (game.movetick == 500 && game.Monster_Direction == 1) {
+			game.Monster_Direction = 0;
+			game.movetick = 0;
+		}
+
+		if (game.Monster_Direction == 1)
+			moveRight();
+		else if (game.Monster_Direction == 0) 
+			moveLeft();
+	}
 
 	@Override
 	public void draw(GraphicsContext gc) {

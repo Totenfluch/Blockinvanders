@@ -735,18 +735,8 @@ public class Frame {
 
 		Tick++;
 		movetick++;
-		if (movetick == 500 && Monster_Direction == 0) {
-			Monster_Direction = 1;
-			movetick = 0;
-		} else if (movetick == 500 && Monster_Direction == 1) {
-			Monster_Direction = 0;
-			movetick = 0;
-		}
-
-		if (Monster_Direction == 1)
-			Monsters.forEach(Monster::moveRight);
-		else if (Monster_Direction == 0) 
-			Monsters.forEach(Monster::moveLeft);
+		
+		Monsters.forEach(Monster::doMovement);
 
 		for(int i = 0; i < Monsters.size(); i++)
 			Monsters.elementAt(i).refresh();
