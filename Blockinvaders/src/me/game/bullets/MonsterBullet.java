@@ -33,10 +33,10 @@ public class MonsterBullet extends Bullet {
 	public void onHit(Monster attacker, Player victim){
 		if(victim.isAlive()){
 			super.onHit();
-			attacker.setInitHp(attacker.getInitHp() + (Frame.getInstance().clearcount+1)*10);
-			attacker.setLife(attacker.getInitHp());
-			attacker.setColor(Color.DARKMAGENTA);
 			if(!victim.isHitImmume()){
+				attacker.setInitHp(attacker.getInitHp() + (Frame.getInstance().clearcount+1)*10);
+				attacker.setLife(attacker.getInitHp());
+				attacker.setColor(Color.DARKMAGENTA);
 				victim.setLife(victim.getLife()-waffe.getDamage());
 				victim.setHitImmume(625);
 			}
