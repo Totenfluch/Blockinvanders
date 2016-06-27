@@ -11,7 +11,7 @@ public abstract class MonsterWeapon extends Weapon {
 	public static Vector<MonsterWeapon> ActiveWeapons = new Vector<MonsterWeapon>();
 
 
-	public MonsterWeapon(Monster Besitzer, int damage,int delay,int bulletSpeed){
+	public MonsterWeapon(Monster Besitzer, int damage, int delay, double bulletSpeed){
 		super(Besitzer, damage, delay, bulletSpeed);
 		ActiveWeapons.add(this);
 	}

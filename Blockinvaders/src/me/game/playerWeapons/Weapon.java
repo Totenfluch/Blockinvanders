@@ -10,7 +10,7 @@ public abstract class Weapon {
 	protected final int INIT_DELAY;
 	protected int damage;
 	protected int ammo = 20;
-	protected int bulletSpeed;
+	protected double bulletSpeed;
 	protected int delay;
 	protected Characters Owner;
 	protected WeaponType typ;
@@ -19,7 +19,7 @@ public abstract class Weapon {
 	protected Vector<Bullet> kugeln = new Vector<Bullet>(400, 20);
 
 
-	public Weapon(Characters owner, int damage,int delay, int bulletSpeed){
+	public Weapon(Characters owner, int damage,int delay, double bulletSpeed){
 		this.damage = damage;
 		this.INIT_DELAY = delay;
 		this.bulletSpeed = bulletSpeed;
@@ -56,7 +56,7 @@ public abstract class Weapon {
 		return damage;
 	}
 
-	public int getBulletSpeed() {
+	public double getBulletSpeed() {
 		return bulletSpeed;
 	}
 

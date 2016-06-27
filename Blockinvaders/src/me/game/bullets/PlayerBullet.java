@@ -9,7 +9,7 @@ import me.game.playerWeapons.PlayerWeapon;
 
 public class PlayerBullet extends Bullet {
 
-	public PlayerBullet(PlayerWeapon waffe, double xPos, double yPos, double height, double width, int speed,
+	public PlayerBullet(PlayerWeapon waffe, double xPos, double yPos, double height, double width, double speed,
 			int damage, double angle) {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle);
 	}

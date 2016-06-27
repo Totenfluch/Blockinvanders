@@ -8,6 +8,7 @@ import me.game.monsters.RandomMovementMonster;
 import me.game.monsters.SmallMonster;
 import me.game.monsters.SwarmMonster;
 import me.game.monsters.TinyMonster;
+import me.game.monsters.WallMonster;
 
 public class MonsterWaves {
 	public static void SpawnWave(int which){
@@ -19,7 +20,7 @@ public class MonsterWaves {
 		// Reset current movement 
 		game.movetick = 0;
 		game.Monster_Direction = 0;
-		switch(which%8){
+		switch(which%9){
 		case 0: 
 			SmallMonster.spawnSmallMonsterWave(which);
 			break;
@@ -51,6 +52,10 @@ public class MonsterWaves {
 			
 		case 7:
 			RandomMovementMonster.spawnRandomMovementMonsterWave(which);
+			break;
+			
+		case 8:
+			WallMonster.spawnWallMonsterWave(which);
 			break;
 		}
 	}

@@ -13,7 +13,7 @@ public class ClusterBullet extends TimedBullet{
 	int clusterTime = 0;
 	final int clusterDelay = 35;
 	
-	public ClusterBullet(Weapon waffe, double xPos, double yPos, double height, double width, int speed, int damage,
+	public ClusterBullet(Weapon waffe, double xPos, double yPos, double height, double width, double speed, int damage,
 			double angle, int lifetimeticks) {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle, lifetimeticks);
 	}

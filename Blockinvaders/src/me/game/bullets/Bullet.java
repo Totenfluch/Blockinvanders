@@ -12,7 +12,7 @@ public abstract class Bullet implements Drawable{
 	double dx, dy;
 	Weapon waffe;
 	
-	public Bullet(Weapon waffe, double xPos, double yPos, double height, double width, int speed, int damage, double angle) {
+	public Bullet(Weapon waffe, double xPos, double yPos, double height, double width, double speed, int damage, double angle) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.height = height;

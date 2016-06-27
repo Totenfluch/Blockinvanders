@@ -18,7 +18,7 @@ public class DoubleHelixBullet extends MonsterBullet{
 	double[][][] helix = new double[3000][2][2];
 
 
-	public DoubleHelixBullet(MonsterWeapon waffe, double xPos, double yPos, double height, double width, int speed, int damage,
+	public DoubleHelixBullet(MonsterWeapon waffe, double xPos, double yPos, double height, double width, double speed, int damage,
 			double angle, boolean type) {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle);
 		this.type = type;

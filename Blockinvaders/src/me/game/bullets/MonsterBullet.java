@@ -10,7 +10,7 @@ import me.game.playerWeapons.PlayerWeapon;
 
 public class MonsterBullet extends Bullet {
 
-	public MonsterBullet(MonsterWeapon waffe, double xPos, double yPos, double height, double width, int speed, int damage,
+	public MonsterBullet(MonsterWeapon waffe, double xPos, double yPos, double height, double width, double speed, int damage,
 			double angle) {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle);
 	}

@@ -4,7 +4,7 @@ import me.game.playerWeapons.Weapon;
 
 public abstract class TimedBullet extends Bullet{
 	private int lifetimeticks;
-	public TimedBullet(Weapon waffe, double xPos, double yPos, double height, double width, int speed, int damage, double angle, int lifetimeticks) {
+	public TimedBullet(Weapon waffe, double xPos, double yPos, double height, double width, double speed, int damage, double angle, int lifetimeticks) {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle);
 		this.lifetimeticks = lifetimeticks;
 	}
