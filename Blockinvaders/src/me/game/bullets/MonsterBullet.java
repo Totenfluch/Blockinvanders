@@ -15,6 +15,7 @@ public class MonsterBullet extends Bullet {
 		super(waffe, xPos, yPos, height, width, speed, damage, angle);
 	}
 
+	@Override
 	public void refresh(){
 		if(yPos <= 0 || yPos >= Frame.GAME_LENGTH || xPos <= 0 || xPos >= Frame.GAME_WIDTH)
 			waffe.getKugeln().remove(this);

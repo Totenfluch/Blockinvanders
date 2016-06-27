@@ -43,6 +43,7 @@ public class Player extends Characters{
 		this.movementSpeed = speed;
 	}
 
+	@Override
 	public void moveLeft() {
 		if (xPos - movementSpeed <= 0)
 			xPos = 0;
@@ -50,6 +51,7 @@ public class Player extends Characters{
 			xPos -= movementSpeed;
 	}
 
+	@Override
 	public void moveRight() {
 		if (xPos + movementSpeed + width >= Frame.GAME_WIDTH)
 			xPos = Frame.GAME_WIDTH - width;
@@ -57,6 +59,7 @@ public class Player extends Characters{
 			xPos += movementSpeed;
 	}
 
+	@Override
 	public boolean setLife(int leben) {
 		if(game.Online_Coop)
 			game.client.processMessage("hitPlayer " + leben);

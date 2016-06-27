@@ -7,6 +7,7 @@ import java.net.URLConnection;
 import java.util.Random;
 import java.util.Vector;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
@@ -273,8 +274,8 @@ public class Frame {
 		SetupDraw();
 		MonsterWaves.SpawnWave(0);
 		CreateTimers();
-		rTf.setCycleCount(Timeline.INDEFINITE);
-		tf.setCycleCount(Timeline.INDEFINITE);
+		rTf.setCycleCount(Animation.INDEFINITE);
+		tf.setCycleCount(Animation.INDEFINITE);
 		tf.play();
 		rTf.play();
 

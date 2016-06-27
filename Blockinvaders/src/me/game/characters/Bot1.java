@@ -27,6 +27,7 @@ public class Bot1 implements BotKI{
 		this.bot = p;
 	}
 
+	@Override
 	public void refresh(){
 		status = "";
 		if(!bot.isAlive())

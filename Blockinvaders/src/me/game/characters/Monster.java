@@ -101,6 +101,7 @@ public class Monster extends Characters {
 	}
 
 
+	@Override
 	public boolean setLife(int Leben){
 		if (game.Online_Coop)
 			game.client.processMessage("hitMonster " + hashCode() + " " + life);
@@ -142,6 +143,7 @@ public class Monster extends Characters {
 	}
 
 
+	@Override
 	public void triggerDeath(){
 		Random r = new Random();
 		Drops[] theDrops = Drops.values();
@@ -160,11 +162,13 @@ public class Monster extends Characters {
 		}
 	}
 
+	@Override
 	public void moveLeft(){
 		if(xPos >= 0)
 			xPos--;
 	}
 
+	@Override
 	public void moveRight(){
 		if(xPos <= Frame.GAME_WIDTH-width)
 			xPos++;

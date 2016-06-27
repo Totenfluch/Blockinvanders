@@ -32,6 +32,7 @@ public class DoubleHelixBullet extends MonsterBullet{
 		this.partnerNullet = Partner;
 	}
 
+	@Override
 	public void refresh(){
 		if(refreshcounter >= 5){
 			refreshcounter = 0;
@@ -99,6 +100,7 @@ public class DoubleHelixBullet extends MonsterBullet{
 		}
 	}
 
+	@Override
 	public boolean checkHit(double x, double y, double width, double height){
 		boolean isHit =  xPos < x + width && xPos + this.width > x && yPos < y + height && yPos + this.height > y;
 		boolean isHit2 = false;

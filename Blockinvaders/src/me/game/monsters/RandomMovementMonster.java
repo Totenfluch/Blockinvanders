@@ -47,6 +47,6 @@ public class RandomMovementMonster extends Monster{
 	public static void spawnRandomMovementMonsterWave(int level){
 		Random r = new Random();
 		for(int i = 0; i<16; i++)
-			new RandomMovementMonster(level, r.nextInt((int) (Frame.GAME_WIDTH-40)), r.nextInt(Frame.GAME_LENGTH-340));
+			new RandomMovementMonster(level, r.nextInt(Frame.GAME_WIDTH-40), r.nextInt(Frame.GAME_LENGTH-340));
 	}
 }
