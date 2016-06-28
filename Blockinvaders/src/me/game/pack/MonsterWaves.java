@@ -1,6 +1,7 @@
 package me.game.pack;
 
 import me.game.monsters.BigBossMonster;
+import me.game.monsters.BonusMonster;
 import me.game.monsters.FlatMonster;
 import me.game.monsters.HelixMonster;
 import me.game.monsters.MediumMonster;
@@ -21,7 +22,7 @@ public class MonsterWaves {
 		// Reset current movement 
 		game.movetick = 0;
 		game.Monster_Direction = 0;
-		switch(which%10){
+		switch(which%11){
 		case 0: 
 			SmallMonster.spawnSmallMonsterWave(which);
 			break;
@@ -61,6 +62,10 @@ public class MonsterWaves {
 		
 		case 9:
 			SplitMonster.spawnSplitMonsterWave(which);
+			break;
+			
+		case 10:
+			BonusMonster.spawnBonusMonsterWave(which);
 			break;
 		}
 	}

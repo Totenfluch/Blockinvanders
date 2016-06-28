@@ -737,7 +737,8 @@ public class Frame {
 		Tick++;
 		movetick++;
 		
-		Monsters.forEach(Monster::doMovement);
+		for(int i = 0 ; i < Monsters.size() ; i++)
+			Monsters.elementAt(i).doMovement();
 
 		for(int i = 0; i < Monsters.size(); i++)
 			Monsters.elementAt(i).refresh();
