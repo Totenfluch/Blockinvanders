@@ -10,7 +10,7 @@ public class SplitMonster extends Monster{
 	private int cLevel;
 	
 	public SplitMonster(int level, double xPos, double yPos, double width, double height, int seq){
-		super(null, (500+level*35)/seq*15, xPos, yPos, width, height, 2+level, Color.DARKOLIVEGREEN, 0.125, 32);
+		super(null, (500+level*35)/seq*100, xPos, yPos, width, height, 2+level, Color.DARKOLIVEGREEN, 0.125, 32);
 		hisWeapon = new MonsterStandardWeapon(this);
 		game.Monsters.add(this);
 		this.seq = seq;
@@ -27,7 +27,7 @@ public class SplitMonster extends Monster{
 	
 	@Override
 	public void triggerDeath(){
-		if(seq < cLevel/4){
+		if(seq < (cLevel/9)+1){
 			seq++;
 			new SplitMonster(cLevel, xPos, yPos, width/2, height/2, seq);
 			new SplitMonster(cLevel, xPos+width/2+10/seq, yPos, width/2-10/seq, height/2, seq);
