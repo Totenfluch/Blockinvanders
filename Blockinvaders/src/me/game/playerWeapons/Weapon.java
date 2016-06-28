@@ -19,7 +19,7 @@ public abstract class Weapon {
 	protected Vector<Bullet> kugeln = new Vector<Bullet>(400, 20);
 
 
-	public Weapon(Characters owner, int damage,int delay, double bulletSpeed){
+	public Weapon(Characters owner, int damage, int delay, double bulletSpeed){
 		this.damage = damage;
 		this.INIT_DELAY = delay;
 		this.bulletSpeed = bulletSpeed;

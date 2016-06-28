@@ -8,7 +8,7 @@ import me.game.characters.Monster;
 public class MonsterWallMonsterWeapon extends MonsterWeapon{
 
 	public MonsterWallMonsterWeapon(Monster Besitzer) {
-		super(Besitzer, 10, 20, 0.25);
+		super(Besitzer, 10, 200, 0.25);
 	}
 
 	@Override
