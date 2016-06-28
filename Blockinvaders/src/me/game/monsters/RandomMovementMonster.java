@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import me.game.characters.Monster;
 import me.game.monsterWeapons.MonsterStandardWeapon;
 import me.game.pack.Frame;
+import me.game.pack.MonsterWaves;
 
 public class RandomMovementMonster extends Monster{
 	
@@ -17,6 +18,7 @@ public class RandomMovementMonster extends Monster{
 		super(null, 10+level*4, xPos, yPos, 40, 40, 2+level, Color.BURLYWOOD, 0.25, 20);
 		hisWeapon = new MonsterStandardWeapon(this);
 		game.Monsters.add(this);
+		monsterType = MonsterWaves.MonsterType.RANDOMMONSTER;
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){
 			setInitHp(getInitHp()*2);
 			setLife(getInitHp());

@@ -3,12 +3,14 @@ package me.game.monsters;
 import javafx.scene.paint.Color;
 import me.game.characters.Monster;
 import me.game.monsterWeapons.MonsterStandardWeapon;
+import me.game.pack.MonsterWaves;
 
 public class TinyMonster extends Monster{
 	public TinyMonster(int level, double xPos, double yPos){
 		super(null, 5+level*5, xPos, yPos, 20, 40, 1+level, Color.CRIMSON, 0.125, 32);
 		hisWeapon = new MonsterStandardWeapon(this);
 		game.Monsters.add(this);
+		monsterType = MonsterWaves.MonsterType.TINYMONSTER;
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){
 			setInitHp(getInitHp()*2);
 			setLife(getInitHp());

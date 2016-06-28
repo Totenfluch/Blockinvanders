@@ -6,6 +6,7 @@ import me.game.bullets.Bullet;
 import me.game.characters.Monster;
 import me.game.characters.Player;
 import me.game.monsterWeapons.MonsterStandardWeapon;
+import me.game.pack.MonsterWaves;
 
 public class SwarmMonsterMinion extends Monster{
 	
@@ -15,6 +16,7 @@ public class SwarmMonsterMinion extends Monster{
 		super(null, 11+level*5, xPos, yPos, 30, 20, 1+level, Color.BROWN, 0.25, 20);
 		hisWeapon = new MonsterStandardWeapon(this);
 		host.swarm.add(this);
+		monsterType = MonsterWaves.MonsterType.SWARMMONSTERMINION;
 		this.host = host;
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){
 			setInitHp(getInitHp()*2);

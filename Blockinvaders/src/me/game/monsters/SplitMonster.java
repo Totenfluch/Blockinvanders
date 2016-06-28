@@ -3,6 +3,7 @@ package me.game.monsters;
 import javafx.scene.paint.Color;
 import me.game.characters.Monster;
 import me.game.monsterWeapons.MonsterStandardWeapon;
+import me.game.pack.MonsterWaves;
 
 public class SplitMonster extends Monster{
 	
@@ -13,6 +14,7 @@ public class SplitMonster extends Monster{
 		super(null, (3000+(level*25))/(seq*250), xPos, yPos, width, height, 2+level, Color.DARKOLIVEGREEN, 0.125, 32);
 		hisWeapon = new MonsterStandardWeapon(this);
 		game.Monsters.add(this);
+		monsterType = MonsterWaves.MonsterType.SPLITMONSTER;
 		this.seq = seq;
 		this.cLevel = level;
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){

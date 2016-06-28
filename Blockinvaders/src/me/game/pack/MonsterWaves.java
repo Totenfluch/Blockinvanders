@@ -13,6 +13,9 @@ import me.game.monsters.TinyMonster;
 import me.game.monsters.WallMonster;
 
 public class MonsterWaves {
+	
+	public enum MonsterType{DEFAULT, SMALLMONSTER, FLATMONSTER, MEDIUMMONSTER, TINYMONSTER, BIGBOSSMONSTER, HELIXMONSTER, SWARMMONSTER, SWARMMONSTERMINION, RANDOMMONSTER, WALLMONSTER, SPLITMONSTER, BONUSMONSTER};
+	
 	public static void SpawnWave(int which){
 		Frame game = Frame.getInstance();
 		Drop.weaponUpgradesDroppedThisWave = 0;

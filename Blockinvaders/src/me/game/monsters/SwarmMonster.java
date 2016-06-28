@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import me.game.characters.Monster;
 import me.game.monsterWeapons.MonsterBossWeapon;
+import me.game.pack.MonsterWaves;
 
 public class SwarmMonster extends Monster{
 
@@ -20,6 +21,7 @@ public class SwarmMonster extends Monster{
 		super(null, 2000+level*55, xPos, yPos, 400, 300, level*5, Color.KHAKI, 1.5, 1);
 		hisWeapon = new MonsterBossWeapon(this);
 		game.Monsters.add(this);
+		monsterType = MonsterWaves.MonsterType.SWARMMONSTER;
 		this.level = level;
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){
 			setInitHp(getInitHp()*2);

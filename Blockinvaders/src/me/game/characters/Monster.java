@@ -6,14 +6,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop;
+import me.game.pack.MonsterWaves;
 import me.game.pack.Drop.Drops;
+import me.game.pack.MonsterWaves.MonsterType;
 import me.game.pack.Frame;
 import me.game.playerWeapons.Weapon;
 
 public class Monster extends Characters {
 
 	private int worth;
-
+	protected MonsterType monsterType = MonsterWaves.MonsterType.DEFAULT;
 	private int InitialHp;
 	private Color color;
 	private double shootRate;
@@ -186,6 +188,10 @@ public class Monster extends Characters {
 
 	public int getWorth(){
 		return worth;
+	}
+	
+	public MonsterType getMonsterType(){
+		return monsterType;
 	}
 
 	public void refresh(){}
