@@ -687,6 +687,20 @@ public class Frame {
 						gc.fillText(".   .   .", 925, 850);
 					}
 				}
+				int weapons = 0;
+				for(MonsterWeapon wp : MonsterWeapon.ActiveWeapons){
+					if(weapons < 80){
+						gc.setFill(Color.CORAL);
+						gc.setFont(new Font("Futura", 10));
+						
+						gc.fillText(wp.toString() + wp.getOwner().toString(), 1125, 50+weapons*10);
+						weapons++;
+					}else{
+						gc.setFill(Color.GREEN);
+						gc.setFont(new Font("Impact", 25));
+						gc.fillText(".   .   .", 925, 850);
+					}
+				}
 			}));
 		}else{
 			tf = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
@@ -736,7 +750,7 @@ public class Frame {
 
 		Tick++;
 		movetick++;
-		
+
 		for(int i = 0 ; i < Monsters.size() ; i++)
 			Monsters.elementAt(i).doMovement();
 
