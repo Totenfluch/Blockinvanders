@@ -20,6 +20,7 @@ public class Monster extends Characters {
 	private Color color;
 	private double shootRate;
 	private int dropRate;
+	private int maxHp;
 
 	public Monster(Weapon waffe, int Leben, double x, double y, double width, double length, int worth, Color color, double shootRate, int dropRate){
 		super(x, y, Leben, waffe);
@@ -31,6 +32,7 @@ public class Monster extends Characters {
 		this.color = color;
 		this.shootRate = shootRate;
 		this.dropRate = dropRate;
+		this.maxHp = InitialHp*2;
 	}
 
 	// Format: ;x|y|width|length|life|initialHp|color:red:green:blue:alpha|weapon|shootRate|dropRate|worth;
@@ -194,6 +196,13 @@ public class Monster extends Characters {
 		return monsterType;
 	}
 
+	public int getMaxHp(){
+		return maxHp;
+	}
+	
+	public void setMaxHp(int maxHp){
+		this.maxHp = maxHp;
+	}
 	public void refresh(){}
 
 	public void doMovement(){
