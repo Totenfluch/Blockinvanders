@@ -54,7 +54,6 @@ public class Drop implements Drawable{
 
 		if(this.getDroptype() == Drops.NEXTWEAPON)
 			weaponUpgradesDroppedThisWave++;
-		System.out.println(weaponUpgradesDroppedThisWave);
 	}
 
 	public Drops getDroptype(){
