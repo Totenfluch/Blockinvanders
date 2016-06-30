@@ -151,13 +151,13 @@ public class Monster extends Characters {
 	public void triggerDeath(){
 		Random r = new Random();
 		Drops[] theDrops = Drops.values();
-		if(r.nextInt(dropRate) == 1){
+		if(r.nextInt(dropRate) == 0){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}else if(color.equals(Color.DARKMAGENTA)){
 			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
 		}
-
-		hisWeapon.requestRemoval();
+		if(hisWeapon != null)
+			hisWeapon.requestRemoval();
 		game.Monsters.remove(this);
 		try {
 			this.finalize();
@@ -191,7 +191,7 @@ public class Monster extends Characters {
 	public int getWorth(){
 		return worth;
 	}
-	
+
 	public MonsterType getMonsterType(){
 		return monsterType;
 	}
@@ -199,7 +199,7 @@ public class Monster extends Characters {
 	public int getMaxHp(){
 		return maxHp;
 	}
-	
+
 	public void setMaxHp(int maxHp){
 		this.maxHp = maxHp;
 	}

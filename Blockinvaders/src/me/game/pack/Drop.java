@@ -18,7 +18,7 @@ public class Drop implements Drawable{
 	public static final int DropSize = 10;
 	protected Drops drop;
 	public static Vector<Drop> AllDrops = new Vector<Drop>();
-	public static final int weaponUpgradeDropLimitPerWave = 2;
+	public static final int weaponUpgradeDropLimitPerWave = 1;
 	public static int weaponUpgradesDroppedThisWave = 0;
 
 	public enum Drops{
@@ -40,11 +40,11 @@ public class Drop implements Drawable{
 		this.game = Frame.getInstance();
 		this.xPos = xPos;
 		this.yPos = yPos;
-		if(this.getDroptype() == Drops.NEXTWEAPON){
+		if(drop == Drops.NEXTWEAPON){
 			Drops[] theDrops = Drops.values();
 			Random r = new Random();
 			if(weaponUpgradesDroppedThisWave < weaponUpgradeDropLimitPerWave ){
-				this.drop = drop;
+				this.drop = Drops.NEXTWEAPON;
 			}else{
 				this.drop = theDrops[r.nextInt(theDrops.length-1)+1];
 			}
@@ -54,6 +54,7 @@ public class Drop implements Drawable{
 
 		if(this.getDroptype() == Drops.NEXTWEAPON)
 			weaponUpgradesDroppedThisWave++;
+		System.out.println(weaponUpgradesDroppedThisWave);
 	}
 
 	public Drops getDroptype(){

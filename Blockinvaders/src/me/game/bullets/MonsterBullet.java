@@ -35,7 +35,6 @@ public class MonsterBullet extends Bullet {
 		if(victim.isAlive()){
 			super.onHit();
 			if(!victim.isHitImmume()){
-				
 				attacker.setInitHp((attacker.getMaxHp() <= attacker.getInitHp() + (Frame.getInstance().clearcount+1)*10) ? attacker.getInitHp() + (Frame.getInstance().clearcount+1)*10 : attacker.getMaxHp());
 				attacker.setLife(attacker.getInitHp());
 				attacker.setColor(Color.DARKMAGENTA);

@@ -4,13 +4,12 @@ import java.util.Random;
 
 import javafx.scene.paint.Color;
 import me.game.characters.Monster;
-import me.game.monsterWeapons.MonsterStandardWeapon;
 import me.game.pack.Frame;
 
 public class BonusMonster extends Monster{
 	public BonusMonster(int level, double xPos, double yPos){
 		super(null, 100+level*10, xPos, yPos, 80-(level/10)*4, 80-(level/10)*4, 8*level, Color.GOLD, 0.0001, 1);
-		hisWeapon = new MonsterStandardWeapon(this);
+		//hisWeapon = new MonsterStandardWeapon(this);
 		game.Monsters.add(this);
 		if(game.Coop_enabled || game.Online_Coop || game.Play_with_bot_enabled){
 			setInitHp(getInitHp()*2);
