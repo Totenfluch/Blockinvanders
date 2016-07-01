@@ -19,8 +19,8 @@ public abstract class Bullet implements Drawable{
 		this.width = width;
 		this.damage = damage;
 		this.waffe = waffe;
-		this.xPos += waffe.getOwner().getWidth()/2/2;
-		this.xPos += width/2;
+		this.xPos += waffe.getOwner().getWidth()/2;
+		this.xPos -= width;
 		
 		if(angle >= -180.0 && angle <= 180){
 			dx = Math.sin(Math.toRadians(angle))*speed;
