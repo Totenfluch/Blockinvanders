@@ -12,11 +12,12 @@ The following feature are included to date
   - Watch 1-4 KIs play the Game
   - Online Leaderboard
   - Debugging mode
+  - Crazy Debugging mode
   - KI testing mode
   - Complete restart of the Game
   
 Ingame Features
   - 4 Different Monster drops
   - 7 Different Player Weapons
-  - 6 Different Monster Waves and Weapons
+  - 10 Different Monster Waves and 5 Weapons
   - Wave counter and Health/Ammo/Score display for up to 4 Players
