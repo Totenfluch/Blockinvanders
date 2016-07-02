@@ -44,6 +44,8 @@ public class Drop implements Drawable{
 			Drops[] theDrops = Drops.values();
 			if(weaponUpgradesDroppedThisWave >= weaponUpgradeDropLimitPerWave)
 				this.drop = theDrops[new Random().nextInt(theDrops.length-1)+1];
+			else
+				this.drop = drop;
 		}else if(weaponUpgradesDroppedThisWave == 0){
 				this.drop = Drops.NEXTWEAPON;
 		}else{
