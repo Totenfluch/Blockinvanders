@@ -14,7 +14,32 @@ import me.game.monsters.WallMonster;
 
 public class MonsterWaves {
 	
-	public enum MonsterType{DEFAULT, SMALLMONSTER, FLATMONSTER, MEDIUMMONSTER, TINYMONSTER, BIGBOSSMONSTER, HELIXMONSTER, SWARMMONSTER, SWARMMONSTERMINION, RANDOMMONSTER, WALLMONSTER, SPLITMONSTER, BONUSMONSTER};
+	public enum MonsterType{
+		DEFAULT (64), 
+		SMALLMONSTER (64), 
+		FLATMONSTER (12), 
+		MEDIUMMONSTER (32), 
+		TINYMONSTER (128), 
+		BIGBOSSMONSTER (1), 
+		HELIXMONSTER (4), 
+		SWARMMONSTER (1), 
+		SWARMMONSTERMINION (-1), 
+		RANDOMMONSTER (16), 
+		WALLMONSTER (1), 
+		SPLITMONSTER (1), 
+		BONUSMONSTER (6);
+		
+		private int initialSpawnAmount;
+		
+		MonsterType(int initialSpawnAmount){
+			this.initialSpawnAmount = initialSpawnAmount;
+		}
+		
+		public int getSpawnAmount(){
+			return initialSpawnAmount;
+		}
+		
+	};
 	
 	public static void SpawnWave(int which){
 		Frame game = Frame.getInstance();
