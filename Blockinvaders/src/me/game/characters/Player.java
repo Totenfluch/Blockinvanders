@@ -59,59 +59,33 @@ public class Player extends Characters{
 			xPos += movementSpeed;
 	}
 
-	@Override
-	public boolean setLife(int leben) {
-		if(game.Online_Coop)
-			game.client.processMessage("hitPlayer " + leben);
-		if (alive && leben > 0) {
-			this.life = leben;
-			return true;
-		} else {
-			alive = false;
-			triggerDeath();
-			return false;
-		}
+	public void incScore(int amount) {
+		setScore(this.score+amount);
 	}
 
-	public boolean setLife(int leben, boolean online) {
-		if (alive && leben > 0) {
-			this.life = leben;
-			return true;
-		} else {
-			alive = false;
-			triggerDeath();
-			return false;
-		}
-	}
-
-	public void incScore(int score) {
-		if (score > 0)
-			this.score += score;
-		if(game.Online_Coop)
-			game.client.processMessage("syncScore " + this.score);
-	}
-
-	public void decScore(int score) {
-		if (score > 0)
-			if (this.score - score <= 0)
-				score = 0;
-			else
-				this.score -= score;
+	public void decScore(int amount) {
+		setScore(this.score-amount);
 	}
 	
 	public void setScore(int score){
-		this.score = score;
+		if(this.score + score > 0)
+			this.score = score;
+		else
+			this.score = 0;
+		
+		if(game.Online_Coop)
+			game.client.processMessage("syncScore " + this.score);
 	}
 
 	public int getScore() {
 		return this.score;
 	}
 	
-	public int getHitImmume(){
+	public int getHitImmumeTimeLeft(){
 		return hitImmume;
 	}
 	
-	public int getDowngradeImmume() {
+	public int getDowngradeImmumeTimeLeft() {
 		return downgradeImmume;
 	}
 	
@@ -142,8 +116,6 @@ public class Player extends Characters{
 			downgradeImmume--;
 	}
 	
-	
-
 	@Override
 	public void draw(GraphicsContext gc) {
 		if(alive && hitImmume > 0){

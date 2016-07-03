@@ -65,7 +65,25 @@ public abstract class Characters implements Drawable{
 	public abstract void moveRight();
 	
 	
-	public abstract boolean setLife(int leben);
+	public boolean setLife(int life){
+		this.life = life;
+		if(this.life <= 0){
+			alive = false;
+			triggerDeath();
+			return false;
+		}else{
+			alive = true;
+			return true;
+		}
+	}
+	
+	public boolean subLife(int amount){
+		return setLife(life-amount);
+	}
+	
+	public boolean addLife(int amount){
+		return setLife(life+amount);
+	}
 	
 	public abstract void triggerDeath();
 	

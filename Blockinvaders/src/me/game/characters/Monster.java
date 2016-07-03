@@ -104,49 +104,6 @@ public class Monster extends Characters {
 		InitialHp = hp;
 	}
 
-
-	@Override
-	public boolean setLife(int Leben){
-		if (game.Online_Coop)
-			game.client.processMessage("hitMonster " + hashCode() + " " + life);
-		this.life = Leben;
-		if(this.life <= 0){
-			alive = false;
-			triggerDeath();
-			return false;
-		}else{
-			alive = true;
-			return true;
-		}
-	}
-
-	public boolean setLife(int Life, boolean online){
-		this.life = Life;
-		if(this.life <= 0){
-			alive = false;
-			triggerDeath();
-			return false;
-		}else{
-			alive = true;
-			return true;
-		}
-	}
-
-	public boolean subLeben(int amount){
-		if (game.Online_Coop)
-			game.client.processMessage("hitMonster " + hashCode() + " " + (life-amount));
-		life -= amount;
-		if(life <= 0){
-			alive = false;
-			triggerDeath();
-			return false;
-		}else{
-			alive = true;
-			return true;
-		}
-	}
-
-
 	@Override
 	public void triggerDeath(){
 		Random r = new Random();

@@ -70,13 +70,13 @@ public class GetServerMessages{
 		}else if(message.startsWith("hitMonster")){
 			// hitMonser Hashcode dmg amount
 			String[] splinter = message.split(" ");
-			game.Monsters.stream().filter(m -> (m.hashCode() == Integer.parseInt(splinter[1]))).forEach(monti -> monti.setLife(Integer.parseInt(splinter[2]), true));
+			game.Monsters.stream().filter(m -> (m.hashCode() == Integer.parseInt(splinter[1]))).forEach(monti -> monti.setLife(Integer.parseInt(splinter[2])));
 		}else if(message.startsWith("hitPlayer")){
 			// hitPlayer dmg amount
 			String[] splinter = message.split(" ");
-			player.setLife(Integer.parseInt(splinter[1]), true);
+			player.setLife(Integer.parseInt(splinter[1]));
 		}else if(message.startsWith("playerDeath")){
-			player.setLife(0, true);
+			player.setLife(0);
 		}else if(message.startsWith("syncScore")){
 			String[] splinter = message.split(" ");
 			player.setScore(Integer.valueOf(splinter[1]));

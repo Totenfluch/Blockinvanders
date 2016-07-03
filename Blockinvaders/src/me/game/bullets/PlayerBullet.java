@@ -33,7 +33,7 @@ public class PlayerBullet extends Bullet {
 	public void onHit(Monster victim, Player attacker){
 		if(victim.isAlive()){
 			super.onHit();
-			if (!victim.subLeben(damage)){
+			if (!victim.subLife(damage)){
 				attacker.incScore(victim.getWorth());
 			}
 		}
