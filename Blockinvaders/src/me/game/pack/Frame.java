@@ -83,6 +83,8 @@ public class Frame {
 	public boolean Play_with_bot_enabled = false;
 	public boolean Performance_benchmark_enabled = false;
 	public boolean Bot_Performance_benchmark_enabled = false;
+	private int Bot_Benchmark_threads = 32;
+	
 	private int KiPartyPlayers = 0;
 	private int botID = 0;
 	private BotKI bot;
@@ -450,19 +452,41 @@ public class Frame {
 		ChoiceBox<String> BenchmarkBox = new ChoiceBox<String>();
 		BenchmarkBox.getItems().addAll("Disabled", "Enabled", "Bot Benchmark", "Speedy Gonzales");
 		BenchmarkBox.setValue("Disabled");
-		connect_MiddlePart.getChildren().add(BenchmarkBox);
+		
 
+		TextField FrameCounter = new TextField("32");
+		HBox BenchmarkCounterBox = new HBox();
+		BenchmarkCounterBox.setSpacing(10);
+		BenchmarkCounterBox.setAlignment(Pos.BASELINE_CENTER);
+		BenchmarkCounterBox.getChildren().add(BenchmarkBox);
+		
+		connect_MiddlePart.getChildren().add(BenchmarkCounterBox);
+		
 		BenchmarkBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-			if (newValue.equals("Disabled"))
+			if (newValue.equals("Disabled")){
 				Performance_benchmark_enabled = false;
-			else if (newValue.equals("Enabled")){
+				BenchmarkCounterBox.getChildren().remove(FrameCounter);
+			}else if (newValue.equals("Enabled")){
 				Performance_benchmark_enabled = true;
 				Performance_benchmark_enabled = false;
+				BenchmarkCounterBox.getChildren().remove(FrameCounter);
 			}else if (newValue.equals("Bot Benchmark")){
 				Bot_Performance_benchmark_enabled = true;
 				Performance_benchmark_enabled = true;
+				BenchmarkCounterBox.getChildren().remove(FrameCounter);
+				BenchmarkCounterBox.getChildren().add(FrameCounter);
 			} else if (newValue.equals("Speedy Gonzales")){
 				Bot_Performance_benchmark_enabled = true;
+				BenchmarkCounterBox.getChildren().remove(FrameCounter);
+				BenchmarkCounterBox.getChildren().add(FrameCounter);
+			}
+		});
+		
+		FrameCounter.textProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				Bot_Benchmark_threads = Integer.valueOf(newValue);
 			}
 		});
 
@@ -740,7 +764,7 @@ public class Frame {
 		});
 		rTf = new Timeline(mainRefresh);
 		if(Bot_Performance_benchmark_enabled)
-			for(int i = 0; i<32; i++)
+			for(int i = 0; i<Bot_Benchmark_threads; i++)
 				rTf.getKeyFrames().add(mainRefresh);
 	}
 
