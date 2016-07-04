@@ -146,8 +146,6 @@ public class Frame {
 
 		MainStage.show();
 
-
-
 		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -450,18 +448,21 @@ public class Frame {
 		BenchmarkDesc.setFill(Color.WHITE);
 		connect_MiddlePart.getChildren().add(BenchmarkDesc);
 		ChoiceBox<String> BenchmarkBox = new ChoiceBox<String>();
-		BenchmarkBox.getItems().addAll("Disabled", "Enabled", "Bot Benchmark");
+		BenchmarkBox.getItems().addAll("Disabled", "Enabled", "Bot Benchmark", "Speedy Gonzales");
 		BenchmarkBox.setValue("Disabled");
 		connect_MiddlePart.getChildren().add(BenchmarkBox);
 
 		BenchmarkBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
 			if (newValue.equals("Disabled"))
 				Performance_benchmark_enabled = false;
-			else if (newValue.equals("Enabled"))
+			else if (newValue.equals("Enabled")){
 				Performance_benchmark_enabled = true;
-			else if (newValue.equals("Bot Benchmark")){
+				Performance_benchmark_enabled = false;
+			}else if (newValue.equals("Bot Benchmark")){
 				Bot_Performance_benchmark_enabled = true;
 				Performance_benchmark_enabled = true;
+			} else if (newValue.equals("Speedy Gonzales")){
+				Bot_Performance_benchmark_enabled = true;
 			}
 		});
 
@@ -564,10 +565,7 @@ public class Frame {
 			@Override
 			public void handle(ActionEvent event) {
 				if (AlternativeIP.getText().equals("")) {
-					client = new Client("127.0.0.1", 1521); // for testing
-					// purposes. old
-					// value:
-					// "139.59.134.247"
+					client = new Client("127.0.0.1", 1521);
 					connect_Bp.setRight(LobbyVBox);
 					DebugConsole.appendText("Connected to Server\n");
 				} else if (AlternativeIP.getText().contains(".") && AlternativeIP.getText().length() > 6
