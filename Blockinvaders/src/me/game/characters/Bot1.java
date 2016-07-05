@@ -9,6 +9,7 @@ import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop;
 import me.game.pack.Drop.Drops;
 import me.game.pack.Frame;
+import me.game.pack.MonsterWaves.MonsterType;
 
 public class Bot1 implements BotKI{
 	/*
@@ -69,8 +70,10 @@ public class Bot1 implements BotKI{
 		}else{
 			bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 		}
-
-		if((game.Monsters.size() > 10  || (game.clearcount%5==4 && game.clearcount > 20)) && bot.getHisSpecialWeapon().getAmmo() > 0)
+		MonsterType waveType = game.Monsters.elementAt(0).getMonsterType();
+		if(bot.getLife() < 10 || bot.getHisWeapon().getWeaponType().ordinal() < 5 || (game.Monsters.size() > 10  || 
+				((waveType == MonsterType.BIGBOSSMONSTER || waveType == MonsterType.SWARMMONSTER || waveType == MonsterType.FLATMONSTER) && game.clearcount > 20)) 
+				&& bot.getHisSpecialWeapon().getAmmo() > 0)
 			if((bot.getX() > 600 && bot.getX() < 1000))
 				bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
 
