@@ -375,7 +375,7 @@ public class Frame {
 		connect_MiddlePart.getChildren().add(VBotBox);
 
 		WatchKi.setOnAction(ae -> {
-			Bot1.Bot_debug = true;
+			Bot1.setBot_debug(true);
 			Bot_enabled = true;
 			if (botID == 0)
 				Player1Name = "Bot 1 - Totenfluch";
@@ -974,7 +974,7 @@ public class Frame {
 
 		case 4:
 			Bot_enabled = true;
-			Bot1.Bot_debug = true;
+			Bot1.setBot_debug(true);
 			break;
 
 		case 5:

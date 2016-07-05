@@ -16,10 +16,10 @@ public class Bot1 implements BotKI{
 		Bot to FIGHT FOR HONOR
 		By Totenfluch~
 	 */
-	public final Frame game;
+	private Frame game;
 	private Player bot;
-	public static boolean Bot_debug = false;
-	public Monster Target = null;
+	private static boolean Bot_debug = false;
+	private Monster Target = null;
 	private String status = "";
 
 	private Bullet escapeThis = null;
@@ -59,12 +59,12 @@ public class Bot1 implements BotKI{
 		if(bot.getLife() < 10 || bot.getHisWeapon().getWeaponType().ordinal() < 5 || (game.Monsters.size() > 10  || 
 				((waveType == MonsterType.BIGBOSSMONSTER || waveType == MonsterType.SWARMMONSTER || waveType == MonsterType.FLATMONSTER) && game.clearcount > 20)) 
 				&& bot.getHisSpecialWeapon().getAmmo() > 0)
-			if((bot.getX() > 600 && bot.getX() < 1000))
+			if((bot.getX() > 600 && bot.getX() < 1000) || bot.getLife() < 10)
 				bot.getHisSpecialWeapon().shoot(bot.getX(), bot.getY());
 
 	}
 
-	public boolean checkForBullets(){
+	private boolean checkForBullets(){
 		status = "checking for Bullets";
 		boolean dogeing = false;
 		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
@@ -78,7 +78,7 @@ public class Bot1 implements BotKI{
 							tryMoveLeft();
 
 						dogeing = true;
-						if(Bot_debug)
+						if(isBot_debug())
 							for(Monster p: game.Monsters)
 								p.setColor(Color.GREENYELLOW);
 					}
@@ -88,7 +88,7 @@ public class Bot1 implements BotKI{
 		return dogeing;
 	}
 
-	public Monster findTarget(){
+	private Monster findTarget(){
 		status = "finding target";
 		Monster monti2 = null;
 		double closest = 5000;
@@ -98,10 +98,10 @@ public class Bot1 implements BotKI{
 			double distanceToMonti = Math.abs(monti.getX()-bot.getX());
 			if( distanceToMonti < closest){
 				closest = distanceToMonti;
-				if(Bot_debug)
+				if(isBot_debug())
 					for(Monster i: game.Monsters)
 						i.setColor(Color.BROWN);
-				if(Bot_debug)
+				if(isBot_debug())
 					monti.setColor(Color.BLUE);
 				monti2 = monti;
 			}
@@ -109,7 +109,7 @@ public class Bot1 implements BotKI{
 		return monti2;
 	}
 
-	public void moveToClosestEnemy(){
+	private void moveToClosestEnemy(){
 		status = "moving to closest Enemy";
 		Monster monti2 = null;
 		double wheretogo = 0;
@@ -143,7 +143,7 @@ public class Bot1 implements BotKI{
 			tryMoveRight();
 	}
 
-	public boolean findWeaponUpgrade(){
+	private boolean findWeaponUpgrade(){
 		status = "finding Weapon Upgrade";
 		Drop p = null;
 		for(int i = 0; i<Drop.AllDrops.size(); i++){
@@ -181,7 +181,7 @@ public class Bot1 implements BotKI{
 			tryMoveLeft();
 		else
 			tryMoveRight();
-		if(Bot_debug)
+		if(isBot_debug())
 			for(Monster ppp: game.Monsters)
 				ppp.setColor(Color.YELLOW);
 		return true;
@@ -220,5 +220,13 @@ public class Bot1 implements BotKI{
 	@Override
 	public String toString(){
 		return status;
+	}
+
+	public boolean isBot_debug() {
+		return Bot_debug;
+	}
+
+	public static void setBot_debug(boolean bot_debug) {
+		Bot_debug = bot_debug;
 	}
 }
