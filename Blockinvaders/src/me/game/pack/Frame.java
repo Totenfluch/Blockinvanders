@@ -468,7 +468,7 @@ public class Frame {
 				BenchmarkCounterBox.getChildren().remove(FrameCounter);
 			}else if (newValue.equals("Enabled")){
 				Performance_benchmark_enabled = true;
-				Performance_benchmark_enabled = false;
+				Bot_Performance_benchmark_enabled = false;
 				BenchmarkCounterBox.getChildren().remove(FrameCounter);
 			}else if (newValue.equals("Bot Benchmark")){
 				Bot_Performance_benchmark_enabled = true;

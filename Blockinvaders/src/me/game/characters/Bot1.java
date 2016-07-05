@@ -33,44 +33,29 @@ public class Bot1 implements BotKI{
 		status = "";
 		if(!bot.isAlive())
 			return;
-		/*boolean oldEscapeLock = false;
-		for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
-			for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
-				oldEscapeLock = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x).equals(escapeThis);
-				if(oldEscapeLock)
-					break;
-			}
-		}*/
 		
 		Vector<Bullet> scont = new Vector<Bullet>(400, 20);
 		MonsterWeapon.ActiveWeapons.forEach(weap -> weap.getKugeln().forEach(bul -> scont.add(bul)));
 		boolean escapeLock = scont.stream().anyMatch(b -> b.equals(escapeThis));
 		
-		
-		if(!checkForBullets() && !escapeLock ){
+		if((!checkForBullets() && !escapeLock) || bot.isHitImmume() || (bot.isDowngradeImmume() && bot.getHisWeapon().getWeaponType().ordinal() < 5)){
 			if(!findWeaponUpgrade()){
 				moveToClosestEnemy();
 				bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 			}else{
+				boolean clear = game.Monsters.stream().noneMatch(b -> b.checkHit(bot.getX()-250, 0, bot.getWidth()+500, Frame.GAME_LENGTH));
 
-				boolean clear = scont.stream().noneMatch(b -> b.checkHit(bot.getX()-10, 0, bot.getWidth()+20, Frame.GAME_LENGTH));
-				//boolean oldclear = true;
-				/*for (int i = 0; i < MonsterWeapon.ActiveWeapons.size(); i++){
-					for(int x = 0; x < MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().size(); x++){
-						Bullet bul = MonsterWeapon.ActiveWeapons.elementAt(i).getKugeln().elementAt(x);
-						if(bul.checkHit(bot.getX()-10, 0, bot.getWidth()+20, Frame.GAME_LENGTH)){
-							clear = false;
-						}
-					}
-				}*/
-				//System.out.println(clear + " " + newClear);
 				if(bot.getHisWeapon().getAmmo() == 0 || !clear)
 					bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 			}
 		}else{
 			bot.getHisWeapon().shoot(bot.getX(), bot.getY());
 		}
-		MonsterType waveType = game.Monsters.elementAt(0).getMonsterType();
+		
+		// Rocketlauncher
+		MonsterType waveType = null;
+		if(game.Monsters.size() > 0)
+			waveType = game.Monsters.elementAt(0).getMonsterType();
 		if(bot.getLife() < 10 || bot.getHisWeapon().getWeaponType().ordinal() < 5 || (game.Monsters.size() > 10  || 
 				((waveType == MonsterType.BIGBOSSMONSTER || waveType == MonsterType.SWARMMONSTER || waveType == MonsterType.FLATMONSTER) && game.clearcount > 20)) 
 				&& bot.getHisSpecialWeapon().getAmmo() > 0)
@@ -231,7 +216,6 @@ public class Bot1 implements BotKI{
 			bot.moveLeft();
 		return clear;
 	}
-	
 	
 	@Override
 	public String toString(){
