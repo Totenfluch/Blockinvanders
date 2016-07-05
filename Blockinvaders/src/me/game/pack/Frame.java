@@ -6,10 +6,6 @@ import java.util.Vector;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,7 +20,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -80,7 +75,7 @@ public class Frame {
 	public boolean Performance_benchmark_enabled = false;
 	public boolean Bot_Performance_benchmark_enabled = false;
 	private int Bot_Benchmark_threads = 32;
-	
+
 	private int KiPartyPlayers = 0;
 	private int botID = 0;
 	private BotKI bot;
@@ -144,63 +139,56 @@ public class Frame {
 
 		MainStage.show();
 
-		GameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.A) {
-					P1_inLeft = true;
-				} 
-				if(event.getCode() == KeyCode.D) {
-					P1_inRight = true;
-				}
-				if (event.getCode() == KeyCode.W) {
-					P1_inShoot = true;
-				}
-				if (event.getCode() == KeyCode.CONTROL) {
-					if (Players[0].getHisSpecialWeapon() != null)
-						Players[0].getHisSpecialWeapon().shoot(Players[0].getX(), Players[0].getY());
-				}
+		GameScene.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.A) {
+				P1_inLeft = true;
+			} 
+			if(event.getCode() == KeyCode.D) {
+				P1_inRight = true;
+			}
+			if (event.getCode() == KeyCode.W) {
+				P1_inShoot = true;
+			}
+			if (event.getCode() == KeyCode.CONTROL) {
+				if (Players[0].getHisSpecialWeapon() != null)
+					Players[0].getHisSpecialWeapon().shoot(Players[0].getX(), Players[0].getY());
+			}
 
-				if (event.getCode() == KeyCode.LEFT) {
-					P2_inLeft = true;
-				}
-				if(event.getCode() == KeyCode.RIGHT) {
-					P2_inRight = true;
-				}
-				if (event.getCode() == KeyCode.UP) {
-					P2_inShoot = true;
-				}
-				if (event.getCode() == KeyCode.NUMPAD0 && Coop_enabled) {
-					if (Players[1].getHisSpecialWeapon() != null)
-						Players[1].getHisSpecialWeapon().shoot(Players[1].getX(), Players[1].getY());
-				}
-
+			if (event.getCode() == KeyCode.LEFT) {
+				P2_inLeft = true;
+			}
+			if(event.getCode() == KeyCode.RIGHT) {
+				P2_inRight = true;
+			}
+			if (event.getCode() == KeyCode.UP) {
+				P2_inShoot = true;
+			}
+			if (event.getCode() == KeyCode.NUMPAD0 && Coop_enabled) {
+				if (Players[1].getHisSpecialWeapon() != null)
+					Players[1].getHisSpecialWeapon().shoot(Players[1].getX(), Players[1].getY());
 			}
 		});
 
-		GameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.A) {
-					P1_inLeft = false;
-				}
-				if (event.getCode() == KeyCode.D) {
-					P1_inRight = false;
-				}
-				if (event.getCode() == KeyCode.W) {
-					P1_inShoot = false;
-				}
+		GameScene.setOnKeyReleased(event -> {
+			if (event.getCode() == KeyCode.A) {
+				P1_inLeft = false;
+			}
+			if (event.getCode() == KeyCode.D) {
+				P1_inRight = false;
+			}
+			if (event.getCode() == KeyCode.W) {
+				P1_inShoot = false;
+			}
 
-				if (Coop_enabled) {
-					if (event.getCode() == KeyCode.LEFT) {
-						P2_inLeft = false;
-					}
-					if (event.getCode() == KeyCode.RIGHT) {
-						P2_inRight = false;
-					}
-					if (event.getCode() == KeyCode.UP) {
-						P2_inShoot = false;
-					}
+			if (Coop_enabled) {
+				if (event.getCode() == KeyCode.LEFT) {
+					P2_inLeft = false;
+				}
+				if (event.getCode() == KeyCode.RIGHT) {
+					P2_inRight = false;
+				}
+				if (event.getCode() == KeyCode.UP) {
+					P2_inShoot = false;
 				}
 			}
 		});
@@ -299,22 +287,16 @@ public class Frame {
 
 		final TextField Username1 = new TextField("Username-1#" + id);
 
-		Username1.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.length() > 16)
-					Username1.setText(oldValue);
-			}
+		Username1.textProperty().addListener((obsvalue, oldValue, newValue) ->{
+			if (newValue.length() > 16)
+				Username1.setText(oldValue);
 		});
 		Usernames.getChildren().add(Username1);
 
 		final TextField Username2 = new TextField("Username-2#" + id);
-		Username2.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.length() > 16)
-					Username2.setText(oldValue);
-			}
+		Username2.textProperty().addListener((obsvalue, oldValue, newValue) ->{
+			if (newValue.length() > 16)
+				Username2.setText(oldValue);
 		});
 		Usernames.getChildren().add(Username2);
 		Usernames.setAlignment(Pos.BOTTOM_CENTER);
@@ -322,29 +304,23 @@ public class Frame {
 		Button Coop = new Button("Local Co-op");
 		connect_MiddlePart.getChildren().add(Coop);
 		Coop.setAlignment(Pos.BOTTOM_CENTER);
-		Coop.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				Player1Name = Username1.getText();
-				Player2Name = Username2.getText();
-				Players = new Player[2];
-				Coop_enabled = true;
-				switchSceneToGame();
-			}
+		Coop.setOnAction(ae -> {
+			Player1Name = Username1.getText();
+			Player2Name = Username2.getText();
+			Players = new Player[2];
+			Coop_enabled = true;
+			switchSceneToGame();
 		});
 
 		Button SinglePlayer = new Button("Single Player");
 		connect_MiddlePart.getChildren().add(SinglePlayer);
 		SinglePlayer.setAlignment(Pos.BOTTOM_CENTER);
-		SinglePlayer.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Player1Name = Username1.getText();
-				Player2Name = Username2.getText();
-				Players = new Player[1];
-				Coop_enabled = false;
-				switchSceneToGame();
-			}
+		SinglePlayer.setOnAction(ae ->{
+			Player1Name = Username1.getText();
+			Player2Name = Username2.getText();
+			Players = new Player[1];
+			Coop_enabled = false;
+			switchSceneToGame();
 		});
 
 		VBox VBotBox = new VBox();
@@ -448,16 +424,16 @@ public class Frame {
 		ChoiceBox<String> BenchmarkBox = new ChoiceBox<String>();
 		BenchmarkBox.getItems().addAll("Disabled", "Enabled", "Bot Benchmark", "Speedy Gonzales");
 		BenchmarkBox.setValue("Disabled");
-		
+
 
 		TextField FrameCounter = new TextField("32");
 		HBox BenchmarkCounterBox = new HBox();
 		BenchmarkCounterBox.setSpacing(10);
 		BenchmarkCounterBox.setAlignment(Pos.BASELINE_CENTER);
 		BenchmarkCounterBox.getChildren().add(BenchmarkBox);
-		
+
 		connect_MiddlePart.getChildren().add(BenchmarkCounterBox);
-		
+
 		BenchmarkBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
 			if (newValue.equals("Disabled")){
 				Performance_benchmark_enabled = false;
@@ -477,12 +453,12 @@ public class Frame {
 				BenchmarkCounterBox.getChildren().add(FrameCounter);
 			}
 		});
-		
+
 		FrameCounter.textProperty().addListener((obss, ov, nv)->{
 			if (!nv.matches("\\d*")) {
 				FrameCounter.setText(nv.replaceAll("[^\\d]", ""));
 				Bot_Benchmark_threads = Integer.valueOf(nv.replaceAll("[^\\d]", ""));
-            }
+			}
 		});
 
 		Text restartDesc = new Text("Restart");
@@ -519,16 +495,13 @@ public class Frame {
 		LobbyName.setPrefWidth(300);
 
 		Button CreateLobby = new Button("Create");
-		CreateLobby.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (LobbyName.getText().length() > 4 && LobbyName.getText().length() < 16) {
-					client.processMessage("createLobby " + LobbyName.getText().replace(" ", ""));
-					DebugConsole
-					.appendText("Attempting to create Lobby " + LobbyName.getText().replace(" ", "") + "\n");
-				} else {
-					DebugConsole.appendText("Invalid Lobby Name length\n");
-				}
+		CreateLobby.setOnAction(ae -> {
+			if (LobbyName.getText().length() > 4 && LobbyName.getText().length() < 16) {
+				client.processMessage("createLobby " + LobbyName.getText().replace(" ", ""));
+				DebugConsole
+				.appendText("Attempting to create Lobby " + LobbyName.getText().replace(" ", "") + "\n");
+			} else {
+				DebugConsole.appendText("Invalid Lobby Name length\n");
 			}
 		});
 		CreateLobby.setPrefWidth(LobbyVBox.getPrefWidth() - 160);
@@ -537,14 +510,11 @@ public class Frame {
 		LobbyControls.setSpacing(5);
 
 		Button JoinLobby = new Button("Join");
-		JoinLobby.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (Lobbys.getSelectionModel().getSelectedItem() != null) {
-					String[] selectedLobbypart = Lobbys.getSelectionModel().getSelectedItem().split(" ");
-					client.processMessage("joinLobby " + selectedLobbypart[1]);
-					DebugConsole.appendText("Attempting to join " + selectedLobbypart[1] + "\n");
-				}
+		JoinLobby.setOnAction(ae -> {
+			if (Lobbys.getSelectionModel().getSelectedItem() != null) {
+				String[] selectedLobbypart = Lobbys.getSelectionModel().getSelectedItem().split(" ");
+				client.processMessage("joinLobby " + selectedLobbypart[1]);
+				DebugConsole.appendText("Attempting to join " + selectedLobbypart[1] + "\n");
 			}
 		});
 		JoinLobby.setPrefWidth(LobbyVBox.getPrefWidth() - 100);
@@ -580,30 +550,24 @@ public class Frame {
 		Online_coop_hbox.setAlignment(Pos.TOP_CENTER);
 		Online_coop_hbox.setSpacing(10);
 
-		Confirm.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (AlternativeIP.getText().equals("")) {
-					client = new Client("127.0.0.1", 1521);
-					connect_Bp.setRight(LobbyVBox);
-					DebugConsole.appendText("Connected to Server\n");
-				} else if (AlternativeIP.getText().contains(".") && AlternativeIP.getText().length() > 6
-						&& AlternativeIP.getText().length() < 16 && !AlternativeIP.getText().matches("^[a-zA-Z]")) {
-					client = new Client(AlternativeIP.getText(), 1521);
-					connect_Bp.setRight(LobbyVBox);
-					DebugConsole.appendText("Connected to Server\n");
-				} else
-					System.out.println("Wrong IP m8");
-			}
+		Confirm.setOnAction(ae ->{
+			if (AlternativeIP.getText().equals("")) {
+				client = new Client("127.0.0.1", 1521);
+				connect_Bp.setRight(LobbyVBox);
+				DebugConsole.appendText("Connected to Server\n");
+			} else if (AlternativeIP.getText().contains(".") && AlternativeIP.getText().length() > 6
+					&& AlternativeIP.getText().length() < 16 && !AlternativeIP.getText().matches("^[a-zA-Z]")) {
+				client = new Client(AlternativeIP.getText(), 1521);
+				connect_Bp.setRight(LobbyVBox);
+				DebugConsole.appendText("Connected to Server\n");
+			} else
+				System.out.println("Wrong IP m8");
 		});
 
 		DebugConsole = new TextArea();
 		// DebugConsole.setDisable(true); -- disable user input
-		DebugConsole.textProperty().addListener(new ChangeListener<Object>() {
-			@Override
-			public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-				DebugConsole.setScrollTop(Double.MAX_VALUE);
-			}
+		DebugConsole.textProperty().addListener((obsvalue, oldValue, newValue) ->{
+			DebugConsole.setScrollTop(Double.MAX_VALUE);
 		});
 		LobbyVBox.getChildren().add(DebugConsole);
 
@@ -709,7 +673,7 @@ public class Frame {
 					if(weapons < 80){
 						gc.setFill(Color.CORAL);
 						gc.setFont(new Font("Futura", 10));
-						
+
 						gc.fillText(wp.toString() + wp.getOwner().toString(), 1125, 50+weapons*10);
 						weapons++;
 					}else{
