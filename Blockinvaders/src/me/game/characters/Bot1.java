@@ -20,7 +20,7 @@ public class Bot1 implements BotKI{
 	private Player bot;
 	private static boolean Bot_debug = false;
 	private Monster Target = null;
-	private String status = "";
+	private String status = "4711";
 
 	private Bullet escapeThis = null;
 	public Bot1(Player p){
