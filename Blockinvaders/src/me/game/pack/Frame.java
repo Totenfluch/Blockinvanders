@@ -1,9 +1,5 @@
 package me.game.pack;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Random;
 import java.util.Vector;
 
@@ -875,7 +871,7 @@ public class Frame {
 
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
-		PublishScores();
+		//PublishScores();
 		new GameResults(new GameSettings(getGameMode(), Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled), Players, clearcount, refreshTime);
 
 		if(autoRestart){
@@ -930,23 +926,6 @@ public class Frame {
 
 	public GraphicsContext getGraphicsContext(){
 		return gc;
-	}
-
-	public void PublishScores() {
-		if (Coop_enabled) {
-			try {
-				String request = "http://totenfluch.de/putScores.php?Username1=" + Player1Name + "&Username2="
-						+ Player2Name + "&Score1=" + Players[0].getScore() + "&Score2=" + Players[1].getScore() + "";
-				URL oracle = new URL(request);
-				URLConnection yc = oracle.openConnection();
-				BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-				String line;
-				while((line = in.readLine()) != null)
-					System.out.println(line);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public boolean loadSettings() {

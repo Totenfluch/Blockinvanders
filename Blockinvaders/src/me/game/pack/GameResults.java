@@ -1,5 +1,9 @@
 package me.game.pack;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Vector;
 
 import me.game.characters.Player;
@@ -16,9 +20,11 @@ public class GameResults {
 	private Player[] players;
 	private int wavesCompleted;
 	private long gameDuration;
+	private Frame game;
 
 	public GameResults(GameSettings gs, Player players[], int wavesCompleted, long gameDuration){
 		this.gs = gs;
+		this.game = Frame.getInstance();
 		this.players = players;
 		this.wavesCompleted = wavesCompleted;
 		this.gameDuration = gameDuration;
@@ -26,6 +32,7 @@ public class GameResults {
 		gameResultId = gameResultsIdCounter;
 		gameResultsIdCounter++;
 		calcAverage();
+		publishLatestScores();
 	}
 	
 	private static void calcAverage(){
@@ -110,6 +117,24 @@ public class GameResults {
 		case 6: return "KI Party";
 		}
 		return "Invalid GameMode";
+	}
+	
+	private void publishLatestScores() {
+		if (game.Coop_enabled || game.KI_Coop_enabled) {
+			try {
+				String request = "http://totenfluch.de/putScores.php?Username1=" + game.Player1Name.replace(" ", "") + "&Username2="
+						+ game.Player2Name.replace(" ", "") + "&Score1=" + game.Players[0].getScore() + "&Score2=" + game.Players[1].getScore() + "";
+				URL oracle = new URL(request);
+				URLConnection yc = oracle.openConnection();
+				BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+				String line = "";
+				while((line = in.readLine()) != null)
+					if(line.contains("<body>"))
+						System.out.println("Uploaded Stats");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public String getWavesCompletedToString(){
