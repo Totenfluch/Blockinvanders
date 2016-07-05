@@ -482,12 +482,11 @@ public class Frame {
 			}
 		});
 		
-		FrameCounter.textProperty().addListener(new ChangeListener<String>(){
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				Bot_Benchmark_threads = Integer.valueOf(newValue);
-			}
+		FrameCounter.textProperty().addListener((obss, ov, nv)->{
+			if (!nv.matches("\\d*")) {
+				FrameCounter.setText(nv.replaceAll("[^\\d]", ""));
+				Bot_Benchmark_threads = Integer.valueOf(nv.replaceAll("[^\\d]", ""));
+            }
 		});
 
 		Text restartDesc = new Text("Restart");
