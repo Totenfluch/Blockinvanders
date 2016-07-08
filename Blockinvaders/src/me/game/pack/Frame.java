@@ -455,7 +455,7 @@ public class Frame {
 		});
 
 		FrameCounter.textProperty().addListener((obss, ov, nv)->{
-			if (!nv.matches("\\d*")) {
+			if (!nv.equals("") && nv.matches("\\d*")) {
 				FrameCounter.setText(nv.replaceAll("[^\\d]", ""));
 				Bot_Benchmark_threads = Integer.valueOf(nv.replaceAll("[^\\d]", ""));
 			}
@@ -723,8 +723,9 @@ public class Frame {
 		});
 		rTf = new Timeline(mainRefresh);
 		if(Bot_Performance_benchmark_enabled)
-			for(int i = 0; i<Bot_Benchmark_threads; i++)
+			for(int i = 0; i<Bot_Benchmark_threads; i++){
 				rTf.getKeyFrames().add(mainRefresh);
+			}
 	}
 
 	public void Refresh() {
@@ -740,7 +741,7 @@ public class Frame {
 
 		for (int i = 0; i < Monsters.size(); i++)
 			if (Monsters.elementAt(i).isAlive())
-				if (new Random().nextInt((int) (shootChance * (1 / Monsters.elementAt(i).getShootRate()))) == 0)
+				if (new Random().nextInt((int) (shootChance * (1 / Monsters.elementAt(i).getShootRate()))) == 0 && Monsters.elementAt(i).getHisWeapon() != null)
 					Monsters.elementAt(i).getHisWeapon().shoot(Monsters.elementAt(i).getX(),
 							Monsters.elementAt(i).getY());
 
@@ -836,7 +837,7 @@ public class Frame {
 		System.out.println("Frametime (ns): " + frameTime / frames);
 		System.out.println("Refreshtime (ns): " + refreshTime / Tick);
 		//PublishScores();
-		new GameResults(new GameSettings(getGameMode(), Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled), Players, clearcount, refreshTime);
+		new GameResults(new GameSettings(getGameMode(), Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled,Bot_Benchmark_threads), Players, clearcount, refreshTime);
 
 		if(autoRestart){
 			saveSettings();
@@ -941,6 +942,7 @@ public class Frame {
 
 		Performance_benchmark_enabled = gs.getPerformance_benchmark_enabled();
 		Bot_Performance_benchmark_enabled = gs.getBot_Performance_benchmark_enabled();
+		Bot_Benchmark_threads = gs.getBotThreads();
 
 		return true;
 	}
@@ -948,7 +950,7 @@ public class Frame {
 	public void saveSettings() {
 		int gameMode = getGameMode();
 
-		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled);
+		GameSettings gs = new GameSettings(gameMode, Players.length, GameSpeed, botID, Player1Name, Player2Name, autoRestart, Performance_benchmark_enabled, Bot_Performance_benchmark_enabled,Bot_Benchmark_threads);
 		Game.setSettings(gs);
 	}
 

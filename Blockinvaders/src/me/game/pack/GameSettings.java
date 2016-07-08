@@ -13,6 +13,7 @@ public class GameSettings {
 	private boolean restart;
 	private boolean Performance_benchmark_enabled;
 	private boolean Bot_Performance_benchmark_enabled;
+	private int botThreads;
 	
 	/*
 	 * GameType:
@@ -93,9 +94,13 @@ public class GameSettings {
 	public void setBot_Performance_benchmark_enabled(boolean bot_Performance_benchmark_enabled) {
 		Bot_Performance_benchmark_enabled = bot_Performance_benchmark_enabled;
 	}
-	
-	
-	public GameSettings(int gameType, int playerNum, int gameSpeed, int botID, String player1Name, String player2Name, boolean restart, boolean Performance_benchmark_enabled, boolean Bot_Performance_benchmark_enabled) {
+	public int getBotThreads() {
+		return botThreads;
+	}
+	public void setBotThreads(int botThreads) {
+		this.botThreads = botThreads;
+	}
+	public GameSettings(int gameType, int playerNum, int gameSpeed, int botID, String player1Name, String player2Name, boolean restart, boolean Performance_benchmark_enabled, boolean Bot_Performance_benchmark_enabled, int botThreads) {
 		this.gameMode = gameType;
 		this.playerNum = playerNum;
 		this.gameSpeed = gameSpeed;
@@ -105,6 +110,7 @@ public class GameSettings {
 		this.restart = restart;	
 		this.Performance_benchmark_enabled = Performance_benchmark_enabled;
 		this.Bot_Performance_benchmark_enabled = Bot_Performance_benchmark_enabled;
+		this.botThreads = botThreads;
 	}
 
 	

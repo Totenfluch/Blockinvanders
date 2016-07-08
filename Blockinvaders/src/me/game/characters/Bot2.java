@@ -4,6 +4,7 @@ import me.game.bullets.Bullet;
 import me.game.monsterWeapons.MonsterWeapon;
 import me.game.pack.Drop;
 import me.game.pack.Frame;
+import me.game.pack.MonsterWaves.MonsterType;
 
 public class Bot2 implements BotKI {
 
@@ -166,37 +167,14 @@ public class Bot2 implements BotKI {
 	}
 
 	private void specialShoot() {
-		if (player.hisSpecialWeapon.getAmmo() > 0) {
+		if (player.hisSpecialWeapon.getAmmo() > 0 && game.Monsters.size() > 0) {
 			int alive = 0;
 			for (Monster m : game.Monsters)
 				if (m.isAlive())
 					alive++;
-
-			int initMonsters = 0;
-			switch (game.clearcount % 6) {
-			case 0:
-				initMonsters = 64;
-				break;
-			case 1:
-				initMonsters = 12;
-				break;
-			case 2:
-				initMonsters = 32;
-				break;
-			case 3:
-				initMonsters = 128;
-				break;
-			case 4:
-				initMonsters = 1;
-				break;
-			case 5:
-				initMonsters = 4;
-				break;
-			}
-
-			if ((game.clearcount >= 20 && (double) alive / initMonsters >= 0.8)
-					|| (game.clearcount >= 30 && (double) alive / initMonsters >= 0.6)
-					|| (game.clearcount >= 40 && (double) alive / initMonsters >= 0.4)) {
+			MonsterType type = game.Monsters.elementAt(0).getMonsterType();
+			if (game.clearcount >= 20 && ((double) alive / type.getSpawnAmount() >= 0.8 || type == MonsterType.SWARMMONSTER || type ==  MonsterType.BIGBOSSMONSTER)|| (game.clearcount >= 40 && (double) alive / type.getSpawnAmount() >= 0.5) || (game.clearcount >= 60 && (double) alive / type.getSpawnAmount() >= 0.3)) {
+				
 				if (player.getX() + player.getWidth() / 2 >= Frame.GAME_WIDTH / 3
 						&& player.getX() + player.getWidth() / 2 <= (Frame.GAME_WIDTH / 3) * 2) {
 					player.hisSpecialWeapon.shoot(player.getX(), player.getY());
