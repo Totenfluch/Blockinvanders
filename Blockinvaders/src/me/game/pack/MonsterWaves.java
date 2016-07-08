@@ -4,6 +4,7 @@ import me.game.monsters.BigBossMonster;
 import me.game.monsters.BonusMonster;
 import me.game.monsters.FlatMonster;
 import me.game.monsters.HelixMonster;
+import me.game.monsters.ImageMonster;
 import me.game.monsters.MediumMonster;
 import me.game.monsters.RandomMovementMonster;
 import me.game.monsters.SmallMonster;
@@ -27,7 +28,8 @@ public class MonsterWaves {
 		RANDOMMONSTER (16), 
 		WALLMONSTER (1), 
 		SPLITMONSTER (1), 
-		BONUSMONSTER (6);
+		BONUSMONSTER (6),
+		IMAGEMONSTER(64);
 		
 		private int initialSpawnAmount;
 		
@@ -50,7 +52,7 @@ public class MonsterWaves {
 		// Reset current movement 
 		game.movetick = 0;
 		game.Monster_Direction = 0;
-		switch(which%11){
+		switch(which%12){
 		case 0: 
 			SmallMonster.spawnSmallMonsterWave(which);
 			break;
@@ -94,6 +96,10 @@ public class MonsterWaves {
 			
 		case 10:
 			BonusMonster.spawnBonusMonsterWave(which);
+			break;
+			
+		case 11:
+			ImageMonster.spawnImageMonsterWave(which);
 			break;
 		}
 	}
