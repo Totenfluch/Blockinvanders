@@ -1,6 +1,7 @@
 package me.game.characters;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import me.game.pack.Frame;
@@ -16,6 +17,8 @@ public class Player extends Characters{
 	private String PlayerName;
 	private int hitImmume = 0;
 	private int downgradeImmume = 0;
+	
+	private Image drawIm;
 
 	public Player(double xPos, int leben, PlayerWeapon waffe) {
 		super(xPos, 800, leben, waffe);
@@ -25,10 +28,14 @@ public class Player extends Characters{
 			instance = Frame.getInstance();
 			activePlayers = 0;
 		}
-		height = 60;
-		width = 40;
+		height = 80;
+		width = 80;
 		playerNumber = activePlayers++;
 		PlayerName = "Player-"+playerNumber;
+		if(playerNumber <= 4)
+			drawIm = new Image(getClass().getResourceAsStream("/playerModel"+ (playerNumber+1) +".png"));
+		else
+			drawIm = new Image(getClass().getResourceAsStream("/playerModel4.png"));
 	}
 	
 	public String getPlayerName(){
@@ -121,9 +128,13 @@ public class Player extends Characters{
 		if(alive && hitImmume > 0){
 			gc.setFill(Color.AQUAMARINE);
 			gc.fillRect(xPos-2, yPos-2, width+4, height+4);
+			gc.setFill(Color.BLACK);
+			gc.fillRect(xPos, yPos, width, height);
 		}else if(alive && downgradeImmume > 0){
 			gc.setFill(Color.ORANGE);
 			gc.fillRect(xPos-2, yPos-2, width+4, height+4);
+			gc.setFill(Color.BLACK);
+			gc.fillRect(xPos, yPos, width, height);
 		}
 		
 		if (playerNumber == 0)
@@ -138,7 +149,8 @@ public class Player extends Characters{
 			gc.setFill(Color.WHITE);
 
 		if (alive)
-			gc.fillRect(xPos, yPos, width, height);
+			//gc.fillRect(xPos, yPos, width, height);
+			gc.drawImage(drawIm, xPos, yPos, width, height);
 
 		if (playerNumber == 0) {
 			if (alive) {
