@@ -109,9 +109,9 @@ public class Monster extends Characters {
 		Random r = new Random();
 		Drops[] theDrops = Drops.values();
 		if(r.nextInt(dropRate) == 0){
-			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
+			Drop.AllDrops.add(new Drop(xPos+width/2, yPos+height/2, theDrops[r.nextInt(theDrops.length)]));
 		}else if(color.equals(Color.DARKMAGENTA)){
-			Drop.AllDrops.add(new Drop(xPos, yPos, theDrops[r.nextInt(theDrops.length)]));
+			Drop.AllDrops.add(new Drop(xPos+width/2, yPos+height/2, theDrops[r.nextInt(theDrops.length)]));
 		}
 		if(hisWeapon != null)
 			hisWeapon.requestRemoval();

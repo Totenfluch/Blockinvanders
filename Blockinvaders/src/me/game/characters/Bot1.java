@@ -56,7 +56,9 @@ public class Bot1 implements BotKI{
 		MonsterType waveType = null;
 		if(game.Monsters.size() > 0)
 			waveType = game.Monsters.elementAt(0).getMonsterType();
-		if(bot.getLife() < 10 || bot.getHisWeapon().getWeaponType().ordinal() < 5 || (game.Monsters.size() > 10  || 
+		else
+			return;
+		if(bot.getLife() < 10 || bot.getHisWeapon().getWeaponType().ordinal() < 5 || (game.Monsters.size() >= waveType.getSpawnAmount()*0.8  || 
 				((waveType == MonsterType.BIGBOSSMONSTER || waveType == MonsterType.SWARMMONSTER || waveType == MonsterType.FLATMONSTER) && game.clearcount > 20)) 
 				&& bot.getHisSpecialWeapon().getAmmo() > 0)
 			if((bot.getX() > 600 && bot.getX() < 1000) || bot.getLife() < 10)
